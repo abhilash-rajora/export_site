@@ -68,7 +68,21 @@ export default function HomePage() {
 
       <section className="relative h-[600px] pt-24 flex items-center overflow-hidden">
         <div className="absolute inset-0">
-          <img src="/hero.png" alt="Global shipping port" className="w-full h-full object-cover" />
+          <>
+  {/* Desktop Image */}
+  <img
+    src="/hero-desktop.png"
+    alt="Global shipping port"
+    className="hidden md:block w-full h-full object-cover"
+  />
+
+  {/* Mobile Image */}
+  <img
+    src="/hero-mobile.png"
+    alt="Global shipping port"
+    className="block md:hidden w-full h-full object-cover"
+  />
+</>
           <div className="hero-overlay absolute inset-0" />
         </div>
         <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
