@@ -16,7 +16,7 @@ export default function Footer() {
       Global
     </span>
     <span className="text-gold-400 transition-colors duration-300 group-hover:text-white">
-      Trade
+      Exports
     </span>
   </span>
 </Link>
