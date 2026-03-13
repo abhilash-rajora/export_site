@@ -155,16 +155,16 @@ export default function AdminEnquiriesPage() {
                                 <Trash2 className="w-3.5 h-3.5 mr-1.5" />Delete
                               </Button>
                             </AlertDialogTrigger>
-                            <AlertDialogContent>
-                              <AlertDialogHeader>
-                                <AlertDialogTitle>Delete Enquiry</AlertDialogTitle>
-                                <AlertDialogDescription>Delete the enquiry from {enquiry.name}? This cannot be undone.</AlertDialogDescription>
-                              </AlertDialogHeader>
-                              <AlertDialogFooter>
-                                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                <AlertDialogAction className="bg-destructive text-destructive-foreground hover:bg-destructive/90" onClick={() => handleDelete(enquiry)}>Delete</AlertDialogAction>
-                              </AlertDialogFooter>
-                            </AlertDialogContent>
+                            <AlertDialogContent className="bg-white border border-gray-200 shadow-xl">
+                            <AlertDialogHeader>
+                              <AlertDialogTitle className="text-gray-900">Delete Enquiry</AlertDialogTitle>
+                              <AlertDialogDescription className="text-gray-600">Delete the enquiry from {enquiry.name}? This cannot be undone.</AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                              <AlertDialogCancel className="border-gray-200 text-gray-700 hover:bg-gray-100">Cancel</AlertDialogCancel>
+                              <AlertDialogAction className="bg-red-600 text-white hover:bg-red-700 border-0" onClick={() => handleDelete(enquiry)}>Delete</AlertDialogAction>
+                            </AlertDialogFooter>
+                          </AlertDialogContent>
                           </AlertDialog>
                         </div>
                       </div>
