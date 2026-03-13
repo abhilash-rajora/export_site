@@ -39,6 +39,7 @@ const loginAdmin = async (req, res) => {
       token,
       email: admin.email,
       role: admin.role,
+      name: admin.name
     });
 
   } catch (error) {
@@ -51,29 +52,31 @@ const loginAdmin = async (req, res) => {
 // @route   POST /api/admin/create
 // @access  Superadmin only
 const createAdmin = async (req, res) => {
-  const { name, email, password, role } = req.body;
-
   try {
+
+    const data = typeof req.body.body === "string"
+      ? JSON.parse(req.body.body)
+      : req.body;
+
+    const { name, email, password, role } = data;
+
     const existing = await Admin.findOne({ email });
+
     if (existing) {
       return res.status(400).json({ message: "Admin already exists" });
     }
 
-    const newAdmin = await Admin.create({
+    const admin = await Admin.create({
       name,
       email,
       password,
-      role: role || "editor",
+      role
     });
 
-    res.status(201).json({
-      message: "Admin created successfully",
-      id: newAdmin._id,
-      email: newAdmin.email,
-      role: newAdmin.role,
-    });
+    res.status(201).json({ message: "Admin created successfully" });
 
   } catch (error) {
+    console.error(error);
     res.status(500).json({ message: error.message });
   }
 };

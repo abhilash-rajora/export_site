@@ -15,6 +15,10 @@ import AdminProductFormPage from './pages/admin/AdminProductFormPage';
 import AdminProductsPage from './pages/admin/AdminProductsPage';
 import FloatingButtons from './components/FloatingButtons';
 import AdminSeoPage from './pages/admin/AdminSeoPage';
+import CreateAdminPage from './pages/admin/CreateAdminPage';
+
+
+
 
 const rootRoute = createRootRoute({
   component: () => (
@@ -57,12 +61,16 @@ const adminProductsRoute = createRoute({ getParentRoute: () => adminLayoutRoute,
 const adminProductNewRoute = createRoute({ getParentRoute: () => adminLayoutRoute, path: '/admin/products/new', component: AdminProductFormPage });
 const adminProductEditRoute = createRoute({ getParentRoute: () => adminLayoutRoute, path: '/admin/products/$id/edit', component: AdminProductFormPage });
 const adminEnquiriesRoute = createRoute({ getParentRoute: () => adminLayoutRoute, path: '/admin/enquiries', component: AdminEnquiriesPage });
+const adminCreateAdminRoute = createRoute({getParentRoute: () => adminLayoutRoute, path: '/admin/create-admin',component: CreateAdminPage,});
+
 
 const routeTree = rootRoute.addChildren([
   publicLayoutRoute.addChildren([homeRoute, productsRoute, productDetailRoute, enquiryRoute, aboutRoute]),
   adminLoginRoute,
-  adminLayoutRoute.addChildren([adminDashboardRoute, adminProductsRoute, adminProductNewRoute, adminProductEditRoute, adminEnquiriesRoute, adminSeoRoute]),
+  adminLayoutRoute.addChildren([adminDashboardRoute, adminProductsRoute, adminProductNewRoute, adminProductEditRoute, adminEnquiriesRoute, adminSeoRoute, adminCreateAdminRoute]),
 ]);
+
+
 
 const router = createRouter({ routeTree });
 

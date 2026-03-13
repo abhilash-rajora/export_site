@@ -13,13 +13,19 @@ import { Label } from "@/components/ui/label";
 import { useAuth } from "../../hooks/useAuth";
 
 export default function AdminDashboardPage() {
+  
   const { data: stats, isLoading } = useDashboardStats();
-  const { role } = useAuth();
+  const { role, name } = useAuth();
+  console.log("Admin role:", role);
+  
+  const roleLabel =
+    role === "superadmin" ? "Super Admin" : "Basic Admin";
 
   const [qrCode, setQrCode] = useState<string | null>(null);
 const [manualKey, setManualKey] = useState<string | null>(null);
 const [otp, setOtp] = useState("");
 const [is2FAEnabled, setIs2FAEnabled] = useState(false);
+const adminName = localStorage.getItem("adminName");
 
 // Fetch current 2FA status
 useEffect(() => {
@@ -79,12 +85,29 @@ const disable2FA = async () => {
 
   return (
     <div >
-      <div className="mb-8" >
-        
-        <h1 className="font-display text-3xl font-extrabold text-sidebar-foreground tracking-tight">Dashboard</h1>
-        <p className="text-sidebar-foreground/50 mt-1">Overview of your export business</p>
+      <div className="mb-8 flex items-center justify-between">
 
-      </div>
+  <div>
+    <h1 className="font-display text-3xl font-extrabold text-sidebar-foreground tracking-tight">
+      Dashboard
+    </h1>
+
+    <p className="text-sidebar-foreground/50 mt-1">
+      Overview of your export business
+    </p>
+  </div>
+
+  <div className="text-right">
+    <p className="text-sm  font-semibold text-sidebar-foreground">
+      {name}
+    </p>
+
+    <p className="text-sm text-gold-400">
+      {roleLabel}
+    </p>
+  </div>
+
+</div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8 ">
         {statCards.map((card, i) => (
@@ -161,6 +184,17 @@ const disable2FA = async () => {
               { to: '/admin/products/new', icon: Package, bg: 'bg-blue-500/10', ic: 'text-blue-400', title: 'Add New Product', sub: 'Create a new product listing' },
               { to: '/admin/enquiries', icon: Eye, bg: 'bg-teal-500/10', ic: 'text-teal-400', title: 'Review Enquiries', sub: stats && stats.newEnquiries ? `${stats.newEnquiries} new enquiries awaiting review` : 'View all customer enquiries' },
               { to: '/admin/products', icon: TrendingUp, bg: 'bg-purple-500/10', ic: 'text-purple-400', title: 'Manage Products', sub: 'Edit, activate, or remove products' },
+              ...(role === "superadmin"
+                ? [{
+                    to: '/admin/create-admin',
+                    icon: Package,
+                    bg: 'bg-gold-500/10',
+                    ic: 'text-gold-400',
+                    title: 'Create Admin',
+                    sub: 'Add a new administrator'
+                  }]
+                : [])
+
             ].map((item) => (
               <Link key={item.to} to={item.to} className="block">
                 <div className="flex items-center gap-4 p-4 rounded-lg border border-sidebar-border hover:border-gold-500/40 hover:bg-white/5 transition-all group cursor-pointer">

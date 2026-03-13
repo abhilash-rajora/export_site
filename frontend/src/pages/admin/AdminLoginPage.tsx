@@ -7,6 +7,7 @@ import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { toast } from 'sonner';
 import { useAuth } from '../../hooks/useAuth';
+import { Link } from '@tanstack/react-router';
 
 export default function AdminLoginPage() {
   const navigate = useNavigate();
@@ -132,6 +133,19 @@ const [require2FA, setRequire2FA] = useState(false);
   require2FA ? 'Verify OTP' : 'Sign In'
 )}
             </Button>
+
+          <div className="flex justify-between items-center mt-4 text-sm">
+
+  <Link
+    to="/admin/forgot-password"
+    className="text-white/60 hover:text-white transition"
+  >
+    Forgot Password?
+  </Link>
+
+</div>
+
+
           </form>
         </div>
 
