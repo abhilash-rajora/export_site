@@ -71,14 +71,14 @@ export default function HomePage() {
           <>
   {/* Desktop Image */}
   <img
-    src="/hero-desktop.png"
+    src="/hero_desktop.png"
     alt="Global shipping port"
     className="hidden md:block w-full h-full object-cover"
   />
 
   {/* Mobile Image */}
   <img
-    src="/hero-mobile.png"
+    src="/hero_mobile.jpg"
     alt="Global shipping port"
     className="block md:hidden w-full h-full object-cover"
   />
