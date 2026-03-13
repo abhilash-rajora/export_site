@@ -93,7 +93,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
             className="absolute inset-0 bg-black/60"
             onClick={() => setSidebarOpen(false)}
           />
-          <aside className="absolute left-0 top-0 bottom-0 w-64 flex flex-col border-r border-sidebar-border admin-gradient z-10">
+          <aside className="absolute left-0 top-0 bottom-0 w-64 flex flex-col bg-white/95 backdrop-blur-md border-r border-gray-200 shadow-2xl z-10">
             <div className="p-6 border-b border-sidebar-border">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-md bg-gold-500 flex items-center justify-center">
