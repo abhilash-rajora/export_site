@@ -29,12 +29,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const stored = localStorage.getItem('adminToken');
     if (stored) {
       setToken(stored);
-
       api.get('/admin/verify')
         .then((res) => {
-  setIsAdmin(true);
-  setRole(res.data.role);   // 👈 VERY IMPORTANT
-})
+          setIsAdmin(true);
+          setRole(res.data.role);
+        })
         .catch(() => {
           localStorage.removeItem('adminToken');
           setToken(null);
@@ -47,27 +46,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const login = async (email: string, password: string): Promise<LoginResponse> => {
     const { data } = await api.post('/admin/login', { email, password });
-
     if (data.require2FA) {
-      return {
-        require2FA: true,
-        adminId: data.adminId,
-      };
+      return { require2FA: true, adminId: data.adminId };
     }
-
     localStorage.setItem('adminToken', data.token);
     setToken(data.token);
     setIsAdmin(true);
-
     return { success: true };
   };
 
   const verifyOTP = async (adminId: string, otp: string) => {
-    const { data } = await api.post('/admin/2fa/login', {
-      adminId,
-      token: otp,
-    });
-
+    const { data } = await api.post('/admin/2fa/login', { adminId, token: otp });
     localStorage.setItem('adminToken', data.token);
     setToken(data.token);
     setIsAdmin(true);
@@ -86,6 +75,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   );
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useAuth() {
   const context = useContext(AuthContext);
   if (!context) throw new Error('useAuth must be used within AuthProvider');
