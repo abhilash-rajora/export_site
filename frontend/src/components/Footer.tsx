@@ -26,11 +26,11 @@ export default function Footer() {
             </p>
             <div className="mt-6 space-y-2">
               <a
-                href="mailto:exports@globaltrade.com"
+                href="mailto:exports@globalexports.com"
                 className="flex items-center gap-2 text-sm text-white/60 hover:text-gold-400 transition-colors"
               >
                 <Mail className="w-4 h-4" />
-                exports@globaltrade.com
+                exports@globalexports.com
               </a>
               <a
                 href="tel:+1234567890"
@@ -122,7 +122,7 @@ export default function Footer() {
 
   {/* Copyright */}
   <p className="text-sm text-white/40 text-center ">
-    © {year} GlobalTrade Exports. All rights reserved.
+    © {year} Global Exports. All rights reserved.
   </p>
 
 </div>
