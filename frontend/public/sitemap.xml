@@ -12,8 +12,25 @@
   <lastmod>2026-03-13T18:16:51+00:00</lastmod>
 </url>
 
-<url>
+    <url>
       <loc>https://export-site-zeta.vercel.app/products</loc>
+   </url>
+   <url>
+      <loc>https://export-site-zeta.vercel.app/products?category=Agriculture</loc>
+   </url>
+   <url>
+      <loc>https://export-site-zeta.vercel.app/products?category=Textiles</loc>
+   </url>
+   <url>
+      <loc>https://export-site-zeta.vercel.app/products?category=Minerals</loc>
+      <url>
+      <loc>https://export-site-zeta.vercel.app/products?category=Electronics</loc>
+   </url>
+   <url>
+      <loc>https://export-site-zeta.vercel.app/products?category=Food+%26+Beverages</loc>
+   </url>
+   <url>
+      <loc>https://export-site-zeta.vercel.app/products?category=Handicrafts</loc>
    </url>
    <url>
       <loc>https://export-site-zeta.vercel.app/about</loc>
@@ -21,5 +38,5 @@
    <url>
       <loc>https://export-site-zeta.vercel.app/enquiry</loc>
    </url>
-   
+
 </urlset>
