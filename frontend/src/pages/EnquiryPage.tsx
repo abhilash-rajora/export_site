@@ -21,7 +21,7 @@ export default function EnquiryPage() {
         </div>
       </div>
 
-      <div id="enquiry-solid-trigger" className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 max-w-5xl">
+      <div id="enquiry-solid-trigger" className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16 max-w-6xl">
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
           <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="lg:col-span-2 space-y-6">
             <div>
