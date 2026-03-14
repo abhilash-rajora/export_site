@@ -39,7 +39,7 @@ export default function ProductsPage() {
   });
 
   return (
-    <div className="min-h-screen bg-slate-200">
+    <div className="min-h-screen bg-white">
       <div className="bg-navy-900 text-white py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>

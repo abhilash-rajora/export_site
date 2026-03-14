@@ -11,6 +11,9 @@ const productSchema = new mongoose.Schema(
     description: { type: String, required: [true, 'Description is required'] },
     imageUrl: { type: String, default: '' },
     images: { type: [String], default: [] },
+    specifications: [{
+    property: { type: String, trim: true },
+    value: { type: String, trim: true },},],
     originCountry: { type: String, required: [true, 'Origin country is required'], trim: true },
     minOrderQty: { type: Number, required: true, min: 1, default: 1 },
     priceRange: { type: String, required: [true, 'Price range is required'], trim: true },
