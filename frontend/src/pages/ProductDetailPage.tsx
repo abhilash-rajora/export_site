@@ -169,7 +169,7 @@ export default function ProductDetailPage() {
           {/* Left — Images + Details */}
           <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
             {/* Main image */}
-            // REPLACE with:
+            
 <div
   className="relative h-80 sm:h-96 bg-muted rounded-2xl overflow-hidden mb-3 shadow-lg cursor-zoom-in group"
   onClick={() => allImages.length > 0 && openZoom(activeImg)}
