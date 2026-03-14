@@ -37,7 +37,7 @@ export default function Footer() {
                 className="flex items-center gap-2 text-sm text-white/60 hover:text-gold-400 transition-colors"
               >
                 <Phone className="w-4 h-4" />
-                +1 (234) 567-890
+                +91 (9466) 3635-22
               </a>
               <span className="flex items-center gap-2 text-sm text-white/60">
                 <Globe className="w-4 h-4" />
@@ -111,7 +111,7 @@ export default function Footer() {
     </a>
 
     <a
-      href="https://wa.me/919876543210"
+      href="https://wa.me/919466363522"
       target="_blank"
       rel="noopener noreferrer"
       className="text-white/60 hover:text-gold-400 transition-all duration-300 hover:scale-110"
