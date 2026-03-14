@@ -42,7 +42,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
               <Package className="w-4 h-4 text-navy-900" />
             </div>
             <div>
-              <p className="font-display font-bold text-sidebar-foreground text-sm leading-tight">GlobalTrade</p>
+              <p className="font-display font-bold text-sidebar-foreground text-sm leading-tight">WeExports</p>
               <p className="text-xs text-sidebar-foreground/50">Admin Panel</p>
             </div>
           </div>
@@ -100,7 +100,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
                   <Package className="w-4 h-4 text-navy-900" />
                 </div>
                 <div>
-                  <p className="font-display font-bold text-sidebar-foreground text-sm leading-tight">GlobalTrade</p>
+                  <p className="font-display font-bold text-sidebar-foreground text-sm leading-tight">WeExports</p>
                   <p className="text-xs text-sidebar-foreground/50">Admin Panel</p>
                 </div>
               </div>

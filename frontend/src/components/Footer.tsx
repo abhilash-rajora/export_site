@@ -13,7 +13,7 @@ export default function Footer() {
             <Link to="/" className="flex items-center group ">
   <span className="font-display text-2xl md:text-xl font-extrabold tracking-tight">
     <span className="text-white transition-colors duration-300 group-hover:text-gold-400">
-      Global
+      We
     </span>
     <span className="text-gold-400 transition-colors duration-300 group-hover:text-white">
       Exports
@@ -21,16 +21,16 @@ export default function Footer() {
   </span>
 </Link>
             <p className="text-white/60 text-sm leading-relaxed max-w-xs">
-              Your trusted global export partner connecting quality products from across the world to
+              Your trusted we.export partner connecting quality products from across the world to
               international markets.
             </p>
             <div className="mt-6 space-y-2">
               <a
-                href="mailto:exports@globalexports.com"
+                href="mailto:wexports@gmail.com"
                 className="flex items-center gap-2 text-sm text-white/60 hover:text-gold-400 transition-colors"
               >
                 <Mail className="w-4 h-4" />
-                exports@globalexports.com
+                wexports@gmail.com
               </a>
               <a
                 href="tel:+1234567890"
@@ -122,7 +122,7 @@ export default function Footer() {
 
   {/* Copyright */}
   <p className="text-sm text-white/40 text-center ">
-    © {year} Global Exports. All rights reserved.
+    © {year} We Exports. All rights reserved.
   </p>
 
 </div>

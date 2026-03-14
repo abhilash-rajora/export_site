@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import EnquiryForm from '../components/EnquiryForm';
 
 const contactInfo = [
-  { icon: Mail, label: 'Email Us', value: 'exports@globaltrade.com', href: 'mailto:exports@globaltrade.com' },
+  { icon: Mail, label: 'Email Us', value: 'wexports@gmail.com', href: 'mailto:wexports@gmail.com' },
   { icon: Phone, label: 'Call Us', value: '+1 (234) 567-890', href: 'tel:+1234567890' },
   { icon: Globe, label: 'Coverage', value: '50+ Countries Worldwide' },
   { icon: Clock, label: 'Response Time', value: 'Within 24 hours' },

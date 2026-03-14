@@ -71,7 +71,7 @@ export default function PublicNavbar() {
 
           <Link to="/" className="flex items-center group">
             <span className="font-display text-2xl md:text-3xl font-extrabold tracking-tight">
-              <span className="text-white transition-colors duration-300 group-hover:text-gold-400">Global</span>
+              <span className="text-white transition-colors duration-300 group-hover:text-gold-400">We</span>
               <span className="text-gold-400 transition-colors duration-300 group-hover:text-white">Exports</span>
             </span>
           </Link>

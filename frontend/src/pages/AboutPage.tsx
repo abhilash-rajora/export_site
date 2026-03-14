@@ -4,7 +4,7 @@ import { ArrowRight, Award, CheckCircle2, Globe, TrendingUp, Users } from 'lucid
 import { motion } from "framer-motion";
 
 const milestones = [
-  { year: '2008', title: 'Founded', desc: 'GlobalTrade was established with a mission to connect quality products with international buyers.' },
+  { year: '2008', title: 'Founded', desc: 'WeExports was established with a mission to connect quality products with international buyers.' },
   { year: '2012', title: 'ISO Certified', desc: 'Received ISO 9001 certification for quality management in export operations.' },
   { year: '2016', title: '25 Countries', desc: 'Expanded our network to serve buyers in 25 countries across Asia, Europe, and the Americas.' },
   { year: '2020', title: 'Digital Transformation', desc: 'Launched our digital platform to streamline enquiries, orders, and tracking.' },
@@ -29,7 +29,7 @@ export default function AboutPage() {
               Building Bridges<br /><span className="text-gold-400">Across Borders</span>
             </h1>
             <p className="text-white/65 text-xl leading-relaxed max-w-2xl">
-              For over 15 years, GlobalTrade has been the trusted export partner for businesses worldwide.
+              For over 15 years, WeExports has been the trusted export partner for businesses worldwide.
             </p>
           </motion.div>
         </div>

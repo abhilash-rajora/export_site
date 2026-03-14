@@ -86,7 +86,7 @@ const validatePasswords = () => {
           </div>
 
           <h1 className="font-display text-3xl font-extrabold text-white tracking-tight">
-            GlobalTrade
+            WeExports
           </h1>
 
           <p className="text-white/50 mt-1 text-sm">

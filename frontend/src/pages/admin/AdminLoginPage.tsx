@@ -66,7 +66,7 @@ const [require2FA, setRequire2FA] = useState(false);
           <div className="w-16 h-16 rounded-2xl bg-gold-500 flex items-center justify-center mx-auto mb-4 shadow-gold">
             <Package className="w-8 h-8 text-navy-900" />
           </div>
-          <h1 className="font-display text-3xl font-extrabold text-white tracking-tight">GlobalTrade</h1>
+          <h1 className="font-display text-3xl font-extrabold text-white tracking-tight">WeExports</h1>
           <p className="text-white/50 mt-1 text-sm">Admin Portal</p>
         </div>
 

@@ -48,7 +48,7 @@ export default function HomePage() {
     <>
       <Helmet>
         <title>
-          {seo?.title || "GlobalTrade Exports | Trusted Global Export Partner"}
+          {seo?.title || "WeExports | Trusted Global Export Partner"}
         </title>
         <meta
           name="description"
@@ -61,7 +61,7 @@ export default function HomePage() {
           name="keywords"
           content={
             seo?.keywords ||
-            "export company, global trade, agriculture export, textile exporter"
+            "export company, we exports, agriculture export, textile exporter"
           }
         />
       </Helmet>
@@ -183,7 +183,7 @@ export default function HomePage() {
       <section id="why-choose-section" className="py-20 bg-navy-900 text-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-14">
-            <h2 className="font-display text-4xl font-extrabold text-white tracking-tight">Why Choose GlobalTrade?</h2>
+            <h2 className="font-display text-4xl font-extrabold text-white tracking-tight">Why Choose WeExports?</h2>
           </motion.div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
