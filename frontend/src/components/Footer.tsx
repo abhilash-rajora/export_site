@@ -33,7 +33,7 @@ export default function Footer() {
                 wexports@gmail.com
               </a>
               <a
-                href="tel:+1234567890"
+                href="tel:+919466363522"
                 className="flex items-center gap-2 text-sm text-white/60 hover:text-gold-400 transition-colors"
               >
                 <Phone className="w-4 h-4" />
