@@ -16,6 +16,7 @@ import AdminProductsPage from './pages/admin/AdminProductsPage';
 import FloatingButtons from './components/FloatingButtons';
 import AdminSeoPage from './pages/admin/AdminSeoPage';
 import CreateAdminPage from './pages/admin/CreateAdminPage';
+import ScrollToTop from './components/ScrollToTop';
 
 
 
@@ -23,6 +24,7 @@ import CreateAdminPage from './pages/admin/CreateAdminPage';
 const rootRoute = createRootRoute({
   component: () => (
     <>
+      <ScrollToTop />
       <Outlet />
       <Toaster position="top-right" richColors  />
     </>
@@ -72,7 +74,9 @@ const routeTree = rootRoute.addChildren([
 
 
 
-const router = createRouter({ routeTree });
+const router = createRouter({ routeTree 
+  
+});
 
 declare module '@tanstack/react-router' {
   interface Register { router: typeof router; }
