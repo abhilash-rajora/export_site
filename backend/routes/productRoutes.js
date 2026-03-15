@@ -12,14 +12,26 @@ const {
   toggleProductActive,
 } = require('../controllers/productController');
 
+const { upload } = require('../config/cloudinary');
+
+// Image upload route
+router.post('/upload-image', protect, (req, res) => {
+  upload.single('image')(req, res, (err) => {
+    if (err) {
+      console.error('Multer/Cloudinary error:', err.message || err);
+      return res.status(500).json({ message: err.message || String(err) });
+    }
+    if (!req.file) return res.status(400).json({ message: 'No file uploaded' });
+    res.json({ url: req.file.path });
+  });
+});
+
 router.get('/all', protect, getAllProducts);
 
-// Public routes
 router.get('/', getActiveProducts);
 router.get('/category/:category', getProductsByCategory);
 router.get('/:id', getProductById);
 
-// Admin routes
 router.post('/', protect, createProduct);
 router.put('/:id', protect, updateProduct);
 router.delete('/:id', protect, deleteProduct);

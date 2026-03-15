@@ -5,11 +5,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Skeleton } from '@/components/ui/skeleton';
 import { Textarea } from '@/components/ui/textarea';
 import { Link, useNavigate, useParams } from '@tanstack/react-router';
-import { ChevronLeft, Loader2, Plus, Save, Trash2 } from 'lucide-react';
+import { ChevronLeft, ImagePlus, Loader2, Plus, Save, Trash2, X } from 'lucide-react';
 import { motion } from "framer-motion";
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
 import { useCreateProduct, useProductById, useUpdateProduct } from '../../hooks/useQueries';
+import api from '../../api/axios';
 
 const CATEGORIES = ['Agriculture', 'Textiles', 'Minerals', 'Electronics', 'Food & Beverages', 'Handicrafts', 'Chemicals', 'Metals', 'Plastics', 'Machinery', 'Automotive Parts', 'Pharmaceuticals', 'Furniture', 'Construction Materials', 'Energy Products', 'Consumer Goods', 'Other'];
 
@@ -18,7 +19,7 @@ const defaultForm = {
   category: '',
   description: '',
   imageUrl: '',
-  images: [''],
+  images: [] as string[],
   specifications: [{ property: '', value: '' }],
   originCountry: '',
   minOrderQty: '',
@@ -30,7 +31,12 @@ export default function AdminProductFormPage() {
   const id = params.id;
   const isEdit = !!id;
   const navigate = useNavigate();
+
   const [form, setForm] = useState(defaultForm);
+  const [uploadingIndex, setUploadingIndex] = useState<number | null>(null);
+  const [urlMode, setUrlMode] = useState(false);
+  const [pendingUrl, setPendingUrl] = useState('');
+  const fileInputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   const { data: product, isLoading: isLoadingProduct } = useProductById(id ?? '');
   const createProduct = useCreateProduct();
@@ -43,7 +49,7 @@ export default function AdminProductFormPage() {
         category: product.category,
         description: product.description,
         imageUrl: product.imageUrl,
-        images: product.images?.length ? product.images : [''],
+        images: product.images?.length ? product.images : [],
         specifications: product.specifications?.length ? product.specifications : [{ property: '', value: '' }],
         originCountry: product.originCountry,
         minOrderQty: String(product.minOrderQty),
@@ -56,21 +62,58 @@ export default function AdminProductFormPage() {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleImageChange = (index: number, value: string) => {
-    const updated = [...form.images];
-    updated[index] = value;
-    setForm((prev) => ({ ...prev, images: updated }));
-  };
-
-  const addImageField = () => {
-    if (form.images.length < 5) {
-      setForm((prev) => ({ ...prev, images: [...prev.images, ''] }));
+  const handleFileUpload = async (file: File, index: number) => {
+    if (!file) return;
+    if (!['image/jpeg', 'image/jpg', 'image/png', 'image/webp'].includes(file.type)) {
+      toast.error('Only JPG, PNG, or WebP images allowed.');
+      return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error('Image must be under 5MB.');
+      return;
+    }
+    setUploadingIndex(index);
+    try {
+      const formData = new FormData();
+      formData.append('image', file);
+      const res = await api.post('/products/upload-image', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+      const uploadedUrl = res.data.url;
+      setForm((prev) => {
+        const updated = [...prev.images];
+        if (index < updated.length) {
+          updated[index] = uploadedUrl;
+        } else {
+          updated.push(uploadedUrl);
+        }
+        return { ...prev, images: updated };
+      });
+      toast.success('Image uploaded successfully.');
+    } catch {
+      toast.error('Failed to upload image. Try again.');
+    } finally {
+      setUploadingIndex(null);
     }
   };
 
-  const removeImageField = (index: number) => {
-    const updated = form.images.filter((_, i) => i !== index);
-    setForm((prev) => ({ ...prev, images: updated.length ? updated : [''] }));
+  const handleFilePick = (index: number) => {
+    fileInputRefs.current[index]?.click();
+  };
+
+  const removeImage = (index: number) => {
+    setForm((prev) => ({
+      ...prev,
+      images: prev.images.filter((_, i) => i !== index),
+    }));
+  };
+
+  const handleAddUrl = () => {
+    const trimmed = pendingUrl.trim();
+    if (!trimmed) return;
+    setForm((prev) => ({ ...prev, images: [...prev.images, trimmed] }));
+    setPendingUrl('');
+    setUrlMode(false);
   };
 
   const handleSpecChange = (index: number, field: 'property' | 'value', value: string) => {
@@ -94,14 +137,13 @@ export default function AdminProductFormPage() {
       toast.error('Please fill in all required fields.');
       return;
     }
-    const cleanImages = form.images.filter(url => url.trim() !== '');
     const cleanSpecs = form.specifications.filter(s => s.property.trim() !== '' && s.value.trim() !== '');
     const data = {
       name: form.name,
       category: form.category,
       description: form.description,
-      imageUrl: cleanImages[0] || form.imageUrl || '',
-      images: cleanImages,
+      imageUrl: form.images[0] || '',
+      images: form.images,
       specifications: cleanSpecs,
       originCountry: form.originCountry,
       minOrderQty: Number(form.minOrderQty),
@@ -176,9 +218,7 @@ export default function AdminProductFormPage() {
 
           {/* Description */}
           <div className="space-y-1.5">
-            <Label className="text-sidebar-foreground text-sm font-medium">
-              Description <span className="text-destructive">*</span>
-            </Label>
+            <Label className="text-sidebar-foreground text-sm font-medium">Description <span className="text-destructive">*</span></Label>
             <p className="text-sidebar-foreground/40 text-xs">Each line will be shown as a bullet point. Press Enter for a new point.</p>
             <Textarea
               name="description"
@@ -189,7 +229,6 @@ export default function AdminProductFormPage() {
               required
               className="bg-white/5 border-sidebar-border text-sidebar-foreground placeholder:text-sidebar-foreground/30 font-mono text-sm"
             />
-            {/* Preview */}
             {form.description && (
               <div className="bg-white/5 rounded-lg p-3 border border-sidebar-border/50">
                 <p className="text-sidebar-foreground/40 text-xs mb-2 uppercase tracking-widest">Preview</p>
@@ -205,7 +244,7 @@ export default function AdminProductFormPage() {
             )}
           </div>
 
-          {/* Specifications Table */}
+          {/* Specifications */}
           <div className="space-y-3">
             <div className="flex items-center justify-between">
               <div>
@@ -225,27 +264,13 @@ export default function AdminProductFormPage() {
               {form.specifications.map((spec, index) => (
                 <div key={index} className="grid grid-cols-[1fr_1fr_auto] border-b border-sidebar-border/50 last:border-b-0">
                   <div className="p-1.5 border-r border-sidebar-border/50">
-                    <Input
-                      placeholder="e.g. Color"
-                      value={spec.property}
-                      onChange={(e) => handleSpecChange(index, 'property', e.target.value)}
-                      className="bg-transparent border-0 text-sidebar-foreground placeholder:text-sidebar-foreground/20 h-8 text-sm focus-visible:ring-0 px-2"
-                    />
+                    <Input placeholder="e.g. Color" value={spec.property} onChange={(e) => handleSpecChange(index, 'property', e.target.value)} className="bg-transparent border-0 text-sidebar-foreground placeholder:text-sidebar-foreground/20 h-8 text-sm focus-visible:ring-0 px-2" />
                   </div>
                   <div className="p-1.5 border-r border-sidebar-border/50">
-                    <Input
-                      placeholder="e.g. Red"
-                      value={spec.value}
-                      onChange={(e) => handleSpecChange(index, 'value', e.target.value)}
-                      className="bg-transparent border-0 text-sidebar-foreground placeholder:text-sidebar-foreground/20 h-8 text-sm focus-visible:ring-0 px-2"
-                    />
+                    <Input placeholder="e.g. Red" value={spec.value} onChange={(e) => handleSpecChange(index, 'value', e.target.value)} className="bg-transparent border-0 text-sidebar-foreground placeholder:text-sidebar-foreground/20 h-8 text-sm focus-visible:ring-0 px-2" />
                   </div>
                   <div className="flex items-center justify-center w-10">
-                    <button
-                      type="button"
-                      onClick={() => removeSpecRow(index)}
-                      className="text-sidebar-foreground/30 hover:text-destructive transition-colors p-1"
-                    >
+                    <button type="button" onClick={() => removeSpecRow(index)} className="text-sidebar-foreground/30 hover:text-destructive transition-colors p-1">
                       <Trash2 className="w-3.5 h-3.5" />
                     </button>
                   </div>
@@ -254,40 +279,112 @@ export default function AdminProductFormPage() {
             </div>
           </div>
 
-          {/* Images */}
+          {/* ── Images ── */}
           <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <Label className="text-sidebar-foreground text-sm font-medium">Product Images <span className="text-sidebar-foreground/40 font-normal">(up to 5)</span></Label>
-              {form.images.length < 5 && (
-                <Button type="button" size="sm" variant="ghost" onClick={addImageField} className="text-gold-400 hover:text-gold-300 hover:bg-white/5 text-xs h-7">
-                  <Plus className="w-3 h-3 mr-1" /> Add Image
-                </Button>
-              )}
+            <div>
+              <Label className="text-sidebar-foreground text-sm font-medium">
+                Product Images <span className="text-sidebar-foreground/40 font-normal">(up to 5)</span>
+              </Label>
+              <p className="text-sidebar-foreground/40 text-xs mt-0.5">Upload a file or paste an image URL</p>
             </div>
-            <div className="space-y-3">
+
+            <div className="grid grid-cols-3 gap-3">
+              {/* Existing images */}
               {form.images.map((url, index) => (
-                <div key={index} className="space-y-2">
-                  <div className="flex gap-2">
-                    <Input
-                      placeholder={`Image URL ${index + 1}`}
-                      value={url}
-                      onChange={(e) => handleImageChange(index, e.target.value)}
-                      className="bg-white/5 border-sidebar-border text-sidebar-foreground placeholder:text-sidebar-foreground/30"
-                    />
-                    {form.images.length > 1 && (
-                      <Button type="button" size="sm" variant="ghost" onClick={() => removeImageField(index)} className="text-destructive hover:text-destructive hover:bg-destructive/10 flex-shrink-0 h-9 w-9 p-0">
-                        <Trash2 className="w-4 h-4" />
-                      </Button>
-                    )}
-                  </div>
-                  {url && (
-                    <div className="h-24 rounded-lg overflow-hidden bg-sidebar-accent">
-                      <img src={url} alt={`Preview ${index + 1}`} className="w-full h-full object-cover" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
+                <div key={index} className="relative group aspect-square rounded-xl overflow-hidden bg-white/5 border border-sidebar-border">
+                  <img src={url} alt={`Product ${index + 1}`} className="w-full h-full object-cover" />
+                  <button
+                    type="button"
+                    onClick={() => removeImage(index)}
+                    className="absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-black/60 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-500"
+                  >
+                    <X className="w-3 h-3" />
+                  </button>
+                  {index === 0 && (
+                    <div className="absolute bottom-1.5 left-1.5 bg-gold-500 text-navy-900 text-[10px] font-bold px-1.5 py-0.5 rounded-md">
+                      Cover
                     </div>
                   )}
                 </div>
               ))}
+
+              {/* Upload / URL slot */}
+              {form.images.length < 5 && (
+                <div className="aspect-square rounded-xl border-2 border-dashed border-sidebar-border flex flex-col overflow-hidden">
+                  {/* Tabs */}
+                  <div className="flex border-b border-sidebar-border flex-shrink-0">
+                    <button
+                      type="button"
+                      onClick={() => setUrlMode(false)}
+                      className={`flex-1 text-[10px] font-semibold py-1.5 transition-colors ${!urlMode ? 'bg-white/10 text-gold-400' : 'text-sidebar-foreground/30 hover:text-sidebar-foreground/60'}`}
+                    >
+                      Upload
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setUrlMode(true)}
+                      className={`flex-1 text-[10px] font-semibold py-1.5 transition-colors ${urlMode ? 'bg-white/10 text-gold-400' : 'text-sidebar-foreground/30 hover:text-sidebar-foreground/60'}`}
+                    >
+                      URL
+                    </button>
+                  </div>
+
+                  {!urlMode ? (
+                    /* Upload mode */
+                    <button
+                      type="button"
+                      onClick={() => handleFilePick(form.images.length)}
+                      disabled={uploadingIndex !== null}
+                      className="flex-1 flex flex-col items-center justify-center gap-1.5 text-sidebar-foreground/40 hover:text-gold-400 hover:bg-white/5 transition-all"
+                    >
+                      {uploadingIndex === form.images.length ? (
+                        <Loader2 className="w-5 h-5 animate-spin" />
+                      ) : (
+                        <>
+                          <ImagePlus className="w-5 h-5" />
+                          <span className="text-[10px] font-medium">Choose file</span>
+                        </>
+                      )}
+                    </button>
+                  ) : (
+                    /* URL mode */
+                    <div className="flex-1 flex flex-col items-center justify-center gap-2 p-2">
+                      <input
+                        type="url"
+                        placeholder="Paste image URL..."
+                        value={pendingUrl}
+                        onChange={(e) => setPendingUrl(e.target.value)}
+                        onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); handleAddUrl(); } }}
+                        className="w-full bg-transparent border border-sidebar-border rounded-md px-2 py-1 text-[10px] text-sidebar-foreground placeholder:text-sidebar-foreground/30 focus:outline-none focus:border-gold-400"
+                      />
+                      <button
+                        type="button"
+                        onClick={handleAddUrl}
+                        className="w-full bg-gold-500 hover:bg-gold-400 text-navy-900 text-[10px] font-bold py-1 rounded-md transition-colors"
+                      >
+                        Add
+                      </button>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
+
+            {/* Hidden file inputs */}
+            {Array.from({ length: 6 }).map((_, index) => (
+              <input
+                key={index}
+                type="file"
+                accept="image/jpeg,image/jpg,image/png,image/webp"
+                className="hidden"
+                ref={(el) => { fileInputRefs.current[index] = el; }}
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) handleFileUpload(file, index);
+                  e.target.value = '';
+                }}
+              />
+            ))}
           </div>
 
           {/* MOQ + Price */}
