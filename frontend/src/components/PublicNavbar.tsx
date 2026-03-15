@@ -62,10 +62,7 @@ export default function PublicNavbar() {
         {/* ── Desktop ── */}
         <div className="hidden md:block pointer-events-auto">
           {!scrolled ? (
-            /* AT TOP — logo pill left, plain links + enquiry right (original style) */
             <div className="relative flex items-center justify-between px-8 mt-5 max-w-7xl mx-auto">
-
-              {/* Logo — always in pill */}
               <Link
                 to="/"
                 className="flex items-center px-5 py-3.5 bg-white/10 border border-white/40 rounded-full shadow-lg backdrop-blur-sm transition-all duration-300 hover:bg-white/20"
@@ -77,7 +74,6 @@ export default function PublicNavbar() {
                 </span>
               </Link>
 
-              {/* Right side: plain nav links + enquiry (original) */}
               <div className="flex items-center gap-1">
                 {navLinks.map((link) => (
                   <Link
@@ -89,7 +85,6 @@ export default function PublicNavbar() {
                     )}
                   >
                     {link.label}
-                    {/* Underline — width matches text, not padding */}
                     <span className={cn(
                       'absolute bottom-0.5 left-4 right-4 h-[1.5px] bg-gold-400 rounded-full transition-all duration-300 origin-left',
                       isActive(link.href) ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100',
@@ -106,10 +101,7 @@ export default function PublicNavbar() {
               </div>
             </div>
           ) : (
-            /* SCROLLED — both pills with white border */
             <div className="flex items-center justify-between px-8 mt-4 max-w-7xl mx-auto">
-
-              {/* Logo pill */}
               <Link
                 to="/"
                 className="flex items-center px-5 py-3 bg-navy-900/80 backdrop-blur-md border border-white/40 rounded-full shadow-xl transition-all duration-300 hover:border-white/60"
@@ -121,7 +113,6 @@ export default function PublicNavbar() {
                 </span>
               </Link>
 
-              {/* Nav pill */}
               <div
                 className="flex items-center gap-1 px-4 py-3 bg-navy-900/80 backdrop-blur-md border border-white/40 rounded-full shadow-xl"
                 style={{ WebkitBackdropFilter: 'blur(12px)' }}
@@ -136,7 +127,6 @@ export default function PublicNavbar() {
                     )}
                   >
                     {link.label}
-                    {/* Underline — width matches text, not padding */}
                     <span className={cn(
                       'absolute bottom-1 left-5 right-5 h-[1.5px] bg-gold-400 rounded-full transition-all duration-300 origin-left',
                       isActive(link.href) ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100',
@@ -163,7 +153,7 @@ export default function PublicNavbar() {
         {/* ── Mobile top bar ── */}
         <div className="md:hidden flex items-center justify-between pointer-events-auto px-4 mt-4">
 
-          {/* Logo pill — always styled */}
+          {/* Logo pill */}
           <Link
             to="/"
             className="flex items-center px-4 py-2 bg-white/10 border border-white/40 rounded-full shadow-lg backdrop-blur-sm transition-all duration-500"
@@ -178,16 +168,17 @@ export default function PublicNavbar() {
           {/* Menu pill + popover */}
           <div className="relative pointer-events-auto">
 
-            {/* Pill button */}
+            {/* Pill button — always above backdrop */}
             <button
               type="button"
               onClick={() => setIsOpen((v) => !v)}
               className={cn(
-                'relative z-[80] flex items-center gap-2 px-4 py-2 rounded-full font-semibold text-sm transition-all duration-300',
+                'relative flex items-center gap-2 px-4 py-2 rounded-full font-semibold text-sm transition-all duration-300',
                 isOpen
                   ? 'bg-navy-900 border border-white/40 text-white shadow-xl'
                   : 'bg-white/10 border border-white/40 text-white shadow-lg backdrop-blur-sm',
               )}
+              style={{ zIndex: 120 }}
             >
               <span>{isOpen ? 'Close' : 'Menu'}</span>
               <span className="w-7 h-7 rounded-full bg-white/20 flex items-center justify-center overflow-hidden">
@@ -219,7 +210,23 @@ export default function PublicNavbar() {
               </span>
             </button>
 
-            {/* Popover */}
+            {/* Backdrop — INSIDE header, BELOW popover */}
+            <AnimatePresence>
+              {isOpen && (
+                <motion.div
+                  key="backdrop"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="fixed inset-0"
+                  style={{ zIndex: 90 }}
+                  onClick={() => setIsOpen(false)}
+                />
+              )}
+            </AnimatePresence>
+
+            {/* Popover — highest z, above backdrop */}
             <AnimatePresence>
               {isOpen && (
                 <motion.div
@@ -227,8 +234,8 @@ export default function PublicNavbar() {
                   animate={{ opacity: 1, scaleX: 1, scaleY: 1 }}
                   exit={{ opacity: 0, scaleX: 0.4, scaleY: 0.2 }}
                   transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
-                  style={{ transformOrigin: 'top right' }}
-                  className="absolute top-14 right-0 w-56 bg-navy-900 border border-white/30 rounded-2xl shadow-2xl z-[75]"
+                  style={{ transformOrigin: 'top right', zIndex: 110 }}
+                  className="absolute top-14 right-0 w-56 bg-navy-900 border border-white/30 rounded-2xl shadow-2xl pointer-events-auto"
                 >
                   <div className="p-2">
                     {navLinks.map((link, i) => (
@@ -276,21 +283,6 @@ export default function PublicNavbar() {
         </div>
 
       </motion.header>
-
-      {/* Invisible backdrop */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            key="backdrop"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="md:hidden fixed inset-0 z-[60]"
-            onClick={() => setIsOpen(false)}
-          />
-        )}
-      </AnimatePresence>
     </>
   );
 }
