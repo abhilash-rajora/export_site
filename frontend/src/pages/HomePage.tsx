@@ -53,7 +53,7 @@ export default function HomePage() {
       </Helmet>
 
       {/* ── MOBILE HERO ── navy bg + rounded card image + text on gradient ── */}
-      <section className="md:hidden bg-[#0D3D3D] px-[8px] pt-[8px] pb-[8px]">
+      <section className="md:hidden bg-[#0D3D3D] px-[20px] pt-[20px] pb-[20px]">
         <div
           className="relative rounded-2xl overflow-hidden"
           style={{ height: '96svh' }}
