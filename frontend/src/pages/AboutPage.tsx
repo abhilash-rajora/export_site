@@ -2,7 +2,6 @@ import { Button } from '@/components/ui/button';
 import { Link } from '@tanstack/react-router';
 import { ArrowRight, Award, CheckCircle2, Globe, TrendingUp, Users } from 'lucide-react';
 import { motion } from "framer-motion";
-import { useEffect } from 'react';
 
 const milestones = [
   { year: '2008', title: 'Founded', desc: 'WeExports was established with a mission to connect quality products with international buyers.' },
@@ -12,9 +11,6 @@ const milestones = [
   { year: '2024', title: '50+ Countries', desc: 'Today we serve over 50 countries with 200+ product lines across 6 major categories.' },
 ];
 
-useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-  }, []); 
 
 const values = [
   { icon: Award, title: 'Quality First', desc: 'Every product meets international quality standards before export.' },

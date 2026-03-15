@@ -1,7 +1,6 @@
 import { Clock, Globe, Mail, Phone } from 'lucide-react';
 import { motion } from "framer-motion";
 import EnquiryForm from '../components/EnquiryForm';
-import { useEffect } from 'react';
 
 const contactInfo = [
   { icon: Mail, label: 'Email Us', value: 'wexports@gmail.com', href: 'mailto:wexports@gmail.com' },
@@ -9,11 +8,6 @@ const contactInfo = [
   { icon: Globe, label: 'Coverage', value: '50+ Countries Worldwide' },
   { icon: Clock, label: 'Response Time', value: 'Within 24 hours' },
 ];
-
-useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-  }, []);  
-
 
 export default function EnquiryPage() {
   return (

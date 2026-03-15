@@ -18,10 +18,6 @@ export default function ProductDetailPage() {
   const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
 
   useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-  }, []); 
-
-  useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setZoomOpen(false);
     };
