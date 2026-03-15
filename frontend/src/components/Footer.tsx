@@ -33,11 +33,11 @@ export default function Footer() {
                 wexports@gmail.com
               </a>
               <a
-                href="tel:+919826827492"
+                href="tel:+919466363522"
                 className="flex items-center gap-2 text-sm text-white/60 hover:text-gold-400 transition-colors"
               >
                 <Phone className="w-4 h-4" />
-                +91 (982) 682-7492
+                +91 (946) 636-3522
               </a>
               <span className="flex items-center gap-2 text-sm text-white/60">
                 <Globe className="w-4 h-4" />
@@ -111,7 +111,7 @@ export default function Footer() {
     </a>
 
     <a
-      href="https://wa.me/919826827492"
+      href="https://wa.me/919466363522"
       target="_blank"
       rel="noopener noreferrer"
       className="text-white/60 hover:text-gold-400 transition-all duration-300 hover:scale-110"
