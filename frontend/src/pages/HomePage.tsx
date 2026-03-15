@@ -128,7 +128,7 @@ export default function HomePage() {
               <Globe className="w-3 h-3" />Global Export Excellence
             </div>
             <h1 className="font-display text-5xl lg:text-6xl font-extrabold text-white leading-[1.08] tracking-tight mb-6">
-              Your Trusted <span className="text-gold-400">Global Export</span> Partner
+              Your Trusted <span className="text-gold-400"><br></br>Global Export</span> Partner
             </h1>
             <p className="text-white/75 text-xl leading-relaxed mb-8 max-w-xl">
               Connecting quality products from across the world to international markets.
