@@ -228,7 +228,7 @@ export default function PublicNavbar() {
                   exit={{ opacity: 0, scaleX: 0.4, scaleY: 0.2 }}
                   transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
                   style={{ transformOrigin: 'top right' }}
-                  className="absolute top-14 right-0 w-56 bg-navy-900 border border-white/30 rounded-2xl shadow-2xl overflow-hidden z-[75]"
+                  className="absolute top-14 right-0 w-56 bg-navy-900 border border-white/30 rounded-2xl shadow-2xl z-[75]"
                 >
                   <div className="p-2">
                     {navLinks.map((link, i) => (
