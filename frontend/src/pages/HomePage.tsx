@@ -53,7 +53,7 @@ export default function HomePage() {
       </Helmet>
 
       {/* ── MOBILE HERO ── navy bg + rounded card image + text on gradient ── */}
-      <section className="md:hidden bg-[#0D3D3D] px-[20px] pt-[20px] pb-[20px]">
+      <section className="md:hidden bg-[#0D3D3D] px-[12px] pt-[12px] pb-[12px]">
         <div
           className="relative rounded-2xl overflow-hidden"
           style={{ height: '96svh' }}
@@ -133,7 +133,7 @@ export default function HomePage() {
                 </div>
                 <h1 className="font-display text-5xl lg:text-6xl font-extrabold text-white leading-[1.08] tracking-tight mb-6">
                   Your Trusted{' '}
-                  <span className="text-gold-400">Global Export</span>{' '}
+                  <span className="text-gold-400"><br></br>Global Export</span>{' '}
                   Partner
                 </h1>
                 <p className="text-white/75 text-xl leading-relaxed mb-8 max-w-xl">

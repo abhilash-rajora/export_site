@@ -62,7 +62,7 @@ export default function PublicNavbar() {
         {/* ── Desktop ── */}
         <div className="hidden md:block pointer-events-auto">
           {!scrolled ? (
-            <div className="relative flex items-center justify-between px-8 mt-5 max-w-7xl mx-auto">
+            <div className="relative flex items-center justify-between px-8 mt-10 max-w-7xl mx-auto">
               <Link
                 to="/"
                 className="flex items-center px-5 py-3.5 bg-white/10 border border-white/40 rounded-full shadow-lg backdrop-blur-sm transition-all duration-300 hover:bg-white/20"
@@ -80,7 +80,7 @@ export default function PublicNavbar() {
                     key={link.href}
                     to={link.href}
                     className={cn(
-                      'relative px-4 py-2 font-semibold transition-all duration-200 group',
+                      'relative px-4 py-2 transition-all duration-200 group',
                       isActive(link.href) ? 'text-gold-400' : 'text-white/90 hover:text-gold-400',
                     )}
                   >
@@ -122,7 +122,7 @@ export default function PublicNavbar() {
                     key={link.href}
                     to={link.href}
                     className={cn(
-                      'relative px-5 py-2 rounded-full text-base font-semibold transition-all duration-200 group',
+                      'relative px-5 py-2 rounded-full text-base  transition-all duration-200 group',
                       isActive(link.href) ? 'text-gold-400' : 'text-white/90 hover:text-gold-400',
                     )}
                   >
