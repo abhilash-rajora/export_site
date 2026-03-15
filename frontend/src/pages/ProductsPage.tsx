@@ -17,6 +17,10 @@ export default function ProductsPage() {
   const [activeCategory, setActiveCategory] = useState(searchParams.category || 'All');
 
   useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }, []);
+
+  useEffect(() => {
     setActiveCategory(searchParams.category || 'All');
   }, [searchParams.category]);
 
