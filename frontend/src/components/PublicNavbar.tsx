@@ -63,15 +63,18 @@ export default function PublicNavbar() {
         <div className="hidden md:block pointer-events-auto">
           {!scrolled ? (
             <div className="relative flex items-center justify-between px-8 mt-10 max-w-7xl mx-auto">
+
+              {/* Logo pill — image */}
               <Link
                 to="/"
-                className="flex items-center px-5 py-3.5 bg-white/10 border border-white/40 rounded-full shadow-lg backdrop-blur-sm transition-all duration-300 hover:bg-white/20"
+                className="flex items-center px-1 py-0.5 bg-white/10 border border-white/40 rounded-full shadow-lg backdrop-blur-sm transition-all duration-300 hover:bg-white/20"
                 style={{ WebkitBackdropFilter: 'blur(8px)' }}
               >
-                <span className="font-display text-xl font-extrabold tracking-tight">
-                  <span className="text-white">We</span>
-                  <span className="text-gold-400">Exports</span>
-                </span>
+                <img
+                  src="/logo1.png"
+                  alt="WeExports"
+                  className="h-14 w-auto object-contain"
+                />
               </Link>
 
               <div className="flex items-center gap-1">
@@ -80,7 +83,7 @@ export default function PublicNavbar() {
                     key={link.href}
                     to={link.href}
                     className={cn(
-                      'relative px-4 py-2 transition-all duration-200 group',
+                      'relative px-4 py-2  transition-all duration-200 group',
                       isActive(link.href) ? 'text-gold-400' : 'text-white/90 hover:text-gold-400',
                     )}
                   >
@@ -102,15 +105,18 @@ export default function PublicNavbar() {
             </div>
           ) : (
             <div className="flex items-center justify-between px-8 mt-4 max-w-7xl mx-auto">
+
+              {/* Logo pill — image scrolled */}
               <Link
                 to="/"
-                className="flex items-center px-5 py-3 bg-navy-900/80 backdrop-blur-md border border-white/40 rounded-full shadow-xl transition-all duration-300 hover:border-white/60"
+                className="flex items-center px-1 py-0.5 bg-navy-900/80 backdrop-blur-md border border-white/40 rounded-full shadow-xl transition-all duration-300 hover:border-white/60"
                 style={{ WebkitBackdropFilter: 'blur(12px)' }}
               >
-                <span className="font-display text-xl font-extrabold tracking-tight">
-                  <span className="text-white">We</span>
-                  <span className="text-gold-400">Exports</span>
-                </span>
+                <img
+                  src="/logo1.png"
+                  alt="WeExports"
+                  className="h-14 w-auto object-contain"
+                />
               </Link>
 
               <div
@@ -122,7 +128,7 @@ export default function PublicNavbar() {
                     key={link.href}
                     to={link.href}
                     className={cn(
-                      'relative px-5 py-2 rounded-full text-base  transition-all duration-200 group',
+                      'relative px-5 py-2 rounded-full text-base transition-all duration-200 group',
                       isActive(link.href) ? 'text-gold-400' : 'text-white/90 hover:text-gold-400',
                     )}
                   >
@@ -153,22 +159,22 @@ export default function PublicNavbar() {
         {/* ── Mobile top bar ── */}
         <div className="md:hidden flex items-center justify-between pointer-events-auto px-4 mt-4">
 
-          {/* Logo pill */}
+          {/* Logo pill — image */}
           <Link
             to="/"
-            className="flex items-center px-4 py-2 bg-white/10 border border-white/40 rounded-full shadow-lg backdrop-blur-sm transition-all duration-500"
+            className="flex items-center px-1 py-0.5 bg-white/10 border border-white/40 rounded-full shadow-lg backdrop-blur-sm transition-all duration-500"
             style={{ WebkitBackdropFilter: 'blur(8px)' }}
           >
-            <span className="font-display text-xl font-extrabold tracking-tight">
-              <span className="text-white">We</span>
-              <span className="text-gold-400">Exports</span>
-            </span>
+            <img
+              src="/logo1.png"
+              alt="WeExports"
+              className="h-11 w-auto object-contain"
+            />
           </Link>
 
           {/* Menu pill + popover */}
           <div className="relative pointer-events-auto">
 
-            {/* Pill button — always above backdrop */}
             <button
               type="button"
               onClick={() => setIsOpen((v) => !v)}
@@ -210,7 +216,7 @@ export default function PublicNavbar() {
               </span>
             </button>
 
-            {/* Backdrop — INSIDE header, BELOW popover */}
+            {/* Backdrop */}
             <AnimatePresence>
               {isOpen && (
                 <motion.div
@@ -226,7 +232,7 @@ export default function PublicNavbar() {
               )}
             </AnimatePresence>
 
-            {/* Popover — highest z, above backdrop */}
+            {/* Popover */}
             <AnimatePresence>
               {isOpen && (
                 <motion.div
