@@ -1,55 +1,49 @@
 import { cn } from '@/lib/utils';
 import { Link, useLocation } from '@tanstack/react-router';
 import { Menu, X } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function PublicNavbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const lastScrollY = useRef(0);
   const location = useLocation();
 
   useEffect(() => {
-    const triggerMap: Record<string, { solid: string; transparent?: string }> = {
-      '/': { solid: 'category-section', transparent: 'why-choose-section' },
-      '/about': { solid: 'about-solid-trigger', transparent: 'about-transparent-trigger' },
-      '/products': { solid: 'products-solid-trigger', transparent: 'products-transparent-trigger' },
-      '/enquiry': { solid: 'enquiry-solid-trigger', transparent: 'enquiry-transparent-trigger' },
-    };
-
-    const triggers = triggerMap[location.pathname] ??
-  (location.pathname.startsWith('/products/')
-  ? { solid: 'product-detail-solid-trigger' }
-  : undefined);
-
-    if (!triggers) {
-      setScrolled(false);
-      return;
-    }
-
     const handleScroll = () => {
-      const solidEl = document.getElementById(triggers.solid);
-      const transparentEl = triggers.transparent
-        ? document.getElementById(triggers.transparent)
-        : null;
+      const currentY = window.scrollY;
+      const prev = lastScrollY.current;
 
-      const pastSolid = (solidEl?.getBoundingClientRect().top ?? Infinity) <= 64;
-      const pastTransparent = transparentEl
-        ? (transparentEl.getBoundingClientRect().top ?? Infinity) <= 64
-        : false;
+      setScrolled(currentY > 50);
 
-      setScrolled(pastSolid && !pastTransparent);
+      if (currentY > 100) {
+        if (currentY > prev) {
+          setHidden(true);
+        } else {
+          setHidden(false);
+        }
+      } else {
+        setHidden(false);
+      }
+
+      lastScrollY.current = currentY;
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    setIsOpen(false);
   }, [location.pathname]);
 
   const navLinks = [
     { label: 'Home', href: '/' },
     { label: 'Products', href: '/products' },
     { label: 'About', href: '/about' },
-    { label: 'Enquiry', href: '/enquiry' },
   ];
 
   const isActive = (href: string) => {
@@ -58,69 +52,245 @@ export default function PublicNavbar() {
   };
 
   return (
-    <header
-      className={cn(
-        'fixed top-0 left-0 w-full z-50 border-b transition-all duration-300',
-        !scrolled
-  ? 'bg-navy-900/70 border-white/10 backdrop-blur-2xl'
-  : 'bg-navy-900 border-navy-700 shadow-navy',
-      )}
-    >
-      <nav className="max-w-7xl mx-auto px-6">
-        <div className="flex items-center justify-between h-16">
+    <>
+      <motion.header
+        className="fixed top-0 left-0 w-full z-50 pointer-events-none"
+        animate={{ y: hidden ? '-120%' : '0%' }}
+        transition={{ duration: 0.5, ease: 'easeInOut' }}
+      >
 
-          <Link to="/" className="flex items-center group">
-            <span className="font-display text-2xl md:text-3xl font-extrabold tracking-tight">
-              <span className="text-white transition-colors duration-300 group-hover:text-gold-400">We</span>
-              <span className="text-gold-400 transition-colors duration-300 group-hover:text-white">Exports</span>
-            </span>
-          </Link>
+        {/* ── Desktop ── */}
+        <div className="hidden md:block pointer-events-auto">
+          {!scrolled ? (
+            /* AT TOP — logo pill left, plain links + enquiry right (original style) */
+            <div className="relative flex items-center justify-between px-8 mt-5 max-w-7xl mx-auto">
 
-          <div className="hidden md:flex items-center gap-1">
-            {navLinks.map((link) => (
+              {/* Logo — always in pill */}
               <Link
-                key={link.href}
-                to={link.href}
-                className={cn(
-                  'px-4 py-2 rounded-md text-base font-semibold transition-colors duration-200 hover:text-gold-400',
-                  isActive(link.href) ? 'text-gold-400' : 'text-white/90',
-                )}
+                to="/"
+                className="flex items-center px-5 py-3.5 bg-white/10 border border-white/40 rounded-full shadow-lg backdrop-blur-sm transition-all duration-300 hover:bg-white/20"
+                style={{ WebkitBackdropFilter: 'blur(8px)' }}
               >
-                {link.label}
+                <span className="font-display text-xl font-extrabold tracking-tight">
+                  <span className="text-white">We</span>
+                  <span className="text-gold-400">Exports</span>
+                </span>
               </Link>
-            ))}
-          </div>
 
-          <div className="md:hidden relative">
-            <button
-              type="button"
-              onClick={() => setIsOpen(!isOpen)}
-              className="p-2 text-white/80 hover:text-white"
-            >
-              {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-            </button>
-
-            {isOpen && (
-              <div className="absolute top-12 right-0 w-48 bg-navy-900 border border-navy-700 rounded-xl shadow-2xl p-2 space-y-0.5">
+              {/* Right side: plain nav links + enquiry (original) */}
+              <div className="flex items-center gap-1">
                 {navLinks.map((link) => (
                   <Link
                     key={link.href}
                     to={link.href}
-                    onClick={() => setIsOpen(false)}
                     className={cn(
-                      'block px-4 py-2.5 rounded-lg text-base font-semibold transition-colors duration-200 hover:text-gold-400 hover:bg-white/5',
-                      isActive(link.href) ? 'text-gold-400' : 'text-white/90',
+                      'relative px-4 py-2 font-semibold transition-all duration-200 group',
+                      isActive(link.href) ? 'text-gold-400' : 'text-white/90 hover:text-gold-400',
                     )}
                   >
                     {link.label}
+                    {/* Underline — width matches text, not padding */}
+                    <span className={cn(
+                      'absolute bottom-0.5 left-4 right-4 h-[1.5px] bg-gold-400 rounded-full transition-all duration-300 origin-left',
+                      isActive(link.href) ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100',
+                    )} />
                   </Link>
                 ))}
+                <Link
+                  to="/enquiry"
+                  className="ml-1 flex items-center gap-2 px-5 py-2 rounded-full text-base font-bold bg-white text-navy-900 hover:bg-gold-400 shadow-lg transition-all duration-200"
+                >
+                  Enquiry
+                  <span className="w-6 h-6 rounded-full bg-navy-900 text-white flex items-center justify-center text-xs font-bold">→</span>
+                </Link>
               </div>
-            )}
-          </div>
+            </div>
+          ) : (
+            /* SCROLLED — both pills with white border */
+            <div className="flex items-center justify-between px-8 mt-4 max-w-7xl mx-auto">
 
+              {/* Logo pill */}
+              <Link
+                to="/"
+                className="flex items-center px-5 py-3 bg-navy-900/80 backdrop-blur-md border border-white/40 rounded-full shadow-xl transition-all duration-300 hover:border-white/60"
+                style={{ WebkitBackdropFilter: 'blur(12px)' }}
+              >
+                <span className="font-display text-xl font-extrabold tracking-tight">
+                  <span className="text-white">We</span>
+                  <span className="text-gold-400">Exports</span>
+                </span>
+              </Link>
+
+              {/* Nav pill */}
+              <div
+                className="flex items-center gap-1 px-4 py-3 bg-navy-900/80 backdrop-blur-md border border-white/40 rounded-full shadow-xl"
+                style={{ WebkitBackdropFilter: 'blur(12px)' }}
+              >
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.href}
+                    to={link.href}
+                    className={cn(
+                      'relative px-5 py-2 rounded-full text-base font-semibold transition-all duration-200 group',
+                      isActive(link.href) ? 'text-gold-400' : 'text-white/90 hover:text-gold-400',
+                    )}
+                  >
+                    {link.label}
+                    {/* Underline — width matches text, not padding */}
+                    <span className={cn(
+                      'absolute bottom-1 left-5 right-5 h-[1.5px] bg-gold-400 rounded-full transition-all duration-300 origin-left',
+                      isActive(link.href) ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100',
+                    )} />
+                  </Link>
+                ))}
+                <Link
+                  to="/enquiry"
+                  className={cn(
+                    'ml-1 flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-bold transition-all duration-200',
+                    location.pathname === '/enquiry'
+                      ? 'bg-gold-400 text-navy-900'
+                      : 'bg-white text-navy-900 hover:bg-gold-400',
+                  )}
+                >
+                  Enquiry
+                  <span className="w-5 h-5 rounded-full bg-navy-900 text-white flex items-center justify-center text-xs font-bold">→</span>
+                </Link>
+              </div>
+            </div>
+          )}
         </div>
-      </nav>
-    </header>
+
+        {/* ── Mobile top bar ── */}
+        <div className="md:hidden flex items-center justify-between pointer-events-auto px-4 mt-4">
+
+          {/* Logo pill — always styled */}
+          <Link
+            to="/"
+            className="flex items-center px-4 py-2 bg-white/10 border border-white/40 rounded-full shadow-lg backdrop-blur-sm transition-all duration-500"
+            style={{ WebkitBackdropFilter: 'blur(8px)' }}
+          >
+            <span className="font-display text-xl font-extrabold tracking-tight">
+              <span className="text-white">We</span>
+              <span className="text-gold-400">Exports</span>
+            </span>
+          </Link>
+
+          {/* Menu pill + popover */}
+          <div className="relative pointer-events-auto">
+
+            {/* Pill button */}
+            <button
+              type="button"
+              onClick={() => setIsOpen((v) => !v)}
+              className={cn(
+                'relative z-[80] flex items-center gap-2 px-4 py-2 rounded-full font-semibold text-sm transition-all duration-300',
+                isOpen
+                  ? 'bg-navy-900 border border-white/40 text-white shadow-xl'
+                  : 'bg-white/10 border border-white/40 text-white shadow-lg backdrop-blur-sm',
+              )}
+            >
+              <span>{isOpen ? 'Close' : 'Menu'}</span>
+              <span className="w-7 h-7 rounded-full bg-white/20 flex items-center justify-center overflow-hidden">
+                <AnimatePresence mode="wait" initial={false}>
+                  {isOpen ? (
+                    <motion.span
+                      key="x"
+                      initial={{ rotate: -90, opacity: 0 }}
+                      animate={{ rotate: 0, opacity: 1 }}
+                      exit={{ rotate: 90, opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="flex items-center justify-center"
+                    >
+                      <X className="w-4 h-4" />
+                    </motion.span>
+                  ) : (
+                    <motion.span
+                      key="menu"
+                      initial={{ rotate: 90, opacity: 0 }}
+                      animate={{ rotate: 0, opacity: 1 }}
+                      exit={{ rotate: -90, opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="flex items-center justify-center"
+                    >
+                      <Menu className="w-4 h-4" />
+                    </motion.span>
+                  )}
+                </AnimatePresence>
+              </span>
+            </button>
+
+            {/* Popover */}
+            <AnimatePresence>
+              {isOpen && (
+                <motion.div
+                  initial={{ opacity: 0, scaleX: 0.4, scaleY: 0.2 }}
+                  animate={{ opacity: 1, scaleX: 1, scaleY: 1 }}
+                  exit={{ opacity: 0, scaleX: 0.4, scaleY: 0.2 }}
+                  transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+                  style={{ transformOrigin: 'top right' }}
+                  className="absolute top-14 right-0 w-56 bg-navy-900 border border-white/30 rounded-2xl shadow-2xl overflow-hidden z-[75]"
+                >
+                  <div className="p-2">
+                    {navLinks.map((link, i) => (
+                      <motion.div
+                        key={link.href}
+                        initial={{ opacity: 0, y: -6 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.25 + i * 0.12, duration: 0.5 }}
+                      >
+                        <Link
+                          to={link.href}
+                          onClick={() => setIsOpen(false)}
+                          className={cn(
+                            'flex items-center px-4 py-3 rounded-xl text-base font-semibold transition-colors duration-200 hover:text-gold-400 hover:bg-white/5',
+                            isActive(link.href) ? 'text-gold-400 bg-white/5' : 'text-white/90',
+                          )}
+                        >
+                          {link.label}
+                        </Link>
+                      </motion.div>
+                    ))}
+
+                    <div className="my-1.5 border-t border-white/10" />
+
+                    <motion.div
+                      initial={{ opacity: 0, y: -6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.25 + navLinks.length * 0.12, duration: 0.5 }}
+                    >
+                      <Link
+                        to="/enquiry"
+                        onClick={() => setIsOpen(false)}
+                        className="flex items-center justify-between px-4 py-3 rounded-xl text-base font-bold bg-gold-500 text-navy-900 hover:bg-gold-400 transition-colors duration-200"
+                      >
+                        Enquiry
+                        <span className="w-6 h-6 rounded-full bg-navy-900 text-white flex items-center justify-center text-xs font-bold">→</span>
+                      </Link>
+                    </motion.div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+          </div>
+        </div>
+
+      </motion.header>
+
+      {/* Invisible backdrop */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            key="backdrop"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="md:hidden fixed inset-0 z-[60]"
+            onClick={() => setIsOpen(false)}
+          />
+        )}
+      </AnimatePresence>
+    </>
   );
 }

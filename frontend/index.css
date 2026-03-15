@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+@keyframes fadeIn {
+  0% { opacity: 0; transform: translateY(-8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.5s ease-in-out 1.5s both;
+}
+
 @font-face {
   font-family: 'Cabinet Grotesk';
   src: url('/assets/fonts/CabinetGrotesk-Variable.woff2') format('woff2');

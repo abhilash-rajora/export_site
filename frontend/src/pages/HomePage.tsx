@@ -67,23 +67,14 @@ export default function HomePage() {
       </Helmet>
 
       <section className="relative h-[600px] pt-24 flex items-center overflow-hidden">
-        <div className="absolute inset-0">
-          <>
-  {/* Desktop Image */}
-  <img
-    src="/hero_desktop.png"
-    alt="Global shipping port"
-    className="hidden md:block w-full h-full object-cover"
-  />
-
-  {/* Mobile Image */}
-  <img
-    src="/hero_mobile.jpg"
-    alt="Global shipping port"
-    className="block md:hidden w-full h-full object-cover"
-  />
-</>
-          <div className="hero-overlay absolute inset-0" />
+        <div className="absolute inset-0 overflow-hidden group">
+            <img
+              src="\container.jpg"
+              alt="Global shipping port"
+              className="w-full h-full object-cover object-right scale-100 origin-right transition-transform duration-700 ease-in-out"
+            />
+            <div className="hero-overlay absolute inset-0" />
+            <img/>
         </div>
         <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease: 'easeOut' }} className="max-w-2xl">
@@ -123,11 +114,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section id="category-section" className="py-20 bg-white">
+      <section id="category-section" className="py-20 bg-[#0D3D3D]">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
-            <h2 className="font-display text-4xl font-extrabold text-foreground tracking-tight">Product Categories</h2>
-            <p className="text-muted-foreground mt-3 text-lg max-w-xl mx-auto">We export a diverse range of products across six major categories.</p>
+            <h2 className="font-display text-4xl font-extrabold text-foreground text-white tracking-tight">Product Categories</h2>
+            <p className="text-muted-foreground mt-3 text-lg text-white max-w-xl mx-auto">We export a diverse range of products across six major categories.</p>
           </motion.div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {categories.map((cat, i) => (
@@ -143,12 +134,12 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-[#0D3D3D]">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="flex items-end justify-between mb-12">
             <div>
-              <h2 className="font-display text-4xl font-extrabold text-foreground tracking-tight">Featured Products</h2>
-              <p className="text-muted-foreground mt-3 text-lg">Handpicked quality exports available now</p>
+              <h2 className="font-display text-4xl font-extrabold text-foreground text-white tracking-tight">Featured Products</h2>
+              <p className="text-muted-foreground mt-3 text-white text-lg">Handpicked quality exports available now</p>
             </div>
             <Link to="/products" className="hidden md:flex items-center">
               <Button variant="ghost" className="text-gold-600 hover:text-gold-700 hover:bg-gold-50 font-semibold">

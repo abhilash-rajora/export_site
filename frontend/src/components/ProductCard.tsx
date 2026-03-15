@@ -33,7 +33,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
   return (
     <div
-      className="group bg-card rounded-xl border border-border overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5 flex flex-col h-full"
+      className="group bg-card rounded-xl border border-border overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5 flex flex-col h-full bg-white"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => { setHovered(false); setCurrentImg(0); }}
     >
