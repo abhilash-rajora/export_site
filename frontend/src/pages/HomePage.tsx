@@ -47,42 +47,88 @@ export default function HomePage() {
   return (
     <>
       <Helmet>
-        <title>
-          {seo?.title || "WeExports | Trusted Global Export Partner"}
-        </title>
-        <meta
-          name="description"
-          content={
-            seo?.description ||
-            "Leading export company delivering agriculture, textiles, minerals and electronics worldwide."
-          }
-        />
-        <meta
-          name="keywords"
-          content={
-            seo?.keywords ||
-            "export company, we exports, agriculture export, textile exporter"
-          }
-        />
+        <title>{seo?.title || "WeExports | Trusted Global Export Partner"}</title>
+        <meta name="description" content={seo?.description || "Leading export company delivering agriculture, textiles, minerals and electronics worldwide."} />
+        <meta name="keywords" content={seo?.keywords || "export company, we exports, agriculture export, textile exporter"} />
       </Helmet>
 
-      <section className="relative h-[600px] pt-24 flex items-center overflow-hidden">
-        <div className="absolute inset-0 overflow-hidden group">
-            <img
-              src="\container.jpg"
-              alt="Global shipping port"
-              className="w-full h-full object-cover object-right scale-100 origin-right transition-transform duration-700 ease-in-out"
-            />
-            <div className="hero-overlay absolute inset-0" />
-            <img/>
+      {/* ── MOBILE HERO — image fills screen, text on dark gradient at bottom ── */}
+      <section
+        className="relative flex flex-col md:hidden overflow-hidden"
+        style={{ height: '100svh' }}
+      >
+        {/* Full-screen background image */}
+        <div className="absolute inset-0">
+          <img
+            src="\container.jpg"
+            alt="Global shipping port"
+            className="w-full h-full object-cover object-center"
+          />
+          {/* Gradient: transparent at top (shows container), pitch black at bottom (text area) */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background: 'linear-gradient(to top, rgba(0,0,0,0.96) 0%, rgba(0,0,0,0.85) 30%, rgba(0,0,0,0.3) 55%, transparent 100%)'
+            }}
+          />
+        </div>
+
+        {/* Text pinned to bottom over the dark area */}
+        <div className="relative z-10 mt-auto px-5 pb-12">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.65, ease: 'easeOut' }}
+          >
+            <div className="inline-flex items-center gap-2 bg-gold-500/20 border border-gold-500/30 text-gold-300 text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4">
+              <Globe className="w-3 h-3" />Global Export Excellence
+            </div>
+            <h1 className="font-display text-4xl font-extrabold text-white leading-tight tracking-tight mb-3">
+              Your Trusted{' '}
+              <span className="text-gold-400">Global Export</span>{' '}
+              Partner
+            </h1>
+            <p className="text-white/70 text-base leading-relaxed mb-6">
+              Connecting quality products from across the world to international markets.
+            </p>
+            <div className="flex gap-3">
+              <Link to="/products">
+                <Button size="sm" className="bg-gold-500 hover:bg-gold-400 text-navy-900 font-bold px-5">
+                  Explore Products <ArrowRight className="ml-1.5 w-3.5 h-3.5" />
+                </Button>
+              </Link>
+              <Link to="/enquiry">
+                <Button size="sm" variant="outline" className="border-white/30 text-white hover:bg-white/10 px-5">
+                  Get in Touch
+                </Button>
+              </Link>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ── DESKTOP HERO — original layout, unchanged ── */}
+      <section className="relative h-[640px] pt-24 hidden md:flex items-center overflow-hidden">
+        <div className="absolute inset-0 overflow-hidden">
+          <img
+            src="\container.jpg"
+            alt="Global shipping port"
+            className="w-full h-full object-cover object-right scale-100 origin-right transition-transform duration-700 ease-in-out"
+          />
+          <div className="hero-overlay absolute inset-0" />
         </div>
         <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease: 'easeOut' }} className="max-w-2xl">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: 'easeOut' }}
+            className="max-w-2xl"
+          >
             <div className="inline-flex items-center gap-2 bg-gold-500/20 border border-gold-500/30 text-gold-300 text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-6">
               <Globe className="w-3 h-3" />Global Export Excellence
             </div>
             <h1 className="font-display text-5xl lg:text-6xl font-extrabold text-white leading-[1.08] tracking-tight mb-6">
-              Your Trusted <span className="text-gold-400"> <br></br>Global Export</span> Partner
+              Your Trusted <span className="text-gold-400">Global Export</span> Partner
             </h1>
             <p className="text-white/75 text-xl leading-relaxed mb-8 max-w-xl">
               Connecting quality products from across the world to international markets.
@@ -94,7 +140,9 @@ export default function HomePage() {
                 </Button>
               </Link>
               <Link to="/enquiry">
-                <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10 px-8">Get in Touch</Button>
+                <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10 px-8">
+                  Get in Touch
+                </Button>
               </Link>
             </div>
           </motion.div>
