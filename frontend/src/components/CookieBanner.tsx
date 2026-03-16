@@ -33,9 +33,9 @@ export default function CookieBanner() {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 100, opacity: 0 }}
           transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[9998] w-[95vw] max-w-2xl"
+          className="fixed bottom-0 left-0 right-0 z-[9998] w-full px-4 pb-6 pt-2"
         >
-          <div className="bg-navy-900/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl px-6 py-5"
+          <div className="bg-navy-900/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl px-4 py-4 max-w-2xl mx-auto"
             style={{ WebkitBackdropFilter: 'blur(20px)' }}
           >
             <div className="flex items-start gap-4">
