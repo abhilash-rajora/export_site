@@ -1,20 +1,11 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const nodemailer = require("nodemailer");
+const { Resend } = require("resend");  
 const Admin = require("../models/Admin");
 const speakeasy = require("speakeasy");
 const QRCode = require("qrcode");
 
-const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 465,        // change from 587
-  secure: true,     // change from false
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-  // remove the tls block entirely
-});
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 const loginAdmin = async (req, res) => {
   const { email, password } = req.body || {};
@@ -223,8 +214,6 @@ const forgotPassword = async (req, res) => {
   const { email } = req.body || {};
 
   try {
-    console.log("req.body:", req.body);
-
     if (!email || typeof email !== "string") {
       return res.status(400).json({ message: "Email is required" });
     }
@@ -243,10 +232,9 @@ const forgotPassword = async (req, res) => {
     admin.resetOtpAttempts = 0;
 
     await admin.save();
-    await transporter.verify();
 
-    await transporter.sendMail({
-      from: process.env.EMAIL_USER,
+    await resend.emails.send({
+      from: "WeExports <onboarding@resend.dev>",  // ← keep this until you add domain
       to: admin.email,
       subject: "WeExports Admin Password Reset OTP",
       html: `
@@ -262,20 +250,13 @@ const forgotPassword = async (req, res) => {
 
     res.json({ message: "Reset OTP sent to your email" });
   } catch (error) {
-  console.error("Forgot password error FULL:", {
-    message: error.message,
-    code: error.code,
-    command: error.command,   // nodemailer gives this
-    response: error.response, // and this
-  });
-  res.status(500).json({ 
-    message: error.message,
-    code: error.code || null,
-  });
-}
-
-
+    console.error("Forgot password error:", error);
+    res.status(500).json({ message: error.message });
+  }
 };
+
+
+
 // @desc Verify reset OTP
 // @route POST /api/admin/verify-reset-otp
 // @access Public
