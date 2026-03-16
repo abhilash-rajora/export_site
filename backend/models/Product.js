@@ -12,12 +12,14 @@ const productSchema = new mongoose.Schema(
     imageUrl: { type: String, default: '' },
     images: { type: [String], default: [] },
     specifications: [{
-    property: { type: String, trim: true },
-    value: { type: String, trim: true },},],
+      property: { type: String, trim: true },
+      value: { type: String, trim: true },
+    }],
     originCountry: { type: String, required: [true, 'Origin country is required'], trim: true },
     minOrderQty: { type: Number, required: true, min: 1, default: 1 },
     priceRange: { type: String, required: [true, 'Price range is required'], trim: true },
     isActive: { type: Boolean, default: true },
+    inStock: { type: Boolean, default: true },
   },
   { timestamps: true }
 );

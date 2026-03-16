@@ -13,11 +13,16 @@ import { useState } from 'react';
 import { toast } from 'sonner';
 import type { Product } from '../../api/types';
 import { useAllProducts, useDeleteProduct, useToggleProductActive } from '../../hooks/useQueries';
+import api from '../../api/axios';
+import { useQueryClient } from '@tanstack/react-query';
+
 export default function AdminProductsPage() {
   const [search, setSearch] = useState('');
   const { data: products, isLoading } = useAllProducts();
   const deleteProduct = useDeleteProduct();
   const toggleActive = useToggleProductActive();
+  const queryClient = useQueryClient();
+  const [togglingStock, setTogglingStock] = useState<string | null>(null);
 
   const filtered = (products ?? []).filter(
     (p) =>
@@ -40,6 +45,22 @@ export default function AdminProductsPage() {
       toast.success(`"${product.name}" ${product.isActive ? 'deactivated' : 'activated'}.`);
     } catch {
       toast.error('Failed to update product status.');
+    }
+  };
+
+  const handleToggleStock = async (product: Product) => {
+    setTogglingStock(product._id);
+    try {
+      await api.put(`/products/${product._id}`, { 
+        ...product, 
+        inStock: !product.inStock 
+      });
+      queryClient.invalidateQueries({ queryKey: ['products'] });
+      toast.success(`"${product.name}" marked as ${!product.inStock ? 'In Stock' : 'Out of Stock'}.`);
+    } catch {
+      toast.error('Failed to update stock status.');
+    } finally {
+      setTogglingStock(null);
     }
   };
 
@@ -91,8 +112,8 @@ export default function AdminProductsPage() {
             <table className="w-full">
               <thead>
                 <tr className="border-b border-sidebar-border">
-                  {['Product', 'Category', 'Origin', 'Price', 'Status', 'Actions'].map((h, i) => (
-                    <th key={h} className={`${i === 5 ? 'text-right px-6' : i === 0 ? 'text-left px-6' : 'text-left px-4'} py-3 text-xs font-semibold uppercase tracking-widest text-sidebar-foreground/40`}>{h}</th>
+                  {['Product', 'Category', 'Origin', 'Price', 'Status', 'Stock', 'Actions'].map((h, i) => (
+                    <th key={h} className={`${i === 6 ? 'text-right px-6' : i === 0 ? 'text-left px-6' : 'text-left px-4'} py-3 text-xs font-semibold uppercase tracking-widest text-sidebar-foreground/40`}>{h}</th>
                   ))}
                 </tr>
               </thead>
@@ -124,6 +145,25 @@ export default function AdminProductsPage() {
                         {product.isActive ? 'Active' : 'Inactive'}
                       </Badge>
                     </td>
+                    {/* Stock status with quick toggle */}
+                    <td className="px-4 py-4">
+                      <button
+                        type="button"
+                        onClick={() => handleToggleStock(product)}
+                        disabled={togglingStock === product._id}
+                        className={`text-xs font-semibold px-2.5 py-1 rounded-full transition-all duration-200 ${
+                          product.inStock !== false
+                            ? 'bg-green-500/15 text-green-400 border border-green-500/30 hover:bg-green-500/25'
+                            : 'bg-red-500/15 text-red-400 border border-red-500/30 hover:bg-red-500/25'
+                        }`}
+                      >
+                        {togglingStock === product._id ? (
+                          <Loader2 className="w-3 h-3 animate-spin" />
+                        ) : (
+                          product.inStock !== false ? '● In Stock' : '● Out of Stock'
+                        )}
+                      </button>
+                    </td>
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-2 justify-end">
                         <button type="button" onClick={() => handleToggle(product)} disabled={toggleActive.isPending} className="p-1.5 rounded-md text-sidebar-foreground/50 hover:text-sidebar-foreground hover:bg-white/10 transition-colors">
@@ -141,17 +181,17 @@ export default function AdminProductsPage() {
                             </button>
                           </AlertDialogTrigger>
                           <AlertDialogContent className="bg-white border border-gray-200 shadow-xl">
-  <AlertDialogHeader>
-    <AlertDialogTitle className="text-gray-900">Delete Product</AlertDialogTitle>
-    <AlertDialogDescription className="text-gray-600">
-      Are you sure you want to delete "{product.name}"? This action cannot be undone.
-    </AlertDialogDescription>
-  </AlertDialogHeader>
-  <AlertDialogFooter>
-    <AlertDialogCancel className="border-gray-200 text-gray-700 hover:bg-gray-100">Cancel</AlertDialogCancel>
-    <AlertDialogAction className="bg-red-600 text-white hover:bg-red-700 border-0" onClick={() => handleDelete(product)}>Delete</AlertDialogAction>
-  </AlertDialogFooter>
-</AlertDialogContent>
+                            <AlertDialogHeader>
+                              <AlertDialogTitle className="text-gray-900">Delete Product</AlertDialogTitle>
+                              <AlertDialogDescription className="text-gray-600">
+                                Are you sure you want to delete "{product.name}"? This action cannot be undone.
+                              </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                              <AlertDialogCancel className="border-gray-200 text-gray-700 hover:bg-gray-100">Cancel</AlertDialogCancel>
+                              <AlertDialogAction className="bg-red-600 text-white hover:bg-red-700 border-0" onClick={() => handleDelete(product)}>Delete</AlertDialogAction>
+                            </AlertDialogFooter>
+                          </AlertDialogContent>
                         </AlertDialog>
                       </div>
                     </td>

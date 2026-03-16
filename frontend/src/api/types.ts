@@ -1,17 +1,16 @@
-// Mirrors the Motoko backend types, adapted for REST/MongoDB
-// _id is used instead of bigint id
-
 export interface Product {
   _id: string;
   name: string;
   category: string;
   description: string;
   imageUrl: string;
-  images: string[]; 
+  images: string[];
+  specifications?: { property: string; value: string }[];
   originCountry: string;
   minOrderQty: number;
   priceRange: string;
   isActive: boolean;
+  inStock: boolean;
   createdAt: string;
   updatedAt: string;
 }
@@ -31,8 +30,8 @@ export interface Enquiry {
 
 export interface DashboardStats {
   totalProducts: number;
-  activeProducts: number;  
-  activeRate: number;    
+  activeProducts: number;
+  activeRate: number;
   totalEnquiries: number;
   newEnquiries: number;
   recentEnquiries: Enquiry[];

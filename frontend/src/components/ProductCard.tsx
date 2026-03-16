@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Link } from '@tanstack/react-router';
-import { ArrowRight, DollarSign, MapPin, Package } from 'lucide-react';
+import { ArrowRight, DollarSign, Heart, MapPin, Package, Share2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import type { Product } from '../api/types';
 
@@ -17,11 +17,34 @@ const categoryColors: Record<string, string> = {
   Handicrafts: 'bg-amber-100 text-amber-800 border-amber-200',
 };
 
+// Wishlist helpers using localStorage
+const getWishlist = (): string[] => {
+  try {
+    return JSON.parse(localStorage.getItem('wishlist') || '[]');
+  } catch {
+    return [];
+  }
+};
+
+const toggleWishlistItem = (id: string): boolean => {
+  const list = getWishlist();
+  const exists = list.includes(id);
+  const updated = exists ? list.filter((i) => i !== id) : [...list, id];
+  localStorage.setItem('wishlist', JSON.stringify(updated));
+  return !exists;
+};
+
 export default function ProductCard({ product }: ProductCardProps) {
   const categoryStyle = categoryColors[product.category] || 'bg-muted text-muted-foreground border-border';
   const allImages = product.images?.length ? product.images : product.imageUrl ? [product.imageUrl] : [];
   const [currentImg, setCurrentImg] = useState(0);
   const [hovered, setHovered] = useState(false);
+  const [wishlisted, setWishlisted] = useState(false);
+  const [shareMsg, setShareMsg] = useState('');
+
+  useEffect(() => {
+    setWishlisted(getWishlist().includes(product._id));
+  }, [product._id]);
 
   useEffect(() => {
     if (!hovered || allImages.length <= 1) return;
@@ -31,18 +54,43 @@ export default function ProductCard({ product }: ProductCardProps) {
     return () => clearInterval(interval);
   }, [hovered, allImages.length]);
 
+  const handleWishlist = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const added = toggleWishlistItem(product._id);
+    setWishlisted(added);
+  };
+
+  const handleShare = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const url = `${window.location.origin}/products/${product._id}`;
+    if (navigator.share) {
+      navigator.share({ title: product.name, url });
+    } else {
+      navigator.clipboard.writeText(url);
+      setShareMsg('Link copied!');
+      setTimeout(() => setShareMsg(''), 2000);
+    }
+  };
+
+  const inStock = product.inStock !== false; // default true if undefined
+
   return (
     <div
       className="group bg-card rounded-xl border border-border overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5 flex flex-col h-full bg-white"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => { setHovered(false); setCurrentImg(0); }}
     >
-
-      <div className="px-3 pt-3">
-    <span className={`text-xs font-semibold px-2 py-0.5 rounded-full border ${categoryStyle}`}>
-      {product.category}
-    </span>
-  </div>
+      {/* Category + Stock badge */}
+      <div className="px-3 pt-3 flex items-center justify-between">
+        <span className={`text-xs font-semibold px-2 py-0.5 rounded-full border ${categoryStyle}`}>
+          {product.category}
+        </span>
+        <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${inStock ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-600'}`}>
+          {inStock ? '● In Stock' : '● Out of Stock'}
+        </span>
+      </div>
 
       {/* Image carousel */}
       <div className="relative h-48 bg-muted overflow-hidden flex-shrink-0">
@@ -54,7 +102,6 @@ export default function ProductCard({ product }: ProductCardProps) {
               className="w-full h-full object-contain transition-opacity duration-300"
               loading="lazy"
             />
-            {/* Dot indicators */}
             {allImages.length > 1 && (
               <div className="absolute bottom-2 left-0 right-0 flex justify-center gap-1">
                 {allImages.map((_, i) => (
@@ -71,7 +118,31 @@ export default function ProductCard({ product }: ProductCardProps) {
             <Package className="w-12 h-12 text-muted-foreground/30" />
           </div>
         )}
-        
+
+        {/* Wishlist + Share buttons on image */}
+        <div className="absolute top-2 right-2 flex flex-col gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+          <button
+            onClick={handleWishlist}
+            className={`w-7 h-7 rounded-full flex items-center justify-center shadow-md transition-all duration-200 ${wishlisted ? 'bg-red-500 text-white' : 'bg-white/90 text-gray-600 hover:bg-red-50 hover:text-red-500'}`}
+            title={wishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
+          >
+            <Heart className={`w-3.5 h-3.5 ${wishlisted ? 'fill-current' : ''}`} />
+          </button>
+          <button
+            onClick={handleShare}
+            className="w-7 h-7 rounded-full bg-white/90 flex items-center justify-center shadow-md text-gray-600 hover:bg-blue-50 hover:text-blue-500 transition-all duration-200"
+            title="Share product"
+          >
+            <Share2 className="w-3.5 h-3.5" />
+          </button>
+        </div>
+
+        {/* Share copied message */}
+        {shareMsg && (
+          <div className="absolute bottom-8 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded-lg">
+            {shareMsg}
+          </div>
+        )}
       </div>
 
       {/* Content */}
@@ -97,9 +168,16 @@ export default function ProductCard({ product }: ProductCardProps) {
           </div>
         </div>
         <Link to="/products/$id" params={{ id: product._id }}>
-          <Button size="sm" className="w-full bg-navy-800 hover:bg-navy-700 text-white group/btn text-xs h-8">
-            View & Enquire
-            <ArrowRight className="w-3 h-3 ml-1.5 group-hover/btn:translate-x-1 transition-transform" />
+          <Button
+            size="sm"
+            className="w-full bg-navy-800 hover:bg-navy-700 text-white group/btn text-xs h-8"
+            disabled={!inStock}
+          >
+            {inStock ? (
+              <>View & Enquire <ArrowRight className="w-3 h-3 ml-1.5 group-hover/btn:translate-x-1 transition-transform" /></>
+            ) : (
+              'Out of Stock'
+            )}
           </Button>
         </Link>
       </div>

@@ -24,6 +24,7 @@ const defaultForm = {
   originCountry: '',
   minOrderQty: '',
   priceRange: '',
+  inStock: true,
 };
 
 export default function AdminProductFormPage() {
@@ -54,6 +55,7 @@ export default function AdminProductFormPage() {
         originCountry: product.originCountry,
         minOrderQty: String(product.minOrderQty),
         priceRange: product.priceRange,
+        inStock: product.inStock !== false,
       });
     }
   }, [isEdit, product]);
@@ -148,6 +150,7 @@ export default function AdminProductFormPage() {
       originCountry: form.originCountry,
       minOrderQty: Number(form.minOrderQty),
       priceRange: form.priceRange,
+      inStock: form.inStock,
     };
     try {
       if (isEdit && id) {
@@ -279,7 +282,7 @@ export default function AdminProductFormPage() {
             </div>
           </div>
 
-          {/* ── Images ── */}
+          {/* Images */}
           <div className="space-y-3">
             <div>
               <Label className="text-sidebar-foreground text-sm font-medium">
@@ -287,112 +290,46 @@ export default function AdminProductFormPage() {
               </Label>
               <p className="text-sidebar-foreground/40 text-xs mt-0.5">Upload a file or paste an image URL</p>
             </div>
-
             <div className="grid grid-cols-3 gap-3">
-              {/* Existing images */}
               {form.images.map((url, index) => (
                 <div key={index} className="relative group aspect-square rounded-xl overflow-hidden bg-white/5 border border-sidebar-border">
                   <img src={url} alt={`Product ${index + 1}`} className="w-full h-full object-cover" />
-                  <button
-                    type="button"
-                    onClick={() => removeImage(index)}
-                    className="absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-black/60 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-500"
-                  >
+                  <button type="button" onClick={() => removeImage(index)} className="absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-black/60 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-500">
                     <X className="w-3 h-3" />
                   </button>
                   {index === 0 && (
-                    <div className="absolute bottom-1.5 left-1.5 bg-gold-500 text-navy-900 text-[10px] font-bold px-1.5 py-0.5 rounded-md">
-                      Cover
-                    </div>
+                    <div className="absolute bottom-1.5 left-1.5 bg-gold-500 text-navy-900 text-[10px] font-bold px-1.5 py-0.5 rounded-md">Cover</div>
                   )}
                 </div>
               ))}
-
-              {/* Upload / URL slot */}
               {form.images.length < 5 && (
                 <div className={`rounded-2xl border-2 border-dashed border-sidebar-border flex flex-col overflow-hidden transition-all duration-200 hover:border-gold-400/60 ${form.images.length === 0 ? 'col-span-3 h-48' : 'aspect-square'}`}>
-                  {/* Tabs */}
                   <div className="flex border-b border-sidebar-border flex-shrink-0">
-                    <button
-                      type="button"
-                      onClick={() => setUrlMode(false)}
-                      className={`flex-1 text-xs font-semibold py-2 transition-colors ${!urlMode ? 'bg-white/10 text-gold-400' : 'text-sidebar-foreground/30 hover:text-sidebar-foreground/60'}`}
-                    >
-                      Upload
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setUrlMode(true)}
-                      className={`flex-1 text-xs font-semibold py-2 transition-colors ${urlMode ? 'bg-white/10 text-gold-400' : 'text-sidebar-foreground/30 hover:text-sidebar-foreground/60'}`}
-                    >
-                      URL
-                    </button>
+                    <button type="button" onClick={() => setUrlMode(false)} className={`flex-1 text-xs font-semibold py-2 transition-colors ${!urlMode ? 'bg-white/10 text-gold-400' : 'text-sidebar-foreground/30 hover:text-sidebar-foreground/60'}`}>Upload</button>
+                    <button type="button" onClick={() => setUrlMode(true)} className={`flex-1 text-xs font-semibold py-2 transition-colors ${urlMode ? 'bg-white/10 text-gold-400' : 'text-sidebar-foreground/30 hover:text-sidebar-foreground/60'}`}>URL</button>
                   </div>
-
                   {!urlMode ? (
-                    <button
-                      type="button"
-                      onClick={() => handleFilePick(form.images.length)}
-                      disabled={uploadingIndex !== null}
-                      className="flex-1 flex flex-col items-center justify-center gap-3 text-sidebar-foreground/40 hover:text-gold-400 hover:bg-white/5 transition-all group"
-                    >
+                    <button type="button" onClick={() => handleFilePick(form.images.length)} disabled={uploadingIndex !== null} className="flex-1 flex flex-col items-center justify-center gap-3 text-sidebar-foreground/40 hover:text-gold-400 hover:bg-white/5 transition-all group">
                       {uploadingIndex === form.images.length ? (
-                        <>
-                          <Loader2 className="w-8 h-8 animate-spin text-gold-400" />
-                          <span className="text-xs font-medium">Uploading...</span>
-                        </>
+                        <><Loader2 className="w-8 h-8 animate-spin text-gold-400" /><span className="text-xs font-medium">Uploading...</span></>
                       ) : (
-                        <>
-                          <div className="w-14 h-14 rounded-2xl bg-white/5 border border-sidebar-border group-hover:border-gold-400/50 group-hover:bg-gold-400/5 flex items-center justify-center transition-all">
-                            <ImagePlus className="w-6 h-6" />
-                          </div>
-                          <div className="text-center">
-                            <p className="text-sm font-semibold">Click to upload</p>
-                            <p className="text-xs text-sidebar-foreground/30 mt-0.5">JPG, PNG, WebP · Max 5MB</p>
-                          </div>
-                        </>
+                        <><div className="w-14 h-14 rounded-2xl bg-white/5 border border-sidebar-border group-hover:border-gold-400/50 group-hover:bg-gold-400/5 flex items-center justify-center transition-all"><ImagePlus className="w-6 h-6" /></div><div className="text-center"><p className="text-sm font-semibold">Click to upload</p><p className="text-xs text-sidebar-foreground/30 mt-0.5">JPG, PNG, WebP · Max 5MB</p></div></>
                       )}
                     </button>
                   ) : (
                     <div className="flex-1 flex flex-col items-center justify-center gap-3 p-5">
                       <div className="w-full">
                         <p className="text-xs text-sidebar-foreground/50 mb-2 font-medium">Paste an image URL below</p>
-                        <input
-                          type="url"
-                          placeholder="https://example.com/image.jpg"
-                          value={pendingUrl}
-                          onChange={(e) => setPendingUrl(e.target.value)}
-                          onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); handleAddUrl(); } }}
-                          className="w-full bg-white/5 border border-sidebar-border rounded-xl px-3 py-2 text-sm text-sidebar-foreground placeholder:text-sidebar-foreground/30 focus:outline-none focus:border-gold-400 transition-colors"
-                        />
+                        <input type="url" placeholder="https://example.com/image.jpg" value={pendingUrl} onChange={(e) => setPendingUrl(e.target.value)} onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); handleAddUrl(); } }} className="w-full bg-white/5 border border-sidebar-border rounded-xl px-3 py-2 text-sm text-sidebar-foreground placeholder:text-sidebar-foreground/30 focus:outline-none focus:border-gold-400 transition-colors" />
                       </div>
-                      <button
-                        type="button"
-                        onClick={handleAddUrl}
-                        className="w-full bg-gold-500 hover:bg-gold-400 text-navy-900 text-sm font-bold py-2 rounded-xl transition-colors"
-                      >
-                        Add Image
-                      </button>
+                      <button type="button" onClick={handleAddUrl} className="w-full bg-gold-500 hover:bg-gold-400 text-navy-900 text-sm font-bold py-2 rounded-xl transition-colors">Add Image</button>
                     </div>
                   )}
                 </div>
               )}
             </div>
-
-            {/* Hidden file inputs */}
             {Array.from({ length: 6 }).map((_, index) => (
-              <input
-                key={index}
-                type="file"
-                accept="image/jpeg,image/jpg,image/png,image/webp"
-                className="hidden"
-                ref={(el) => { fileInputRefs.current[index] = el; }}
-                onChange={(e) => {
-                  const file = e.target.files?.[0];
-                  if (file) handleFileUpload(file, index);
-                  e.target.value = '';
-                }}
-              />
+              <input key={index} type="file" accept="image/jpeg,image/jpg,image/png,image/webp" className="hidden" ref={(el) => { fileInputRefs.current[index] = el; }} onChange={(e) => { const file = e.target.files?.[0]; if (file) handleFileUpload(file, index); e.target.value = ''; }} />
             ))}
           </div>
 
@@ -406,6 +343,25 @@ export default function AdminProductFormPage() {
               <Label className="text-sidebar-foreground text-sm font-medium">Price Range <span className="text-destructive">*</span></Label>
               <Input name="priceRange" placeholder="e.g. $2 - $5 per kg" value={form.priceRange} onChange={handleChange} required className="bg-white/5 border-sidebar-border text-sidebar-foreground placeholder:text-sidebar-foreground/30" />
             </div>
+          </div>
+
+          {/* Stock Status Toggle */}
+          <div className="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-sidebar-border">
+            <div>
+              <Label className="text-sidebar-foreground text-sm font-medium">Stock Status</Label>
+              <p className="text-sidebar-foreground/40 text-xs mt-0.5">Mark product as in stock or out of stock</p>
+            </div>
+            <button
+              type="button"
+              onClick={() => setForm((p) => ({ ...p, inStock: !p.inStock }))}
+              className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold transition-all duration-200 ${
+                form.inStock
+                  ? 'bg-green-500/20 text-green-400 border border-green-500/30 hover:bg-green-500/30'
+                  : 'bg-red-500/20 text-red-400 border border-red-500/30 hover:bg-red-500/30'
+              }`}
+            >
+              {form.inStock ? '● In Stock' : '● Out of Stock'}
+            </button>
           </div>
 
           {/* Submit */}

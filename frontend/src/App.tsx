@@ -19,7 +19,7 @@ import CreateAdminPage from './pages/admin/CreateAdminPage';
 import ScrollToTop from './components/ScrollToTop';
 import TermsPage from './pages/TermsPage';
 import CookieBanner from './components/CookieBanner';
-
+import WishlistPage from './pages/WishlistPage';
 
 
 
@@ -41,7 +41,7 @@ const productsRoute = createRoute({ getParentRoute: () => publicLayoutRoute, pat
 const productDetailRoute = createRoute({ getParentRoute: () => publicLayoutRoute, path: '/products/$id', component: ProductDetailPage });
 const enquiryRoute = createRoute({ getParentRoute: () => publicLayoutRoute, path: '/enquiry', component: EnquiryPage });
 const aboutRoute = createRoute({ getParentRoute: () => publicLayoutRoute, path: '/about', component: AboutPage });
-
+const wishlistRoute = createRoute({ getParentRoute: () => publicLayoutRoute, path: '/wishlist', component: WishlistPage });
 const adminLoginRoute = createRoute({ getParentRoute: () => rootRoute, path: '/admin/login', component: AdminLoginPage });
 
 const adminLayoutRoute = createRoute({
@@ -71,7 +71,7 @@ const adminCreateAdminRoute = createRoute({getParentRoute: () => adminLayoutRout
 const termsRoute = createRoute({ getParentRoute: () => publicLayoutRoute, path: '/terms', component: TermsPage });
 
 const routeTree = rootRoute.addChildren([
-  publicLayoutRoute.addChildren([homeRoute, productsRoute, productDetailRoute, enquiryRoute, aboutRoute, termsRoute]),
+  publicLayoutRoute.addChildren([homeRoute, productsRoute, productDetailRoute, enquiryRoute, aboutRoute, termsRoute,wishlistRoute]),
   adminLoginRoute,
   adminLayoutRoute.addChildren([adminDashboardRoute, adminProductsRoute, adminProductNewRoute, adminProductEditRoute, adminEnquiriesRoute, adminSeoRoute, adminCreateAdminRoute]),
 ]);
