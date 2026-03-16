@@ -21,7 +21,7 @@ export default function Footer() {
   </span>
 </Link>
             <p className="text-white/60 text-sm leading-relaxed max-w-xs">
-              Your trusted we.export partner connecting quality products from across the world to
+              Your trusted export partner connecting quality products from across the world to
               international markets.
             </p>
             <div className="mt-6 space-y-2">
@@ -63,6 +63,9 @@ export default function Footer() {
                   </Link>
                 </li>
               ))}
+              <li>
+                <Link to="/terms" className="text-sm text-white/60 hover:text-gold-400 transition-colors">Terms & Conditions</Link>
+              </li>
             </ul>
           </div>
 

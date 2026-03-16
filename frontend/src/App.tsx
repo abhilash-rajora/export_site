@@ -17,6 +17,7 @@ import FloatingButtons from './components/FloatingButtons';
 import AdminSeoPage from './pages/admin/AdminSeoPage';
 import CreateAdminPage from './pages/admin/CreateAdminPage';
 import ScrollToTop from './components/ScrollToTop';
+import TermsPage from './pages/TermsPage';
 
 
 
@@ -64,10 +65,10 @@ const adminProductNewRoute = createRoute({ getParentRoute: () => adminLayoutRout
 const adminProductEditRoute = createRoute({ getParentRoute: () => adminLayoutRoute, path: '/admin/products/$id/edit', component: AdminProductFormPage });
 const adminEnquiriesRoute = createRoute({ getParentRoute: () => adminLayoutRoute, path: '/admin/enquiries', component: AdminEnquiriesPage });
 const adminCreateAdminRoute = createRoute({getParentRoute: () => adminLayoutRoute, path: '/admin/create-admin',component: CreateAdminPage,});
-
+const termsRoute = createRoute({ getParentRoute: () => publicLayoutRoute, path: '/terms', component: TermsPage });
 
 const routeTree = rootRoute.addChildren([
-  publicLayoutRoute.addChildren([homeRoute, productsRoute, productDetailRoute, enquiryRoute, aboutRoute]),
+  publicLayoutRoute.addChildren([homeRoute, productsRoute, productDetailRoute, enquiryRoute, aboutRoute, termsRoute]),
   adminLoginRoute,
   adminLayoutRoute.addChildren([adminDashboardRoute, adminProductsRoute, adminProductNewRoute, adminProductEditRoute, adminEnquiriesRoute, adminSeoRoute, adminCreateAdminRoute]),
 ]);
