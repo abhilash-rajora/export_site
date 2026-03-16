@@ -7,13 +7,16 @@ export default function CookieBanner() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const accepted = localStorage.getItem('cookie_consent');
-    if (!accepted) {
-      // Small delay before showing
-      const timer = setTimeout(() => setVisible(true), 1500);
-      return () => clearTimeout(timer);
-    }
-  }, []);
+  const accepted = localStorage.getItem('cookie_consent');
+  // Only hide if explicitly accepted or declined — NOT if just closed
+  if (accepted === 'accepted' || accepted === 'declined') {
+    setVisible(false);
+    return;
+  }
+  // Show banner
+  const timer = setTimeout(() => setVisible(true), 1500);
+  return () => clearTimeout(timer);
+}, []);
 
   const handleAccept = () => {
     localStorage.setItem('cookie_consent', 'accepted');
@@ -60,13 +63,13 @@ export default function CookieBanner() {
 
               {/* Close */}
               <button
-                onClick={handleDecline}
+                onClick={() => setVisible(false)}
                 className="text-white/30 hover:text-white/60 transition-colors flex-shrink-0 mt-0.5"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
-
+            
             {/* Buttons */}
             <div className="flex items-center gap-3 mt-4 ml-14">
               <button
