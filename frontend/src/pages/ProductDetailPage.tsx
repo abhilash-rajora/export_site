@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Link, useParams } from '@tanstack/react-router';
-import { AlertCircle, ChevronLeft, ChevronRight, DollarSign, MapPin, Package, Tag, X, ZoomIn } from 'lucide-react';
+import { AlertCircle, ChevronLeft, ChevronRight, DollarSign, Heart, MapPin, Package, Share2, Tag, X, ZoomIn } from 'lucide-react';
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from 'react';
 import EnquiryForm from '../components/EnquiryForm';
@@ -16,6 +16,8 @@ export default function ProductDetailPage() {
   const [zoomOpen, setZoomOpen] = useState(false);
   const [zoomImg, setZoomImg] = useState(0);
   const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
+  const [isWishlisted, setIsWishlisted] = useState(false);
+  const [shareTooltip, setShareTooltip] = useState<'idle' | 'copied' | 'shared'>('idle');
 
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
@@ -34,9 +36,55 @@ export default function ProductDetailPage() {
     return () => { document.body.style.overflow = ''; };
   }, [zoomOpen]);
 
+  // Load wishlist state from localStorage
+  useEffect(() => {
+    if (!id) return;
+    try {
+      const saved = JSON.parse(localStorage.getItem('wishlist') ?? '[]') as string[];
+      setIsWishlisted(saved.includes(id));
+    } catch {
+      // ignore
+    }
+  }, [id]);
+
   const openZoom = (index: number) => {
     setZoomImg(index);
     setZoomOpen(true);
+  };
+
+  const toggleWishlist = () => {
+    if (!id) return;
+    try {
+      const saved = JSON.parse(localStorage.getItem('wishlist') ?? '[]') as string[];
+      const next = isWishlisted
+        ? saved.filter((v) => v !== id)
+        : [...saved, id];
+      localStorage.setItem('wishlist', JSON.stringify(next));
+      setIsWishlisted(!isWishlisted);
+    } catch {
+      setIsWishlisted(!isWishlisted);
+    }
+  };
+
+  const handleShare = async () => {
+    const url = window.location.href;
+    const title = product?.name ?? 'Product';
+    if (navigator.share) {
+      try {
+        await navigator.share({ title, url });
+        setShareTooltip('shared');
+      } catch {
+        // user cancelled — do nothing
+      }
+    } else {
+      try {
+        await navigator.clipboard.writeText(url);
+        setShareTooltip('copied');
+      } catch {
+        // fallback: select text
+      }
+    }
+    setTimeout(() => setShareTooltip('idle'), 2000);
   };
 
   if (isLoading) {
@@ -151,15 +199,96 @@ export default function ProductDetailPage() {
         )}
       </AnimatePresence>
 
+      {/* Hero header */}
       <div className="bg-navy-900 pt-24 pb-10">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
           <Link to="/products" className="inline-flex items-center gap-2 text-sm text-white/60 hover:text-white transition-colors">
             <ChevronLeft className="w-4 h-4" />Back to Products
           </Link>
-          <h1 className="font-display text-xl sm:text-2xl font-extrabold text-white tracking-tight leading-tight mt-4">
-  {product.name}
-</h1>
-          <Badge className="mt-3 bg-gold-500/20 text-gold-300 border-gold-500/30">{product.category}</Badge>
+
+          {/* Title row with wishlist + share */}
+          <div className="flex items-start justify-between gap-4 mt-4">
+            <h1 className="font-display text-xl sm:text-2xl font-extrabold text-white tracking-tight leading-tight flex-1">
+              {product.name}
+            </h1>
+
+            {/* Action buttons */}
+            <div className="flex items-center gap-2 flex-shrink-0 pt-0.5">
+              {/* Wishlist button */}
+              <motion.button
+                whileTap={{ scale: 0.85 }}
+                onClick={toggleWishlist}
+                aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
+                className={`
+                  relative w-10 h-10 rounded-full flex items-center justify-center
+                  border transition-all duration-200
+                  ${isWishlisted
+                    ? 'bg-rose-500 border-rose-400 text-white shadow-lg shadow-rose-500/30'
+                    : 'bg-white/10 border-white/20 text-white/70 hover:bg-white/20 hover:text-white hover:border-white/40'}
+                `}
+              >
+                <AnimatePresence mode="wait">
+                  <motion.span
+                    key={isWishlisted ? 'filled' : 'empty'}
+                    initial={{ scale: 0.5, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    exit={{ scale: 0.5, opacity: 0 }}
+                    transition={{ duration: 0.15 }}
+                    className="absolute"
+                  >
+                    <Heart
+                      className="w-4 h-4"
+                      fill={isWishlisted ? 'currentColor' : 'none'}
+                      strokeWidth={isWishlisted ? 0 : 2}
+                    />
+                  </motion.span>
+                </AnimatePresence>
+              </motion.button>
+
+              {/* Share button */}
+              <div className="relative">
+                <motion.button
+                  whileTap={{ scale: 0.9 }}
+                  onClick={handleShare}
+                  aria-label="Share product"
+                  className="w-10 h-10 rounded-full flex items-center justify-center bg-white/10 border border-white/20 text-white/70 hover:bg-white/20 hover:text-white hover:border-white/40 transition-all duration-200"
+                >
+                  <Share2 className="w-4 h-4" />
+                </motion.button>
+
+                {/* Tooltip */}
+                <AnimatePresence>
+                  {shareTooltip !== 'idle' && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 6, scale: 0.9 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: 6, scale: 0.9 }}
+                      transition={{ duration: 0.15 }}
+                      className="absolute top-12 right-0 bg-foreground text-background text-xs font-medium px-3 py-1.5 rounded-lg whitespace-nowrap shadow-lg"
+                    >
+                      {shareTooltip === 'copied' ? '🔗 Link copied!' : '✓ Shared!'}
+                      <span className="absolute -top-1 right-3.5 w-2 h-2 bg-foreground rotate-45" />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3 mt-3">
+            <Badge className="bg-gold-500/20 text-gold-300 border-gold-500/30">{product.category}</Badge>
+            {isWishlisted && (
+              <motion.span
+                initial={{ opacity: 0, x: -6 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -6 }}
+                className="text-xs text-rose-300 flex items-center gap-1"
+              >
+                <Heart className="w-3 h-3 fill-current" />
+                Saved to wishlist
+              </motion.span>
+            )}
+          </div>
         </div>
       </div>
 
@@ -169,26 +298,25 @@ export default function ProductDetailPage() {
           {/* Left — Images + Details */}
           <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
             {/* Main image */}
-            
-<div
-  className="relative h-80 sm:h-96 bg-muted rounded-2xl overflow-hidden mb-3 shadow-lg cursor-zoom-in group"
-  onClick={() => allImages.length > 0 && openZoom(activeImg)}
-  onMouseMove={(e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
-    setMousePos({ x, y });
-  }}
-  onMouseLeave={() => setMousePos({ x: 50, y: 50 })}
->
-  {allImages.length > 0 ? (
-    <>
-      <img
-        src={allImages[activeImg]}
-        alt={product.name}
-        className="w-full h-full object-contain transition-transform duration-200 group-hover:scale-150"
-        style={{ transformOrigin: `${mousePos.x}% ${mousePos.y}%` }}
-      />
+            <div
+              className="relative h-80 sm:h-96 bg-muted rounded-2xl overflow-hidden mb-3 shadow-lg cursor-zoom-in group"
+              onClick={() => allImages.length > 0 && openZoom(activeImg)}
+              onMouseMove={(e) => {
+                const rect = e.currentTarget.getBoundingClientRect();
+                const x = ((e.clientX - rect.left) / rect.width) * 100;
+                const y = ((e.clientY - rect.top) / rect.height) * 100;
+                setMousePos({ x, y });
+              }}
+              onMouseLeave={() => setMousePos({ x: 50, y: 50 })}
+            >
+              {allImages.length > 0 ? (
+                <>
+                  <img
+                    src={allImages[activeImg]}
+                    alt={product.name}
+                    className="w-full h-full object-contain transition-transform duration-200 group-hover:scale-150"
+                    style={{ transformOrigin: `${mousePos.x}% ${mousePos.y}%` }}
+                  />
                   <div className="absolute bottom-2 right-2 bg-black/40 text-white text-xs px-2 py-1 rounded-full flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                     <ZoomIn className="w-3 h-3" />
                     <span>Click to zoom</span>
@@ -215,6 +343,20 @@ export default function ProductDetailPage() {
                   <Package className="w-20 h-20 text-muted-foreground/20" />
                 </div>
               )}
+
+              {/* Wishlist overlay badge on image */}
+              <AnimatePresence>
+                {isWishlisted && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.7 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.7 }}
+                    className="absolute top-3 left-3 w-8 h-8 rounded-full bg-rose-500 flex items-center justify-center shadow-md"
+                  >
+                    <Heart className="w-4 h-4 text-white fill-white" />
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
 
             {/* Thumbnails */}
@@ -252,29 +394,29 @@ export default function ProductDetailPage() {
                 ))}
               </div>
             </div>
-                  <br></br>
+            <br />
+
             {/* Specifications table */}
             {hasSpecs && (
               <div className="bg-card rounded-xl border border-border p-6 mt-4">
                 <h3 className="font-display font-bold text-lg text-foreground mb-4">Specifications</h3>
                 <div className="rounded-lg overflow-hidden">
-  <table className="w-full text-sm">
-    <tbody>
-      {product.specifications!.map((spec, i) => (
-        <tr key={i} className={i % 2 === 0 ? 'bg-muted/50' : 'bg-transparent'}>
-          <td className="px-4 py-2.5 font-semibold w-1/2" style={{ color: '#565959' }}>{spec.property}</td>
-          <td className="px-4 py-2.5 text-muted-foreground">{spec.value}</td>
-        </tr>
-      ))}
-    </tbody>
-  </table>
-</div>
+                  <table className="w-full text-sm">
+                    <tbody>
+                      {product.specifications!.map((spec, i) => (
+                        <tr key={i} className={i % 2 === 0 ? 'bg-muted/50' : 'bg-transparent'}>
+                          <td className="px-4 py-2.5 font-semibold w-1/2" style={{ color: '#565959' }}>{spec.property}</td>
+                          <td className="px-4 py-2.5 text-muted-foreground">{spec.value}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             )}
           </motion.div>
-          
 
-          {/* Right — Description + Specs + Enquiry */}
+          {/* Right — Description + Enquiry */}
           <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 }} className="space-y-6">
 
             {/* Description as bullet points */}
@@ -288,6 +430,49 @@ export default function ProductDetailPage() {
                   </li>
                 ))}
               </ul>
+            </div>
+
+            {/* Quick action row */}
+            <div className="flex gap-3">
+              <button
+                onClick={toggleWishlist}
+                className={`
+                  flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl border text-sm font-medium transition-all duration-200
+                  ${isWishlisted
+                    ? 'bg-rose-50 border-rose-200 text-rose-600 hover:bg-rose-100'
+                    : 'bg-card border-border text-muted-foreground hover:border-rose-200 hover:text-rose-500 hover:bg-rose-50'}
+                `}
+              >
+                <Heart
+                  className="w-4 h-4 transition-all"
+                  fill={isWishlisted ? 'currentColor' : 'none'}
+                />
+                {isWishlisted ? 'Saved to Wishlist' : 'Add to Wishlist'}
+              </button>
+
+              <div className="relative">
+                <button
+                  onClick={handleShare}
+                  className="flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl border border-border bg-card text-muted-foreground text-sm font-medium hover:bg-muted hover:text-foreground transition-all duration-200"
+                >
+                  <Share2 className="w-4 h-4" />
+                  Share
+                </button>
+                <AnimatePresence>
+                  {shareTooltip !== 'idle' && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 6, scale: 0.9 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: 6, scale: 0.9 }}
+                      transition={{ duration: 0.15 }}
+                      className="absolute top-12 right-0 bg-foreground text-background text-xs font-medium px-3 py-1.5 rounded-lg whitespace-nowrap shadow-lg z-10"
+                    >
+                      {shareTooltip === 'copied' ? '🔗 Link copied!' : '✓ Shared!'}
+                      <span className="absolute -top-1 right-3.5 w-2 h-2 bg-foreground rotate-45" />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
             </div>
 
             {/* Enquiry form */}
