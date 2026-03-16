@@ -6,6 +6,7 @@ import type { Product } from '../api/types';
 
 interface ProductCardProps {
   product: Product;
+  hideStockBadge?: boolean;
 }
 
 const categoryColors: Record<string, string> = {
@@ -17,7 +18,6 @@ const categoryColors: Record<string, string> = {
   Handicrafts: 'bg-amber-100 text-amber-800 border-amber-200',
 };
 
-// Wishlist helpers using localStorage
 const getWishlist = (): string[] => {
   try {
     return JSON.parse(localStorage.getItem('wishlist') || '[]');
@@ -34,7 +34,7 @@ const toggleWishlistItem = (id: string): boolean => {
   return !exists;
 };
 
-export default function ProductCard({ product }: ProductCardProps) {
+export default function ProductCard({ product, hideStockBadge = false }: ProductCardProps) {
   const categoryStyle = categoryColors[product.category] || 'bg-muted text-muted-foreground border-border';
   const allImages = product.images?.length ? product.images : product.imageUrl ? [product.imageUrl] : [];
   const [currentImg, setCurrentImg] = useState(0);
@@ -74,7 +74,7 @@ export default function ProductCard({ product }: ProductCardProps) {
     }
   };
 
-  const inStock = product.inStock !== false; // default true if undefined
+  const inStock = product.inStock !== false;
 
   return (
     <div
@@ -87,9 +87,11 @@ export default function ProductCard({ product }: ProductCardProps) {
         <span className={`text-xs font-semibold px-2 py-0.5 rounded-full border ${categoryStyle}`}>
           {product.category}
         </span>
-        <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${inStock ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-600'}`}>
-          {inStock ? '● In Stock' : '● Out of Stock'}
-        </span>
+        {!hideStockBadge && (
+          <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${inStock ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-600'}`}>
+            {inStock ? '● In Stock' : '● Out of Stock'}
+          </span>
+        )}
       </div>
 
       {/* Image carousel */}
@@ -137,7 +139,6 @@ export default function ProductCard({ product }: ProductCardProps) {
           </button>
         </div>
 
-        {/* Share copied message */}
         {shareMsg && (
           <div className="absolute bottom-8 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded-lg">
             {shareMsg}
