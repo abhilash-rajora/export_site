@@ -34,7 +34,7 @@ export default function CookieBanner() {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 100, opacity: 0 }}
           transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="fixed z-30 bottom-4 right-4 md:bottom-6 md:right-36 w-[calc(100vw-2rem)] md:w-96"
+          className="fixed z-30 bottom-4 left-4 right-24 md:left-auto md:bottom-6 md:right-36 md:w-96"
         >
           <div
             className="bg-navy-900/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl px-4 py-3"
