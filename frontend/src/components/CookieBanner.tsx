@@ -7,16 +7,14 @@ export default function CookieBanner() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-  const accepted = localStorage.getItem('cookie_consent');
-  // Only hide if explicitly accepted or declined — NOT if just closed
-  if (accepted === 'accepted' || accepted === 'declined') {
-    setVisible(false);
-    return;
-  }
-  // Show banner
-  const timer = setTimeout(() => setVisible(true), 1500);
-  return () => clearTimeout(timer);
-}, []);
+    const accepted = localStorage.getItem('cookie_consent');
+    if (accepted === 'accepted' || accepted === 'declined') {
+      setVisible(false);
+      return;
+    }
+    const timer = setTimeout(() => setVisible(true), 1500);
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleAccept = () => {
     localStorage.setItem('cookie_consent', 'accepted');
@@ -36,26 +34,30 @@ export default function CookieBanner() {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 100, opacity: 0 }}
           transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="fixed bottom-6 right-6 z-[9998] w-full max-w-sm"
+          className="fixed z-40 bottom-4 right-4 md:bottom-6 md:right-20 w-[calc(100vw-2rem)] md:w-96"
         >
-          <div className="bg-navy-900/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl px-5 py-5"
+          <div
+            className="bg-navy-900/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl px-4 py-3"
             style={{ WebkitBackdropFilter: 'blur(20px)' }}
           >
-            <div className="flex items-start gap-4">
-
+            <div className="flex items-start gap-3">
               {/* Icon */}
-              <div className="w-10 h-10 rounded-xl bg-gold-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                <Cookie className="w-5 h-5 text-gold-400" />
+              <div className="w-8 h-8 rounded-lg bg-gold-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <Cookie className="w-4 h-4 text-gold-400" />
               </div>
 
               {/* Text */}
               <div className="flex-1 min-w-0">
-                <p className="text-white font-semibold text-sm mb-1">
+                <p className="text-white font-semibold text-sm mb-0.5">
                   We value your privacy
                 </p>
                 <p className="text-white/50 text-xs leading-relaxed">
-                  We use cookies to enhance your browsing experience and analyze site traffic. By clicking "Accept", you consent to our use of cookies and agree to our{' '}
-                  <Link to="/terms" className="text-gold-400 hover:text-gold-300 underline underline-offset-2" onClick={handleAccept}>
+                  We use cookies to enhance your experience. By clicking "Accept", you agree to our{' '}
+                  <Link
+                    to="/terms"
+                    className="text-gold-400 hover:text-gold-300 underline underline-offset-2"
+                    onClick={handleAccept}
+                  >
                     Terms & Conditions
                   </Link>.
                 </p>
@@ -64,23 +66,23 @@ export default function CookieBanner() {
               {/* Close */}
               <button
                 onClick={() => setVisible(false)}
-                className="text-white/30 hover:text-white/60 transition-colors flex-shrink-0 mt-0.5"
+                className="text-white/30 hover:text-white/60 transition-colors flex-shrink-0"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
             {/* Buttons */}
-            <div className="flex items-center gap-3 mt-4 ml-14">
+            <div className="flex items-center gap-2 mt-3 ml-11">
               <button
                 onClick={handleAccept}
-                className="px-5 py-2 rounded-full bg-gold-500 hover:bg-gold-400 text-navy-900 text-xs font-bold transition-colors"
+                className="px-4 py-1.5 rounded-full bg-gold-500 hover:bg-gold-400 text-navy-900 text-xs font-bold transition-colors"
               >
                 Accept All
               </button>
               <button
                 onClick={handleDecline}
-                className="px-5 py-2 rounded-full border border-white/10 hover:border-white/20 text-white/60 hover:text-white text-xs font-medium transition-colors"
+                className="px-4 py-1.5 rounded-full border border-white/10 hover:border-white/20 text-white/60 hover:text-white text-xs font-medium transition-colors"
               >
                 Decline
               </button>
