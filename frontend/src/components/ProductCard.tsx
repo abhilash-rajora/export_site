@@ -87,9 +87,9 @@ export default function ProductCard({ product, hideStockBadge = false }: Product
         <span className={`text-xs font-semibold px-2 py-0.5 rounded-full border ${categoryStyle}`}>
           {product.category}
         </span>
-        {!hideStockBadge && (
-          <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${inStock ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-600'}`}>
-            {inStock ? '● In Stock' : '● Out of Stock'}
+        {inStock && (
+          <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-green-100 text-green-700">
+            ● In Stock
           </span>
         )}
       </div>
