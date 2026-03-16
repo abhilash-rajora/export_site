@@ -49,7 +49,7 @@ const sections = [
   },
   {
     title: '12. Contact Us',
-    content: `If you have any questions about these Terms and Conditions, please contact us at wexports@gmail.com. We will respond to your enquiry within 2-3 business days.`,
+    content: `If you have any questions about these Terms and Conditions, please contact us at wexports.support@gmail.com. We will respond to your enquiry within 2-3 business days.`,
   },
 ];
 
@@ -109,8 +109,8 @@ export default function TermsPage() {
         <div className="mt-8 bg-gold-50 border border-gold-200 rounded-2xl p-6 text-center">
           <p className="text-gray-700 text-sm">
             For any questions regarding these terms, contact us at{' '}
-            <a href="mailto:wexports@gmail.com" className="text-gold-600 font-semibold hover:text-gold-700">
-              wexports@gmail.com
+            <a href="mailto:wexports.support@gmail.com" className="text-gold-600 font-semibold hover:text-gold-700">
+              wexports.support@gmail.com
             </a>
           </p>
         </div>

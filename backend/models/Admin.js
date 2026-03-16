@@ -4,7 +4,7 @@ const bcrypt = require("bcryptjs");
 const adminSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
+    email: { type: String, required: true, unique: true, lowercase: true, trim: true },
     password: { type: String, required: true },
 
     role: {
@@ -15,6 +15,23 @@ const adminSchema = new mongoose.Schema(
 
     twoFactorSecret: String,
     twoFactorEnabled: { type: Boolean, default: false },
+
+    resetOtp: {
+      type: String,
+      default: null,
+    },
+    resetOtpExpiry: {
+      type: Date,
+      default: null,
+    },
+    resetOtpVerified: {
+      type: Boolean,
+      default: false,
+    },
+    resetOtpAttempts: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true }
 );

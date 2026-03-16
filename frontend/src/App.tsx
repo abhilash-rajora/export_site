@@ -20,9 +20,28 @@ import ScrollToTop from './components/ScrollToTop';
 import TermsPage from './pages/TermsPage';
 import CookieBanner from './components/CookieBanner';
 import WishlistPage from './pages/WishlistPage';
+import AdminForgotPasswordPage from './pages/admin/AdminForgotPasswordPage';
+import AdminVerifyResetOtpPage from './pages/admin/AdminVerifyResetOtpPage';
+import AdminResetPasswordPage from './pages/admin/AdminResetPasswordPage';
 
 
+const adminForgotPasswordRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/admin/forgot-password',
+  component: AdminForgotPasswordPage,
+});
 
+const adminVerifyResetOtpRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/admin/verify-reset-otp',
+  component: AdminVerifyResetOtpPage,
+});
+
+const adminResetPasswordRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/admin/reset-password',
+  component: AdminResetPasswordPage,
+});
 
 const rootRoute = createRootRoute({
   component: () => (
@@ -71,9 +90,28 @@ const adminCreateAdminRoute = createRoute({getParentRoute: () => adminLayoutRout
 const termsRoute = createRoute({ getParentRoute: () => publicLayoutRoute, path: '/terms', component: TermsPage });
 
 const routeTree = rootRoute.addChildren([
-  publicLayoutRoute.addChildren([homeRoute, productsRoute, productDetailRoute, enquiryRoute, aboutRoute, termsRoute,wishlistRoute]),
+  publicLayoutRoute.addChildren([
+    homeRoute,
+    productsRoute,
+    productDetailRoute,
+    enquiryRoute,
+    aboutRoute,
+    termsRoute,
+    wishlistRoute,
+  ]),
   adminLoginRoute,
-  adminLayoutRoute.addChildren([adminDashboardRoute, adminProductsRoute, adminProductNewRoute, adminProductEditRoute, adminEnquiriesRoute, adminSeoRoute, adminCreateAdminRoute]),
+  adminForgotPasswordRoute,
+  adminVerifyResetOtpRoute,
+  adminResetPasswordRoute,
+  adminLayoutRoute.addChildren([
+    adminDashboardRoute,
+    adminProductsRoute,
+    adminProductNewRoute,
+    adminProductEditRoute,
+    adminEnquiriesRoute,
+    adminSeoRoute,
+    adminCreateAdminRoute,
+  ]),
 ]);
 
 
