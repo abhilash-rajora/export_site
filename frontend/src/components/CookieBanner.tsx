@@ -34,14 +34,23 @@ export default function CookieBanner() {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 100, opacity: 0 }}
           transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="fixed z-40 bottom-4 right-4 md:bottom-6 md:right-36 w-[calc(100vw-2rem)] md:w-96 mb-16 md:mb-0"
-
+          className="fixed z-40 bottom-4 right-4 md:bottom-6 md:right-36 w-[calc(100vw-2rem)] md:w-96"
         >
           <div
-            className="bg-navy-900/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl px-4 py-3 pr-12 md:pr-4"
+            className="bg-navy-900/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl px-4 py-3"
             style={{ WebkitBackdropFilter: 'blur(20px)' }}
           >
-            <div className="flex items-start gap-3">
+            {/* Mobile: X on left | Desktop: X on right */}
+            <div className="flex items-start gap-3 flex-row-reverse md:flex-row">
+
+              {/* Close — left on mobile, right on desktop */}
+              <button
+                onClick={() => setVisible(false)}
+                className="text-white/30 hover:text-white/60 transition-colors flex-shrink-0 mt-0.5"
+              >
+                <X className="w-4 h-4" />
+              </button>
+
               {/* Icon */}
               <div className="w-8 h-8 rounded-lg bg-gold-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
                 <Cookie className="w-4 h-4 text-gold-400" />
@@ -64,13 +73,6 @@ export default function CookieBanner() {
                 </p>
               </div>
 
-              {/* Close */}
-              <button
-                onClick={() => setVisible(false)}
-                className="text-white/30 hover:text-white/60 transition-colors flex-shrink-0"
-              >
-                <X className="w-4 h-4" />
-              </button>
             </div>
 
             {/* Buttons */}
