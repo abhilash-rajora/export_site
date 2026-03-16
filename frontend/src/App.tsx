@@ -18,6 +18,8 @@ import AdminSeoPage from './pages/admin/AdminSeoPage';
 import CreateAdminPage from './pages/admin/CreateAdminPage';
 import ScrollToTop from './components/ScrollToTop';
 import TermsPage from './pages/TermsPage';
+import CookieBanner from './components/CookieBanner';
+
 
 
 
@@ -28,6 +30,7 @@ const rootRoute = createRootRoute({
       <ScrollToTop />
       <Outlet />
       <Toaster position="top-right" richColors  />
+      <CookieBanner /> 
     </>
   ),
 });
