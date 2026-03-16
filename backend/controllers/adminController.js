@@ -14,9 +14,13 @@ const transporter = nodemailer.createTransport({
 });
 
 const loginAdmin = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password } = req.body || {};
 
   try {
+    if (!email || !password) {
+      return res.status(400).json({ message: "Email and password are required" });
+    }
+
     const admin = await Admin.findOne({ email: email.toLowerCase() });
 
     if (!admin) {
@@ -59,11 +63,17 @@ const loginAdmin = async (req, res) => {
 const createAdmin = async (req, res) => {
   try {
     const data =
-      typeof req.body.body === "string" ? JSON.parse(req.body.body) : req.body;
+      typeof req.body.body === "string" ? JSON.parse(req.body.body) : req.body || {};
 
     const { name, email, password, role } = data;
 
-    const existing = await Admin.findOne({ email: email.toLowerCase() });
+    if (!name || !email || !password || !role) {
+      return res.status(400).json({ message: "Name, email, password and role are required" });
+    }
+
+    const normalizedEmail = email.toLowerCase();
+
+    const existing = await Admin.findOne({ email: normalizedEmail });
 
     if (existing) {
       return res.status(400).json({ message: "Admin already exists" });
@@ -71,14 +81,14 @@ const createAdmin = async (req, res) => {
 
     await Admin.create({
       name,
-      email: email.toLowerCase(),
+      email: normalizedEmail,
       password,
       role,
     });
 
     res.status(201).json({ message: "Admin created successfully" });
   } catch (error) {
-    console.error(error);
+    console.error("Create admin error:", error);
     res.status(500).json({ message: error.message });
   }
 };
@@ -207,9 +217,15 @@ const disable2FA = async (req, res) => {
 // @route POST /api/admin/forgot-password
 // @access Public
 const forgotPassword = async (req, res) => {
-  const { email } = req.body;
+  const { email } = req.body || {};
 
   try {
+    console.log("req.body:", req.body);
+
+    if (!email || typeof email !== "string") {
+      return res.status(400).json({ message: "Email is required" });
+    }
+
     const admin = await Admin.findOne({ email: email.toLowerCase() });
 
     if (!admin) {
@@ -242,17 +258,21 @@ const forgotPassword = async (req, res) => {
 
     res.json({ message: "Reset OTP sent to your email" });
   } catch (error) {
+    console.error("Forgot password error:", error);
     res.status(500).json({ message: error.message });
   }
 };
-
 // @desc Verify reset OTP
 // @route POST /api/admin/verify-reset-otp
 // @access Public
 const verifyResetOtp = async (req, res) => {
-  const { email, otp } = req.body;
+  const { email, otp } = req.body || {};
 
   try {
+    if (!email || !otp) {
+      return res.status(400).json({ message: "Email and OTP are required" });
+    }
+
     const admin = await Admin.findOne({ email: email.toLowerCase() });
 
     if (!admin) {
@@ -291,9 +311,13 @@ const verifyResetOtp = async (req, res) => {
 // @route POST /api/admin/reset-password
 // @access Public
 const resetPassword = async (req, res) => {
-  const { email, newPassword } = req.body;
+  const { email, newPassword } = req.body || {};
 
   try {
+    if (!email || !newPassword) {
+      return res.status(400).json({ message: "Email and new password are required" });
+    }
+
     const admin = await Admin.findOne({ email: email.toLowerCase() });
 
     if (!admin) {
