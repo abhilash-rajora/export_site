@@ -216,9 +216,16 @@ export default function HomePage() {
               </Link>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
+            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 items-stretch">
               {featuredProducts.map((product, i) => (
-                <motion.div key={product._id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}>
+                <motion.div 
+                  key={product._id} 
+                  initial={{ opacity: 0, y: 20 }} 
+                  whileInView={{ opacity: 1, y: 0 }} 
+                  viewport={{ once: true }} 
+                  transition={{ delay: i * 0.08 }}
+                  className="aspect-[2/3] md:aspect-auto"
+                >
                   <ProductCard product={product} />
                 </motion.div>
               ))}
