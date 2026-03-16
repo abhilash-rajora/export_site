@@ -6,10 +6,15 @@ const speakeasy = require("speakeasy");
 const QRCode = require("qrcode");
 
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  host: "smtp.gmail.com",
+  port: 587,
+  secure: false,
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
+  },
+  tls: {
+    rejectUnauthorized: false,
   },
 });
 
@@ -240,6 +245,7 @@ const forgotPassword = async (req, res) => {
     admin.resetOtpAttempts = 0;
 
     await admin.save();
+    await transporter.verify();
 
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
