@@ -12,32 +12,45 @@ export default function AdminForgotPasswordPage() {
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
+ const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
 
-    try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/admin/forgot-password`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
-      });
+  const trimmedEmail = email.trim();
+  console.log('Forgot password email:', trimmedEmail);
 
-      const data = await res.json();
+  if (!trimmedEmail) {
+    toast.error('Email is required');
+    return;
+  }
 
-      if (!res.ok) throw new Error(data.message || 'Failed to send OTP');
+  setIsLoading(true);
 
-      toast.success(data.message || 'OTP sent');
-      navigate({
-        to: '/admin/verify-reset-otp',
-        search: { email },
-      });
-    } catch (error: any) {
-      toast.error(error.message || 'Failed to send OTP');
-    } finally {
-      setIsLoading(false);
+  try {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/admin/forgot-password`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email: trimmedEmail }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      throw new Error(data.message || 'Failed to send OTP');
     }
-  };
+
+    toast.success(data.message || 'OTP sent');
+    navigate({
+      to: '/admin/verify-reset-otp',
+      search: { email: trimmedEmail },
+    });
+  } catch (error: any) {
+    toast.error(error.message || 'Failed to send OTP');
+  } finally {
+    setIsLoading(false);
+  }
+};
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-navy-900">

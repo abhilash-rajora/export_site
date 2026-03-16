@@ -224,7 +224,6 @@ export default function HomePage() {
                   whileInView={{ opacity: 1, y: 0 }} 
                   viewport={{ once: true }} 
                   transition={{ delay: i * 0.08 }}
-                  className="aspect-[2/3] md:aspect-auto"
                 >
                   <ProductCard product={product} />
                 </motion.div>

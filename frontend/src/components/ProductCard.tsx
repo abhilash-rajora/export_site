@@ -148,7 +148,7 @@ export default function ProductCard({ product, hideStockBadge = false }: Product
 
       {/* Content */}
       <div className="p-3 sm:p-4 flex flex-col flex-1">
-        <h3 className="font-display font-bold text-foreground text-sm sm:text-base leading-snug mb-1 line-clamp-2 min-h-[2.5rem]">
+        <h3 className="font-display font-bold text-foreground text-sm sm:text-base leading-snug mb-1 line-clamp-3 min-h-[2.5rem]">
           {product.name}
         </h3>
         <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed line-clamp-2 mb-3">
