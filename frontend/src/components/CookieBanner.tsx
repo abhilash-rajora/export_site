@@ -36,9 +36,9 @@ export default function CookieBanner() {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 100, opacity: 0 }}
           transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="fixed bottom-0 left-0 right-0 z-[9998] w-full px-4 pb-6 pt-2"
+          className="fixed bottom-6 right-6 z-[9998] w-full max-w-sm"
         >
-          <div className="bg-navy-900/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl px-4 py-4 max-w-2xl mx-auto"
+          <div className="bg-navy-900/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl px-5 py-5"
             style={{ WebkitBackdropFilter: 'blur(20px)' }}
           >
             <div className="flex items-start gap-4">
@@ -69,7 +69,7 @@ export default function CookieBanner() {
                 <X className="w-4 h-4" />
               </button>
             </div>
-            
+
             {/* Buttons */}
             <div className="flex items-center gap-3 mt-4 ml-14">
               <button
