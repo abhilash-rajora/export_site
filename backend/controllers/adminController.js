@@ -7,15 +7,13 @@ const QRCode = require("qrcode");
 
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
-  port: 587,
-  secure: false,
+  port: 465,        // change from 587
+  secure: true,     // change from false
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
   },
-  tls: {
-    rejectUnauthorized: false,
-  },
+  // remove the tls block entirely
 });
 
 const loginAdmin = async (req, res) => {
@@ -264,9 +262,19 @@ const forgotPassword = async (req, res) => {
 
     res.json({ message: "Reset OTP sent to your email" });
   } catch (error) {
-    console.error("Forgot password error:", error);
-    res.status(500).json({ message: error.message });
-  }
+  console.error("Forgot password error FULL:", {
+    message: error.message,
+    code: error.code,
+    command: error.command,   // nodemailer gives this
+    response: error.response, // and this
+  });
+  res.status(500).json({ 
+    message: error.message,
+    code: error.code || null,
+  });
+}
+
+
 };
 // @desc Verify reset OTP
 // @route POST /api/admin/verify-reset-otp
