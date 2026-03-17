@@ -126,7 +126,7 @@ const LogoImage = ({ height }: { height: string }) => {
                 zIndex: 0,
 
                 // 👉 REAL glass blur
-                backdropFilter: 'blur(3px) saturate(140%)',
+                backdropFilter: 'blur(1px) saturate(140%)',
                 WebkitBackdropFilter: 'blur(14px)',
 
                 // 👉 very light tint (optional but better)
