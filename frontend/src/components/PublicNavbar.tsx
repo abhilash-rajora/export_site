@@ -144,14 +144,14 @@ const LogoImage = ({ height }: { height: string }) => {
             <Link
               to="/"
               className={cn(
-                "flex items-center justify-center px-4 py-1.5 min-w-[200px] h-[60px] rounded-full transition-all duration-500",
+                "flex items-center justify-center px-4 py-1.5 min-w-[180px] h-[52px] md:h-[60px] rounded-full transition-all duration-500",
                 scrolled
                   ? telegramPill.className
                   : 'bg-white/10 border border-white/40 shadow-lg backdrop-blur-sm',
               )}
               style={scrolled ? telegramPill.style : { WebkitBackdropFilter: 'blur(8px)' }}
             >
-              <LogoImage height="h-14" />
+              <LogoImage height="h-14 md:h-14px" />
             </Link>
 
             {/* Nav */}
