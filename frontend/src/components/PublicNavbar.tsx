@@ -65,41 +65,37 @@ const LogoImage = ({ height }: { height: string }) => {
   const px = height === 'h-14' ? '56px' : '44px';
 
   return (
-    <AnimatePresence mode="wait">
-      {scrolled ? (
-        <motion.img
-          key="logo-dark"
-          src="/logo-dark.png"
-          alt="WeExports"
-          style={{
-            height: px,
-            width: 'auto',
-            objectFit: 'contain',
-            transform: 'scale(1)',   // 👈 increase this
-          }}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.2 }}
-        />
-      ) : (
-        <motion.img
-          key="logo-light"
-          src="/logo1.png"
-          alt="WeExports"
-          style={{
-            height: px,
-            width: 'auto',
-            objectFit: 'contain',
-            transform: 'scale(1)',
-          }}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.2 }}
-        />
-      )}
-    </AnimatePresence>
+    <div className="relative flex items-center justify-center w-[160px] h-[56px]">
+      
+      {/* Light logo */}
+      <motion.img
+        src="/logo1.png"
+        alt="WeExports"
+        className="absolute"
+        style={{
+          height: px,
+          width: 'auto',
+          objectFit: 'contain',
+        }}
+        animate={{ opacity: scrolled ? 0 : 1 }}
+        transition={{ duration: 0.25 }}
+      />
+
+      {/* Dark logo */}
+      <motion.img
+        src="/logo-dark.png"
+        alt="WeExports"
+        className="absolute"
+        style={{
+          height: px,
+          width: 'auto',
+          objectFit: 'contain',
+        }}
+        animate={{ opacity: scrolled ? 1 : 0 }}
+        transition={{ duration: 0.25 }}
+      />
+
+    </div>
   );
 };
 
@@ -126,8 +122,8 @@ const LogoImage = ({ height }: { height: string }) => {
                 zIndex: 0,
 
                 // 👉 REAL glass blur
-                backdropFilter: 'blur(1px) saturate(140%)',
-                WebkitBackdropFilter: 'blur(14px)',
+                backdropFilter: 'blur(3px) saturate(140%)',
+                WebkitBackdropFilter: 'blur(3px) saturate(140%)',
 
                 // 👉 very light tint (optional but better)
                 background: 'linear-gradient(to bottom, rgba(255,255,255,0.12), rgba(255,255,255,0.05))',
@@ -148,7 +144,7 @@ const LogoImage = ({ height }: { height: string }) => {
             <Link
               to="/"
               className={cn(
-                'flex items-center justify-center px-4 py-1.5 min-w-[200px] rounded-full transition-all duration-500',
+                "flex items-center justify-center px-4 py-1.5 min-w-[200px] h-[60px] rounded-full transition-all duration-500",
                 scrolled
                   ? telegramPill.className
                   : 'bg-white/10 border border-white/40 shadow-lg backdrop-blur-sm',
