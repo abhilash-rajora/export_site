@@ -65,7 +65,7 @@ const LogoImage = ({ height }: { height: string }) => {
   const px = height === 'h-14' ? '56px' : '44px';
 
   return (
-    <div className="relative flex items-center justify-center w-[160px] h-[56px]">
+    <div className="relative flex items-center justify-center w-[140px] h-[44px] md:w-[160px] md:h-[56px]">
       
       {/* Light logo */}
       <motion.img
@@ -144,7 +144,7 @@ const LogoImage = ({ height }: { height: string }) => {
             <Link
               to="/"
               className={cn(
-                "flex items-center justify-center px-4 py-1.5 min-w-[180px] h-[42px] md:h-[60px] rounded-full transition-all duration-500",
+                "flex items-center justify-center px-4 py-1.5 min-w-[180px] h-[48px] md:h-[60px] rounded-full transition-all duration-500",
                 scrolled
                   ? telegramPill.className
                   : 'bg-white/10 border border-white/40 shadow-lg backdrop-blur-sm',
