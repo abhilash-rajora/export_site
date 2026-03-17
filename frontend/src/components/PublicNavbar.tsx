@@ -146,16 +146,17 @@ const LogoImage = ({ height }: { height: string }) => {
 
             {/* Logo pill */}
             <Link
-  to="/"
-  className={cn(
-    'flex items-center justify-center px-0 py-1.5 min-w-[200px] rounded-full transition-all duration-500 border shadow-md',
-    scrolled
-      ? 'bg-white/80 border-white/30'
-      : 'bg-white/10 border-white/40 backdrop-blur-sm'
-  )}
->
-  <LogoImage height="h-14" />
-</Link>
+              to="/"
+              className={cn(
+                'flex items-center justify-center px-4 py-1.5 min-w-[200px] rounded-full transition-all duration-500',
+                scrolled
+                  ? telegramPill.className
+                  : 'bg-white/10 border border-white/40 shadow-lg backdrop-blur-sm',
+              )}
+              style={scrolled ? telegramPill.style : { WebkitBackdropFilter: 'blur(8px)' }}
+            >
+              <LogoImage height="h-14" />
+            </Link>
 
             {/* Nav */}
             <AnimatePresence mode="wait">
