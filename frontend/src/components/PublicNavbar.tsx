@@ -52,11 +52,6 @@ export default function PublicNavbar() {
   const isActive = (href: string) =>
     href === '/' ? location.pathname === '/' : location.pathname.startsWith(href);
 
-  // Exact Telegram pill style:
-  // - rgba(255,255,255,0.72) solid-ish white base
-  // - very light blur (4px) — Telegram barely blurs
-  // - thin light border
-  // - soft shadow underneath
   const telegramPill = {
     className: 'rounded-full border border-white/50 shadow-[0_2px_16px_rgba(0,0,0,0.12)]',
     style: {
@@ -66,6 +61,47 @@ export default function PublicNavbar() {
     } as React.CSSProperties,
   };
 
+const LogoImage = ({ height }: { height: string }) => {
+  const px = height === 'h-14' ? '56px' : '44px';
+
+  return (
+    <AnimatePresence mode="wait">
+      {scrolled ? (
+        <motion.img
+          key="logo-dark"
+          src="/logo-dark.png"
+          alt="WeExports"
+          style={{
+            height: px,
+            width: 'auto',
+            objectFit: 'contain',
+            transform: 'scale(1.3)',   // 👈 increase this
+          }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2 }}
+        />
+      ) : (
+        <motion.img
+          key="logo-light"
+          src="/logo1.png"
+          alt="WeExports"
+          style={{
+            height: px,
+            width: 'auto',
+            objectFit: 'contain',
+          }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2 }}
+        />
+      )}
+    </AnimatePresence>
+  );
+};
+
   return (
     <>
       <motion.header
@@ -74,7 +110,7 @@ export default function PublicNavbar() {
         transition={{ duration: 0.5, ease: 'easeInOut' }}
       >
 
-        {/* Dim gradient — only when scrolled, sits behind pills, above page */}
+        {/* White fade — only when scrolled, fades content behind pill */}
         <AnimatePresence>
           {scrolled && (
             <motion.div
@@ -85,9 +121,19 @@ export default function PublicNavbar() {
               transition={{ duration: 0.4 }}
               className="absolute inset-x-0 top-0 pointer-events-none"
               style={{
-                height: '110px',
+                height: '120px',
                 zIndex: 0,
-                background: 'linear-gradient(to bottom, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0.10) 60%, transparent 100%)',
+
+                // 👉 REAL glass blur
+                backdropFilter: 'blur(4px) saturate(140%)',
+                WebkitBackdropFilter: 'blur(14px)',
+
+                // 👉 very light tint (optional but better)
+                background: 'linear-gradient(to bottom, rgba(255,255,255,0.12), rgba(255,255,255,0.05))',
+
+                // 👉 THIS IS THE MAGIC (no hard line)
+                maskImage: 'linear-gradient(to bottom, black 0%, black 60%, transparent 100%)',
+                WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black 60%, transparent 100%)',
               }}
             />
           )}
@@ -97,18 +143,18 @@ export default function PublicNavbar() {
         <div className="hidden md:block pointer-events-auto relative z-10">
           <div className="flex items-center justify-between px-8 mt-6 max-w-7xl mx-auto">
 
-            {/* Logo — plain at top, Telegram pill when scrolled */}
+            {/* Logo pill */}
             <Link
               to="/"
               className={cn(
-                'flex items-center px-1 py-0.5 rounded-full transition-all duration-500',
+                'flex items-center px-5 py-1 rounded-full transition-all duration-500',
                 scrolled
                   ? telegramPill.className
                   : 'bg-white/10 border border-white/40 shadow-lg backdrop-blur-sm',
               )}
               style={scrolled ? telegramPill.style : { WebkitBackdropFilter: 'blur(8px)' }}
             >
-              <img src="/logo1.png" alt="WeExports" className="h-14 w-auto object-contain" />
+              <LogoImage height="h-14" />
             </Link>
 
             {/* Nav */}
@@ -248,7 +294,7 @@ export default function PublicNavbar() {
             )}
             style={scrolled ? telegramPill.style : { WebkitBackdropFilter: 'blur(8px)' }}
           >
-            <img src="/logo1.png" alt="WeExports" className="h-11 w-auto object-contain" />
+            <LogoImage height="h-11" />
           </Link>
 
           <div className="relative pointer-events-auto">
@@ -260,7 +306,7 @@ export default function PublicNavbar() {
                 isOpen
                   ? 'bg-navy-900 border border-white/40 text-white shadow-xl'
                   : scrolled
-                    ? cn(telegramPill.className, 'text-gray-800')
+                    ? cn(telegramPill.className, 'text-black')
                     : 'bg-white/10 border border-white/40 text-white shadow-lg backdrop-blur-sm',
               )}
               style={{

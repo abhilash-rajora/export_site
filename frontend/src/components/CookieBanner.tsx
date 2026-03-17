@@ -37,43 +37,47 @@ export default function CookieBanner() {
           className="fixed z-30 bottom-4 left-4 right-20 md:left-auto md:bottom-6 md:right-36 md:w-96"
         >
           <div
-            className="bg-navy-900/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl px-4 py-3"
-            style={{ WebkitBackdropFilter: 'blur(20px)' }}
+            className="rounded-2xl border border-white/50 px-4 py-3 shadow-[0_2px_16px_rgba(0,0,0,0.12)]"
+            style={{
+              background: 'rgba(255,255,255,0.72)',
+              backdropFilter: 'blur(4px)',
+              WebkitBackdropFilter: 'blur(4px)',
+            }}
           >
-            {/* Mobile: X on left | Desktop: X on right */}
             <div className="flex items-start gap-3">
 
-  {/* Icon */}
-  <div className="w-8 h-8 rounded-lg bg-gold-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-    <Cookie className="w-4 h-4 text-gold-400" />
-  </div>
+              {/* Icon */}
+              <div className="w-8 h-8 rounded-lg bg-gold-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <Cookie className="w-4 h-4 text-gold-600" />
+              </div>
 
-  {/* Text */}
-  <div className="flex-1 min-w-0">
-    <p className="text-white font-semibold text-sm mb-0.5">
-      We value your privacy
-    </p>
-    <p className="text-white/50 text-xs leading-relaxed">
-      We use cookies to enhance your experience. By clicking "Accept", you agree to our{' '}
-      <Link
-        to="/terms"
-        className="text-gold-400 hover:text-gold-300 underline underline-offset-2"
-        onClick={handleAccept}
-      >
-        Terms & Conditions
-      </Link>.
-    </p>
-  </div>
+              {/* Text */}
+              <div className="flex-1 min-w-0">
+                <p className="text-black font-semibold text-sm mb-0.5">
+                  We value your privacy
+                </p>
+                <p className="text-black/50 text-xs leading-relaxed">
+                  We use cookies to enhance your experience. By clicking "Accept", you agree to our{' '}
+                  <Link
+                    to="/terms"
+                    className="text-gold-600 hover:text-gold-500 underline underline-offset-2"
+                    onClick={handleAccept}
+                  >
+                    Terms & Conditions
+                  </Link>.
+                </p>
+              </div>
 
-  {/* Close */}
-  <button
-    onClick={() => setVisible(false)}
-    className="text-white/30 hover:text-white/60 transition-colors flex-shrink-0 mt-0.5"
-  >
-    <X className="w-4 h-4" />
-  </button>
+              {/* Close */}
+              <button
+                onClick={() => setVisible(false)}
+                className="text-black/25 hover:text-black/50 transition-colors flex-shrink-0 mt-0.5"
+              >
+                <X className="w-4 h-4" />
+              </button>
 
-</div>
+            </div>
+
             {/* Buttons */}
             <div className="flex items-center gap-2 mt-3 ml-11">
               <button
@@ -84,7 +88,7 @@ export default function CookieBanner() {
               </button>
               <button
                 onClick={handleDecline}
-                className="px-4 py-1.5 rounded-full border border-white/10 hover:border-white/20 text-white/60 hover:text-white text-xs font-medium transition-colors"
+                className="px-4 py-1.5 rounded-full border border-black/10 hover:border-black/20 text-black/50 hover:text-black text-xs font-medium transition-colors"
               >
                 Decline
               </button>
