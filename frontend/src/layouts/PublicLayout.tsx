@@ -2,6 +2,8 @@ import { Outlet } from '@tanstack/react-router';
 import Footer from '../components/Footer';
 import PublicNavbar from '../components/PublicNavbar';
 import FloatingButtons from '../components/FloatingButtons';
+import ScrollTopButton from '@/components/ScrollTopButton';
+import ScrollToTop from '@/components/ScrollToTop';
 
 export default function PublicLayout() {
   return (
@@ -12,6 +14,7 @@ export default function PublicLayout() {
       </main>
       <Footer />
       <FloatingButtons />
+       <ScrollTopButton /> 
     </div>
   );
 }

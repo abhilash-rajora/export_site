@@ -53,9 +53,9 @@ export default function PublicNavbar() {
     href === '/' ? location.pathname === '/' : location.pathname.startsWith(href);
 
   const telegramPill = {
-    className: 'rounded-full border border-white/50 shadow-[0_2px_16px_rgba(0,0,0,0.12)]',
+    className: 'rounded-full border border-white/50 shadow-[0_2px_16px_rgba(0,0,0,0.4)]',
     style: {
-      background: 'rgba(255,255,255,0.72)',
+      background: 'rgba(255,255,255,0.5)',
       backdropFilter: 'blur(4px)',
       WebkitBackdropFilter: 'blur(4px)',
     } as React.CSSProperties,
@@ -223,7 +223,7 @@ const LogoImage = ({ height }: { height: string }) => {
                         'relative flex items-center px-5 h-14 rounded-full text-[15px] font-medium transition-all duration-200 group',
                         isActive(link.href)
                           ? 'text-gold-600'
-                          : 'text-black hover:text-black hover:bg-black/[0.04]',
+                          : 'text-black hover:text-black hover:bg-black/[0.09]',
                       )}
                     >
                       {link.label}
