@@ -37,9 +37,9 @@ export default function CookieBanner() {
           className="fixed z-30 bottom-4 left-4 right-20 md:left-auto md:bottom-6 md:right-36 md:w-96"
         >
           <div
-            className="rounded-2xl border border-white/50 px-4 py-3 shadow-[0_2px_16px_rgba(0,0,0,0.12)]"
+            className="rounded-2xl border border-white/50 px-4 py-3 shadow-[0_2px_16px_rgba(0,0,0,0.2)]"
             style={{
-              background: 'rgba(255,255,255,0.72)',
+              background: 'rgba(255,255,255,0.5)',
               backdropFilter: 'blur(4px)',
               WebkitBackdropFilter: 'blur(4px)',
             }}
