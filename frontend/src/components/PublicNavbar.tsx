@@ -75,7 +75,7 @@ const LogoImage = ({ height }: { height: string }) => {
             height: px,
             width: 'auto',
             objectFit: 'contain',
-            transform: 'scale(1.3)',   // 👈 increase this
+            transform: 'scale(1)',   // 👈 increase this
           }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -91,6 +91,7 @@ const LogoImage = ({ height }: { height: string }) => {
             height: px,
             width: 'auto',
             objectFit: 'contain',
+            transform: 'scale(0.85)',
           }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -121,11 +122,11 @@ const LogoImage = ({ height }: { height: string }) => {
               transition={{ duration: 0.4 }}
               className="absolute inset-x-0 top-0 pointer-events-none"
               style={{
-                height: '120px',
+                height: '110px',
                 zIndex: 0,
 
                 // 👉 REAL glass blur
-                backdropFilter: 'blur(4px) saturate(140%)',
+                backdropFilter: 'blur(3px) saturate(140%)',
                 WebkitBackdropFilter: 'blur(14px)',
 
                 // 👉 very light tint (optional but better)
@@ -145,17 +146,16 @@ const LogoImage = ({ height }: { height: string }) => {
 
             {/* Logo pill */}
             <Link
-              to="/"
-              className={cn(
-                'flex items-center px-5 py-1 rounded-full transition-all duration-500',
-                scrolled
-                  ? telegramPill.className
-                  : 'bg-white/10 border border-white/40 shadow-lg backdrop-blur-sm',
-              )}
-              style={scrolled ? telegramPill.style : { WebkitBackdropFilter: 'blur(8px)' }}
-            >
-              <LogoImage height="h-14" />
-            </Link>
+  to="/"
+  className={cn(
+    'flex items-center justify-center px-0 py-1.5 min-w-[200px] rounded-full transition-all duration-500 border shadow-md',
+    scrolled
+      ? 'bg-white/80 border-white/30'
+      : 'bg-white/10 border-white/40 backdrop-blur-sm'
+  )}
+>
+  <LogoImage height="h-14" />
+</Link>
 
             {/* Nav */}
             <AnimatePresence mode="wait">
