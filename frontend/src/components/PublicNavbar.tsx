@@ -53,7 +53,7 @@ export default function PublicNavbar() {
     href === '/' ? location.pathname === '/' : location.pathname.startsWith(href);
 
   const telegramPill = {
-    className: 'rounded-full border border-white/50 shadow-[0_2px_16px_rgba(0,0,0,0.4)]',
+    className: 'rounded-full border border-white/50 shadow-[0_2px_16px_rgba(0,0,0,0.12)]',
     style: {
       background: 'rgba(255,255,255,0.5)',
       backdropFilter: 'blur(4px)',
