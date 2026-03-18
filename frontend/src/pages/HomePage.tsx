@@ -52,18 +52,29 @@ export default function HomePage() {
         <meta name="keywords" content={seo?.keywords || "export company, we exports, agriculture export, textile exporter"} />
       </Helmet>
 
-      {/* ── MOBILE HERO ── navy bg + rounded card image + text on gradient ── */}
+      {/* ── MOBILE HERO ── navy bg + rounded card video + text on gradient ── */}
       <section className="md:hidden bg-[#0D3D3D] px-[8px] pt-[8px] pb-[8px]">
         <div
           className="relative rounded-2xl overflow-hidden"
           style={{ height: '96svh' }}
         >
-          {/* Zoomed background image */}
-          <img
+          {/* Autoplay looping background video (mobile) */}
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover object-center"
+          >
+            <source src="/hero-mobile.mp4" type="video/mp4" />
+          </video>
+
+          {/* Static image fallback — commented out */}
+          {/* <img
             src="\container1.jpg"
             alt="Global shipping port"
             className="absolute inset-0 w-full h-full object-cover object-center scale-125"
-          />
+          /> */}
 
           {/* Gradient: clear at top, dark at bottom for text */}
           <div
@@ -88,7 +99,7 @@ export default function HomePage() {
                 <span className="text-gold-400">Global Export</span>{' '}
                 Partner
               </h1>
-              <p className="text-white/70 text-base leading-relaxed mb-6">
+              <p className="text-white text-base leading-relaxed mb-6">
                 Connecting quality products from across the world to international markets.
               </p>
               <div className="flex gap-3">
@@ -108,15 +119,27 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── DESKTOP HERO ── navy bg + rounded card image ── */}
+      {/* ── DESKTOP HERO ── navy bg + rounded card video ── */}
       <section className="hidden md:block bg-[#0D3D3D] px-[20px] pt-[20px] pb-[20px]">
         <div className="relative h-[620px] rounded-3xl overflow-hidden">
-          {/* Background image */}
-          <img
+          {/* Autoplay looping background video (desktop) */}
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover object-right"
+          >
+            <source src="/hero-desktop.mp4" type="video/mp4" />
+          </video>
+
+          {/* Static image fallback — commented out */}
+          {/* <img
             src="\container1.jpg"
             alt="Global shipping port"
             className="absolute inset-0 w-full h-full object-cover object-right scale-100 origin-right transition-transform duration-700 ease-in-out"
-          />
+          /> */}
+
           <div className="hero-overlay absolute inset-0" />
 
           {/* Text content */}
