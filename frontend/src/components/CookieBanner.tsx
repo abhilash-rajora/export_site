@@ -156,25 +156,25 @@ const handleClose = () => {
             </div>
 
             {/* Buttons */}
-            <div className="flex flex-wrap items-center gap-2 mt-3 ml-11">
+            <div className="flex items-center gap-2 mt-3 ml-0 md:ml-11 overflow-x-auto">
 
               <button
                 onClick={handleAcceptAll}
-                className="px-4 py-1.5 rounded-full bg-gold-500 hover:bg-gold-400 text-navy-900 text-xs font-bold transition"
+                className="px-4 py-1.5 rounded-full bg-gold-500 hover:bg-gold-400 text-navy-900 text-xs font-bold transition flex-shrink-0"
               >
                 Accept All
               </button>
 
               <button
                 onClick={handleRejectAll}
-                className="px-4 py-1.5 rounded-full border border-black/10 hover:border-black/20 text-black/60 hover:text-black text-xs font-medium transition"
+                className="px-4 py-1.5 rounded-full border border-black/10 hover:border-black/20 text-black/60 hover:text-black text-xs font-medium transition flex-shrink-0"
               >
                 Reject All
               </button>
 
               <button
                 onClick={handleEssential}
-                className="px-4 py-1.5 rounded-full border border-black/10 hover:border-black/20 text-black/60 hover:text-black text-xs font-medium transition"
+                className="px-4 py-1.5 rounded-full border border-black/10 hover:border-black/20 text-black/60 hover:text-black text-xs font-medium transition flex-shrink-0"
               >
                 Essential Only
               </button>
