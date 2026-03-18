@@ -108,12 +108,6 @@ export default function HomePage() {
               <p className="text-white text-base leading-relaxed mb-6">
                 Connecting quality products from across the world to international markets.
               </p>
-
-              <div className="flex flex-wrap gap-3 mt-3 text-white/70 text-xs">
-                <span>✔ ISO Certified</span>
-                <span>✔ 50+ Countries</span>
-                <span>✔ 15+ Years</span>
-              </div>
               
               <div className="flex gap-3">
                 <Link to="/products">
@@ -174,11 +168,6 @@ export default function HomePage() {
                 <p className="text-white/75 text-xl leading-relaxed mb-8 max-w-xl">
                   Connecting quality products from across the world to international markets.
                 </p>
-                <div className="flex items-center gap-6 mt-6  text-white/70 text-sm">
-                  <span>✔ ISO Certified</span>
-                  <span>✔ 50+ Countries</span>
-                  <span>✔ 15+ Years Experience</span>
-                </div>
 
                 <div className="h-4"></div>
 
@@ -320,13 +309,6 @@ export default function HomePage() {
           </motion.div>
         </div>
       </section>
-      <div className="fixed bottom-4 left-0 right-0 px-4 md:hidden z-50">
-  <Link to="/enquiry">
-    <Button className="w-full bg-gold-500 text-navy-900 font-bold shadow-lg">
-      Get Quote Now
-    </Button>
-  </Link>
-</div>
     </>
   );
 }
