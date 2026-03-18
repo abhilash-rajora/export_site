@@ -56,8 +56,8 @@ export default function PublicNavbar() {
     className: 'rounded-full border border-white/50 shadow-[0_2px_16px_rgba(0,0,0,0.12)]',
     style: {
       background: 'rgba(255,255,255,0.5)',
-      backdropFilter: 'blur(4px)',
-      WebkitBackdropFilter: 'blur(4px)',
+      backdropFilter: 'blur(12px) saturate(160%)', 
+      WebkitBackdropFilter: 'blur(12px) saturate(160%)',
     } as React.CSSProperties,
   };
 
@@ -103,7 +103,8 @@ const LogoImage = ({ height }: { height: string }) => {
     <>
       <motion.header
         className="fixed top-0 left-0 w-full z-50 pointer-events-none"
-        animate={{ y: hidden ? '-120%' : '0%' }}
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: hidden ? '-120%' : '0%', opacity: 1 }}
         transition={{ duration: 0.5, ease: 'easeInOut' }}
       >
 
@@ -122,11 +123,11 @@ const LogoImage = ({ height }: { height: string }) => {
                 zIndex: 0,
 
                 // 👉 REAL glass blur
-                backdropFilter: 'blur(3px) saturate(140%)',
-                WebkitBackdropFilter: 'blur(3px) saturate(140%)',
+                backdropFilter: 'blur(6px) saturate(150%)',
+                WebkitBackdropFilter: 'blur(6px) saturate(150%)',
 
                 // 👉 very light tint (optional but better)
-                background: 'linear-gradient(to bottom, rgba(255,255,255,0.12), rgba(255,255,255,0.05))',
+                background: 'linear-gradient(to bottom, rgba(255,255,255,0.10), rgba(255,255,255,0.03))',
 
                 // 👉 THIS IS THE MAGIC (no hard line)
                 maskImage: 'linear-gradient(to bottom, black 0%, black 60%, transparent 100%)',
@@ -144,7 +145,7 @@ const LogoImage = ({ height }: { height: string }) => {
             <Link
               to="/"
               className={cn(
-                "flex items-center justify-center px-4 py-1.5 min-w-[180px] h-[48px] md:h-[60px] rounded-full transition-all duration-500",
+                "flex items-center justify-center px-4 py-1.5  h-[48px] md:h-[60px] rounded-full transition-all duration-500",
                 scrolled
                   ? telegramPill.className
                   : 'bg-white/10 border border-white/40 shadow-lg backdrop-blur-sm',
@@ -172,7 +173,7 @@ const LogoImage = ({ height }: { height: string }) => {
                       to={link.href}
                       className={cn(
                         'relative px-4 py-2 transition-all duration-200 group',
-                        isActive(link.href) ? 'text-gold-400' : 'text-white/90 hover:text-gold-400',
+                        isActive(link.href) ? 'text-gold-400' : 'text-white/90 hover:scale-105 transition-transform duration-200',
                       )}
                     >
                       {link.label}
@@ -198,7 +199,7 @@ const LogoImage = ({ height }: { height: string }) => {
 
                   <Link
                     to="/enquiry"
-                    className="ml-1 flex items-center gap-2 px-5 py-2 rounded-full text-base font-bold bg-white text-navy-900 hover:bg-gold-400 shadow-lg transition-all duration-200"
+                    className="ml-1 flex items-center gap-2 px-5 py-2 rounded-full text-base font-bold bg-gold-500 text-navy-900 hover:bg-gold-400 shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200"
                   >
                     Enquiry
                     <span className="w-6 h-6 rounded-full bg-navy-900 text-white flex items-center justify-center text-xs font-bold">→</span>
@@ -342,7 +343,7 @@ const LogoImage = ({ height }: { height: string }) => {
                   initial={{ opacity: 0, scaleX: 0.4, scaleY: 0.2 }}
                   animate={{ opacity: 1, scaleX: 1, scaleY: 1 }}
                   exit={{ opacity: 0, scaleX: 0.4, scaleY: 0.2 }}
-                  transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+                  transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                   style={{ transformOrigin: 'top right', zIndex: 110 }}
                   className="absolute top-14 right-0 w-56 bg-navy-900 border border-white/30 rounded-2xl shadow-2xl pointer-events-auto"
                 >

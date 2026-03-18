@@ -78,7 +78,7 @@ export default function ProductCard({ product, hideStockBadge = false }: Product
 
   return (
     <div
-      className="group bg-card rounded-xl border border-border overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5 flex flex-col h-full bg-white"
+      className="group bg-white rounded-xl border border-border will-change-transform overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.15)] flex flex-col h-full"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => { setHovered(false); setCurrentImg(0); }}
     >
@@ -95,13 +95,13 @@ export default function ProductCard({ product, hideStockBadge = false }: Product
       </div>
 
       {/* Image carousel */}
-      <div className="relative h-48 bg-muted overflow-hidden flex-shrink-0">
+      <div className="relative h-48 bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden flex-shrink-0">
         {allImages.length > 0 ? (
           <>
             <img
               src={allImages[currentImg]}
               alt={product.name}
-              className="w-full h-full object-contain transition-opacity duration-300"
+              className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-110"
               loading="lazy"
             />
             {allImages.length > 1 && (
@@ -122,7 +122,7 @@ export default function ProductCard({ product, hideStockBadge = false }: Product
         )}
 
         {/* Wishlist + Share buttons on image */}
-        <div className="absolute top-2 right-2 flex flex-col gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+        <div className="absolute top-2 right-2 flex flex-col gap-1.5 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
           <button
             onClick={handleWishlist}
             className={`w-7 h-7 rounded-full flex items-center justify-center shadow-md transition-all duration-200 ${wishlisted ? 'bg-red-500 text-white' : 'bg-white/90 text-gray-600 hover:bg-red-50 hover:text-red-500'}`}
@@ -148,7 +148,7 @@ export default function ProductCard({ product, hideStockBadge = false }: Product
 
       {/* Content */}
       <div className="p-3 sm:p-4 flex flex-col flex-1">
-        <h3 className="font-display font-bold text-foreground text-sm sm:text-base leading-snug mb-1 line-clamp-2 min-h-[2.5rem]">
+        <h3 className="font-display font-bold text-sm sm:text-base leading-snug mb-1 line-clamp-2 min-h-[2.5rem] group-hover:text-gold-500 transition-colors duration-200">
           {product.name}
         </h3>
         <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed line-clamp-2 mb-3">
@@ -171,8 +171,7 @@ export default function ProductCard({ product, hideStockBadge = false }: Product
         <Link to="/products/$id" params={{ id: product._id }}>
           <Button
             size="sm"
-            className="w-full bg-navy-800 hover:bg-navy-700 text-white group/btn text-xs h-8"
-            disabled={!inStock}
+            className="w-full bg-navy-800 hover:bg-navy-700 text-white font-semibold group/btn text-xs h-9 shadow-sm hover:shadow-md transition-all duration-300"
           >
             {inStock ? (
               <>View & Enquire <ArrowRight className="w-3 h-3 ml-1.5 group-hover/btn:translate-x-1 transition-transform" /></>
