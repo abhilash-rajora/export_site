@@ -91,7 +91,7 @@ export default function HomePage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.65, ease: 'easeOut' }}
             >
-              <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 text-gold-300 text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4">
+              <div className="inline-flex items-center gap-2 bg-gold-500/20 border border-gold-500/30 text-gold-300 text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4">
                 <Globe className="w-3 h-3" />Global Export Excellence
               </div>
               <h1 className="font-display text-4xl font-extrabold text-white leading-tight tracking-tight mb-3">
@@ -99,7 +99,7 @@ export default function HomePage() {
                 <span className="text-gold-400">Global Export</span>{' '}
                 Partner
               </h1>
-              <p className="text-white/70 text-base leading-relaxed mb-6">
+              <p className="text-white text-base leading-relaxed mb-6">
                 Connecting quality products from across the world to international markets.
               </p>
               <div className="flex gap-3">
@@ -149,7 +149,7 @@ export default function HomePage() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, ease: 'easeOut' }}
-                className="max-w-2xl bg-white/10 backdrop-blur-md border border-white/15 rounded-2xl px-8 py-8"
+                className="max-w-2xl"
               >
                 <div className="inline-flex items-center gap-2 bg-gold-500/20 border border-gold-500/30 text-gold-300 text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-6">
                   <Globe className="w-3 h-3" />Global Export Excellence
