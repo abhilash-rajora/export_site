@@ -118,8 +118,8 @@ const handleClose = () => {
             className="rounded-2xl border border-white/50 px-4 py-3 shadow-[0_2px_16px_rgba(0,0,0,0.2)]"
             style={{
               background: 'rgba(255,255,255,0.5)',
-              backdropFilter: 'blur(4px)',
-              WebkitBackdropFilter: 'blur(4px)',
+              backdropFilter: 'blur(12px)',
+              WebkitBackdropFilter: 'blur(12px)',
             }}
           >
             <div className="flex items-start gap-3">
