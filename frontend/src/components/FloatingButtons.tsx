@@ -4,7 +4,7 @@ import { Link } from '@tanstack/react-router';
 
 export default function FloatingButtons() {
   return (
-    <div className="fixed bottom-4 -right-3 sm:right-6 flex flex-col items-end gap-4 z-50">
+    <div className="fixed bottom-4 right-3 sm:right-6 flex flex-col items-end gap-4 z-50">
       
       {/* WhatsApp Button */}
       <a
