@@ -2,34 +2,112 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { Link } from '@tanstack/react-router';
 import { Cookie, X } from 'lucide-react';
+import { loadGoogleAnalytics } from '../utils/loadAnalytics';
 
 export default function CookieBanner() {
   const [visible, setVisible] = useState(false);
 
-  useEffect(() => {
-    const accepted = localStorage.getItem('cookie_consent');
-    if (accepted === 'accepted' || accepted === 'declined') {
-      setVisible(false);
-      return;
-    }
+useEffect(() => {
+  if (typeof window === 'undefined') return;
+
+  const consent = localStorage.getItem('cookie_consent');
+  const tempHide = localStorage.getItem('cookie_temp_hide');
+
+ const isHidden = tempHide && Date.now() < parseInt(tempHide, 10);
+
+  if (!consent && !isHidden) {
     const timer = setTimeout(() => setVisible(true), 1500);
     return () => clearTimeout(timer);
-  }, []);
+  }
+}, []);
 
-  const handleAccept = () => {
-    localStorage.setItem('cookie_consent', 'accepted');
-    setVisible(false);
+  // ✅ Accept All
+const handleAcceptAll = () => {
+  const consent = {
+    essential: true,
+    analytics: true,
+    marketing: true,
   };
 
-  const handleDecline = () => {
-    localStorage.setItem('cookie_consent', 'declined');
-    setVisible(false);
+  localStorage.setItem('cookie_consent', JSON.stringify(consent));
+
+  window['ga-disable-G-FHPMSX3KN1'] = false;
+
+  loadGoogleAnalytics(consent);
+
+  window.gtag?.('consent', 'update', {
+    analytics_storage: 'granted',
+  });
+
+  window.gtag?.('event', 'cookie_accept', {
+  event_category: 'engagement',
+  event_label: 'accepted_all',
+});
+
+  setVisible(false);
+};
+
+  // ❌ Reject All
+const handleRejectAll = () => {
+  const consent = {
+    essential: true,
+    analytics: false,
+    marketing: false,
   };
+
+  localStorage.setItem('cookie_consent', JSON.stringify(consent));
+
+window.gtag?.('consent', 'update', {
+  analytics_storage: 'denied',
+});
+
+window.gtag?.('event', 'cookie_reject', {
+  event_category: 'engagement',
+  event_label: 'rejected_all',
+});
+
+window['ga-disable-G-FHPMSX3KN1'] = true;
+
+  setVisible(false);
+};
+
+  // ⚙️ Essential Only
+const handleEssential = () => {
+  const consent = {
+    essential: true,
+    analytics: false,
+    marketing: false,
+  };
+
+  localStorage.setItem('cookie_consent', JSON.stringify(consent));
+
+  window.gtag?.('consent', 'update', {
+    analytics_storage: 'denied',
+  });
+
+  window.gtag?.('event', 'cookie_essential', {
+  event_category: 'engagement',
+  event_label: 'essential_only',
+});
+  window['ga-disable-G-FHPMSX3KN1'] = true;
+
+  setVisible(false);
+};
+
+  // ❌ Close (temporary)
+const handleClose = () => {
+  const expireTime = Date.now() + 10 * 60 * 1000; // 10 min
+  localStorage.setItem('cookie_temp_hide', expireTime.toString());
+  setVisible(false);
+};
 
   return (
     <AnimatePresence>
       {visible && (
         <motion.div
+          role="dialog"
+          aria-live="polite"
+          aria-label="Cookie consent banner"
           initial={{ y: 100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 100, opacity: 0 }}
@@ -57,11 +135,10 @@ export default function CookieBanner() {
                   We value your privacy
                 </p>
                 <p className="text-black/50 text-xs leading-relaxed">
-                  We use cookies to enhance your experience. By clicking "Accept", you agree to our{' '}
+                  We use cookies to enhance your experience. Manage your preferences or accept all cookies. Read our{' '}
                   <Link
                     to="/terms"
                     className="text-gold-600 hover:text-gold-500 underline underline-offset-2"
-                    onClick={handleAccept}
                   >
                     Terms & Conditions
                   </Link>.
@@ -70,7 +147,7 @@ export default function CookieBanner() {
 
               {/* Close */}
               <button
-                onClick={() => setVisible(false)}
+                onClick={handleClose}
                 className="text-black/25 hover:text-black/50 transition-colors flex-shrink-0 mt-0.5"
               >
                 <X className="w-4 h-4" />
@@ -79,19 +156,29 @@ export default function CookieBanner() {
             </div>
 
             {/* Buttons */}
-            <div className="flex items-center gap-2 mt-3 ml-11">
+            <div className="flex flex-wrap items-center gap-2 mt-3 ml-11">
+
               <button
-                onClick={handleAccept}
-                className="px-4 py-1.5 rounded-full bg-gold-500 hover:bg-gold-400 text-navy-900 text-xs font-bold transition-colors"
+                onClick={handleAcceptAll}
+                className="px-4 py-1.5 rounded-full bg-gold-500 hover:bg-gold-400 text-navy-900 text-xs font-bold transition"
               >
                 Accept All
               </button>
+
               <button
-                onClick={handleDecline}
-                className="px-4 py-1.5 rounded-full border border-black/10 hover:border-black/20 text-black/50 hover:text-black text-xs font-medium transition-colors"
+                onClick={handleRejectAll}
+                className="px-4 py-1.5 rounded-full border border-black/10 hover:border-black/20 text-black/60 hover:text-black text-xs font-medium transition"
               >
-                Decline
+                Reject All
               </button>
+
+              <button
+                onClick={handleEssential}
+                className="px-4 py-1.5 rounded-full border border-black/10 hover:border-black/20 text-black/60 hover:text-black text-xs font-medium transition"
+              >
+                Essential Only
+              </button>
+
             </div>
           </div>
         </motion.div>

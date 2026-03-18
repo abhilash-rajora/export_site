@@ -11,30 +11,35 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
           <div className="md:col-span-2">
             <Link to="/" className="flex items-center group ">
-  <span className="font-display text-2xl md:text-xl font-extrabold tracking-tight">
-    <span className="text-white transition-colors duration-300 group-hover:text-gold-400">
-      We
-    </span>
-    <span className="text-gold-400 transition-colors duration-300 group-hover:text-white">
-      Exports
-    </span>
-  </span>
-</Link>
-            <p className="text-white/60 text-sm leading-relaxed max-w-xs">
+              <span className="font-display text-2xl md:text-xl font-extrabold tracking-tight">
+                <span className="text-white transition-colors duration-300 group-hover:text-gold-400">
+                  We
+                </span>
+                <span className="text-gold-400 transition-colors duration-300 group-hover:text-white">
+                  Exports
+                </span>
+              </span>
+            </Link>
+
+            <p className="text-xs text-green-400 mt-3 font-medium">
+              ✔ Trusted by global buyers  • 50+ countries served
+            </p>
+
+            <p className="text-white/60 text-sm leading-relaxed mt-3 max-w-xs">
               Your trusted export partner connecting quality products from across the world to
               international markets.
             </p>
             <div className="mt-6 space-y-2">
               <a
                 href="mailto:wexports.support@gmail.com"
-                className="flex items-center gap-2 text-sm text-white/60 hover:text-gold-400 transition-colors"
+                className="flex items-center gap-2 text-sm text-white/60 hover:text-gold-400 hover:translate-x-1 inline-block transition-all duration-200"
               >
                 <Mail className="w-4 h-4" />
                 wexports.support@gmail.com
               </a>
               <a
                 href="tel:+919466363522"
-                className="flex items-center gap-2 text-sm text-white/60 hover:text-gold-400 transition-colors"
+                className="flex items-center gap-2 text-sm text-white/60 hover:text-gold-400 hover:translate-x-1 inline-block transition-all duration-200"
               >
                 <Phone className="w-4 h-4" />
                 +91 (946) 636-3522
@@ -58,13 +63,15 @@ export default function Footer() {
                 { label: 'Contact / Enquiry', href: '/enquiry' },
               ].map((link) => (
                 <li key={link.href}>
-                  <Link to={link.href} className="text-sm text-white/60 hover:text-gold-400 transition-colors">
+                  <Link to={link.href} className="text-sm text-white/60 hover:text-gold-400 hover:translate-x-1 inline-block transition-all duration-200">
                     {link.label}
                   </Link>
                 </li>
               ))}
               <li>
-                <Link to="/terms" className="text-sm text-white/60 hover:text-gold-400 transition-colors">Terms & Conditions</Link>
+                <Link to="/terms" className="text-sm text-white/60 hover:text-gold-400 hover:translate-x-1 inline-block transition-all duration-200">
+                  Terms & Conditions
+                </Link>
               </li>
             </ul>
           </div>
@@ -99,27 +106,27 @@ export default function Footer() {
       href="https://facebook.com/yourpage"
       target="_blank"
       rel="noopener noreferrer"
-      className="text-white/60 hover:text-gold-400 transition-all duration-300 hover:scale-110"
+      className="w-9 h-9 flex items-center justify-center rounded-full bg-white/5 hover:bg-gold-500/20 text-white/60 hover:text-gold-400 transition-all duration-300 hover:scale-110"
     >
-      <FaFacebookF size={38} />
+      <FaFacebookF size={25} />
     </a>
 
     <a
       href="https://instagram.com/yourpage"
       target="_blank"
       rel="noopener noreferrer"
-      className="text-white/60 hover:text-gold-400 transition-all duration-300 hover:scale-110"
+      className="w-9 h-9 flex items-center justify-center rounded-full bg-white/5 hover:bg-gold-500/20 text-white/60 hover:text-gold-400 transition-all duration-300 hover:scale-110"
     >
-      <FaInstagram size={38} />
+      <FaInstagram size={25} />
     </a>
 
     <a
       href="https://wa.me/919466363522"
       target="_blank"
       rel="noopener noreferrer"
-      className="text-white/60 hover:text-gold-400 transition-all duration-300 hover:scale-110"
+      className="w-9 h-9 flex items-center justify-center rounded-full bg-white/5 hover:bg-gold-500/20 text-white/60 hover:text-gold-400 transition-all duration-300 hover:scale-110"
     >
-      <FaWhatsapp size={38} />
+      <FaWhatsapp size={25} />
     </a>
   </div>
 
@@ -127,6 +134,9 @@ export default function Footer() {
   <p className="text-sm text-white/40 text-center ">
     © {year} We Exports. All rights reserved.
   </p>
+  <p className="text-xs text-white/30 text-center">
+  Connecting global markets with trusted exports
+</p>
 
 </div>
       </div>
