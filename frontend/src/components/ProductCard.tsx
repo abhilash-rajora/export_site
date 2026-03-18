@@ -199,7 +199,7 @@ export default function ProductCard({ product, hideStockBadge = false }: Product
             size="sm"
             disabled={!inStock}
             className={cn(
-              "w-1/2 font-semibold text-xs h-9 rounded-xl transition-all duration-200",
+              "w-1/2 font-semibold text-[10px] sm:text-xs h-9 rounded-xl transition-all duration-200 px-1 truncate",
               inStock
                 ? "bg-navy-800 hover:bg-navy-700 text-white shadow-sm hover:shadow-md"
                 : "bg-gray-300 text-gray-800 cursor-not-allowed border border-gray-200"
@@ -210,7 +210,7 @@ export default function ProductCard({ product, hideStockBadge = false }: Product
               navigate({ to: '/enquiry', search: { productName: product.name } });
             }}
           >
-            {inStock ? "Quick Enquiry" : "Out of Stock"}
+            {inStock ? "Enquiry" : "Out of Stock"}
           </Button>
 
           {/* View */}
@@ -218,7 +218,7 @@ export default function ProductCard({ product, hideStockBadge = false }: Product
             <Button
               size="sm"
               variant="outline"
-              className="w-full text-xs h-9 rounded-xl border-navy-800/20 text-navy-800 hover:bg-navy-50 hover:border-navy-800/40 transition-all duration-200 group/btn"
+              className="w-full text-[10px] sm:text-xs h-9 rounded-xl border-navy-800/20 text-navy-800 hover:bg-navy-50 hover:border-navy-800/40 transition-all duration-200 group/btn px-1"
             >
               View
               <ArrowRight className="ml-1 w-3 h-3 transition-transform duration-200 group-hover/btn:translate-x-0.5" />

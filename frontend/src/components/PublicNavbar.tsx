@@ -67,32 +67,32 @@ const LogoImage = ({ height }: { height: string }) => {
   return (
     <div className="relative flex items-center justify-center w-[140px] h-[44px] md:w-[160px] md:h-[56px]">
       
-      {/* Light logo */}
-      <motion.img
+      {/* Light logo - visible when NOT scrolled */}
+      <img
         src="/logo1.png"
         alt="WeExports"
-        className="absolute"
+        className="absolute transition-opacity duration-300"
         style={{
           height: px,
           width: 'auto',
           objectFit: 'contain',
+          opacity: scrolled ? 0 : 1,
+          pointerEvents: 'none',
         }}
-        animate={{ opacity: scrolled ? 0 : 1 }}
-        transition={{ duration: 0.25 }}
       />
 
-      {/* Dark logo */}
-      <motion.img
+      {/* Dark logo - visible when scrolled */}
+      <img
         src="/logo-dark.png"
         alt="WeExports"
-        className="absolute"
+        className="absolute transition-opacity duration-300"
         style={{
           height: px,
           width: 'auto',
           objectFit: 'contain',
+          opacity: scrolled ? 1 : 0,
+          pointerEvents: 'none',
         }}
-        animate={{ opacity: scrolled ? 1 : 0 }}
-        transition={{ duration: 0.25 }}
       />
 
     </div>
