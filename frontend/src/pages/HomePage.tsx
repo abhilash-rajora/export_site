@@ -53,7 +53,7 @@ export default function HomePage() {
       </Helmet>
 
       {/* ── MOBILE HERO ── navy bg + rounded card video + text on gradient ── */}
-      <section className="md:hidden bg-[#0D3D3D] px-[8px] pt-[8px] pb-[8px]">
+      <section className="md:hidden bg-[#0D3D3D] px-[8px] pt-[8px] pb-[8px] ">
         <div
           className="relative rounded-2xl overflow-hidden"
           style={{ height: '96svh' }}
@@ -80,7 +80,7 @@ export default function HomePage() {
           <div
             className="absolute inset-0"
             style={{
-              background: 'linear-gradient(to top, rgba(0,0,0,0.96) 0%, rgba(0,0,0,0.80) 28%, rgba(0,0,0,0.2) 55%, transparent 100%)'
+              background: 'linear-gradient(to top, rgba(0,0,0,0.98) 0%, rgba(0,0,0,0.85) 30%, rgba(0,0,0,0.4) 60%, transparent 100%)'
             }}
           />
 
@@ -121,14 +121,14 @@ export default function HomePage() {
 
       {/* ── DESKTOP HERO ── navy bg + rounded card video ── */}
       <section className="hidden md:block bg-[#0D3D3D] px-[20px] pt-[20px] pb-[20px]">
-        <div className="relative h-[620px] rounded-3xl overflow-hidden">
+        <div className="relative h-[620px] md:h-[700px] rounded-3xl overflow-hidden">
           {/* Autoplay looping background video (desktop) */}
           <video
             autoPlay
             loop
             muted
             playsInline
-            className="absolute inset-0 w-full h-full object-cover object-right"
+            className="absolute inset-0 w-full h-full object-cover object-center"
           >
             <source src="/hero-desktop.mp4" type="video/mp4" />
           </video>
@@ -149,14 +149,15 @@ export default function HomePage() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, ease: 'easeOut' }}
-                className="max-w-2xl"
+                style={{ textShadow: "0 2px 10px rgba(0,0,0,0.5)" }}
+                className="max-w-2xl backdrop-blur-[2px] "
               >
                 <div className="inline-flex items-center gap-2 bg-gold-500/20 border border-gold-500/30 text-gold-300 text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-6">
                   <Globe className="w-3 h-3" />Global Export Excellence
                 </div>
                 <h1 className="font-display text-5xl lg:text-6xl font-extrabold text-white leading-[1.08] tracking-tight mb-6">
                   Your Trusted{' '}
-                  <span className="text-gold-400"><br></br>Global Export</span>{' '}
+                  <span className="text-gold-400 block">Global Export</span>
                   Partner
                 </h1>
                 <p className="text-white/75 text-xl leading-relaxed mb-8 max-w-xl">
@@ -164,12 +165,18 @@ export default function HomePage() {
                 </p>
                 <div className="flex flex-wrap gap-4">
                   <Link to="/products">
-                    <Button size="lg" className="bg-gold-500 hover:bg-gold-400 text-navy-900 font-bold shadow-gold px-8">
+                    <Button size="lg" 
+                    className="bg-gold-500 hover:bg-gold-400 text-navy-900 font-bold px-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+>
                       Explore Products <ArrowRight className="ml-2 w-4 h-4" />
                     </Button>
                   </Link>
                   <Link to="/enquiry">
-                    <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10 px-8">
+                    <Button 
+                      size="lg" 
+                      variant="outline" 
+                      className="border-white/40 text-white hover:bg-white/10 px-8 backdrop-blur-md"
+                    >
                       Get in Touch
                     </Button>
                   </Link>
