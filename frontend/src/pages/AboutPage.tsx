@@ -29,12 +29,20 @@ export default function AboutPage() {
             <h1 className="font-display text-5xl font-extrabold tracking-tight leading-tight mb-6">
               Building Bridges<br /><span className="text-gold-400">Across Borders</span>
             </h1>
-            <p className="text-white/65 text-xl leading-relaxed max-w-2xl">
+            <p className="text-white/65 text-xl leading-relaxed max-w-xl">
               For over 15 years, WeExports has been the trusted export partner for businesses worldwide.
             </p>
           </motion.div>
+          <div className="mt-6 flex flex-wrap gap-4 text-sm text-white/70">
+            <span>✔ Trusted by 1000+ buyers</span>
+            <span>✔ 50+ countries served</span>
+            <span>✔ 15+ years experience</span>
+          </div>
         </div>
+        
       </div>
+
+      
 
       <section id="about-solid-trigger" className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
@@ -123,21 +131,63 @@ export default function AboutPage() {
         </div>
       </section>
 
+      <section className="py-16 bg-muted/30">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center max-w-3xl">
+            
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
+              <div className="flex justify-center">
+                <p className="text-lg italic text-muted-foreground leading-relaxed border-l-4 border-gold-500 pl-4 text-left inline-block max-w-xl">
+                  <span className="text-gold-500 text-2xl mr-1">“</span>
+                  WeExports helped us source high-quality products smoothly and efficiently. 
+                  Their team is highly professional and reliable.
+                </p>
+              </div>
+
+              <p className="mt-4 font-semibold text-foreground">
+                — International Buyer
+              </p>
+            </motion.div>
+
+          </div>
+        </section>
+
       <section id="about-transparent-trigger" className="py-20 bg-navy-900 text-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <h2 className="font-display text-4xl font-extrabold text-white tracking-tight mb-4">Ready to Work Together?</h2>
-            <p className="text-white/60 text-lg mb-8 max-w-xl mx-auto">Let's discuss your import needs and find the perfect products for your market.</p>
+            
+            <h2 className="font-display text-4xl font-extrabold text-white tracking-tight mb-4">
+              Start Importing with Confidence
+            </h2>
+
+            <p className="text-white/60 text-lg mb-8 max-w-xl mx-auto">
+              Get high-quality export products, transparent pricing, and dedicated support — all in one place.
+            </p>
+
+            {/* 🔥 trust mini line */}
+            <div className="flex flex-wrap gap-4 justify-center text-sm text-white/70 mb-8">
+              <span>✔ 50+ Countries</span>
+              <span>✔ 200+ Products</span>
+              <span>✔ 1000+ Happy Clients</span>
+            </div>
+
             <div className="flex flex-wrap gap-4 justify-center">
               <Link to="/products">
-                <Button size="lg" className="bg-gold-500 hover:bg-gold-400 text-navy-900 font-bold px-8">
+                <Button size="lg" className="bg-gold-500 hover:bg-gold-400 text-navy-900 font-bold px-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.03]">
                   Browse Products <ArrowRight className="ml-2 w-4 h-4" />
                 </Button>
               </Link>
+
               <Link to="/enquiry">
-                <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10 px-8">Contact Us</Button>
+                <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10 px-8">
+                  Contact Us
+                </Button>
               </Link>
             </div>
+
           </motion.div>
         </div>
       </section>
