@@ -211,18 +211,23 @@ export default function ProductDetailPage() {
             {product.name}
           </h1>
           <Badge className="mt-3 bg-gold-500/20 text-gold-300 border-gold-500/30">{product.category}</Badge>
+          
         </div>
+        
       </div>
 
+      
+
+
       <div id="product-detail-solid-trigger" className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 max-w-6xl">
-
+          
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-14">
-
+          
           {/* Left — Images + Details */}
           <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
             {/* Main image */}
             <div
-              className="relative h-80 sm:h-96 bg-muted rounded-2xl overflow-hidden mb-3 shadow-lg cursor-zoom-in group"
+              className="relative h-80 sm:h-96 bg-muted rounded-2xl overflow-hidden mb-3 shadow-xl cursor-zoom-in group hover:shadow-[0_20px_40px_rgba(0,0,0,0.3)]"
               onClick={() => allImages.length > 0 && openZoom(activeImg)}
               onMouseMove={(e) => {
                 const rect = e.currentTarget.getBoundingClientRect();
@@ -237,7 +242,7 @@ export default function ProductDetailPage() {
                   <img
                     src={allImages[activeImg]}
                     alt={product.name}
-                    className="w-full h-full object-contain transition-transform duration-200 group-hover:scale-150"
+                    className="w-full h-full object-contain transition-transform duration-200 group-hover:scale-125"
                     style={{ transformOrigin: `${mousePos.x}% ${mousePos.y}%` }}
                   />
                   <div className="absolute bottom-2 right-2 bg-black/40 text-white text-xs px-2 py-1 rounded-full flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -283,6 +288,8 @@ export default function ProductDetailPage() {
                 ))}
               </div>
             )}
+
+            
 
             {/* Wishlist + Share — above Product Details card */}
             <div className="flex gap-2 mb-3">
@@ -339,6 +346,7 @@ export default function ProductDetailPage() {
               </div>
             </div>
 
+            <div className="space-y-6">
             {/* Product Details */}
             <div className="bg-card rounded-xl border border-border p-6 space-y-4">
               <h3 className="font-display font-bold text-lg text-foreground">Product Details</h3>
@@ -359,8 +367,9 @@ export default function ProductDetailPage() {
                 ))}
               </div>
             </div>
-            <br />
 
+            
+          
             {/* Specifications table */}
             {hasSpecs && (
               <div className="bg-card rounded-xl border border-border p-6 mt-4">
@@ -379,11 +388,23 @@ export default function ProductDetailPage() {
                 </div>
               </div>
             )}
+            </div>
           </motion.div>
 
           {/* Right — Description + Enquiry */}
+          
           <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 }} className="space-y-6 sticky top-24">
-
+              <div className="flex flex-wrap gap-2 mb-2">
+              <span className="px-3 py-1 text-sm font-medium rounded-full bg-green-100 text-green-700">
+                ✔ Verified Supplier
+              </span>
+              <span className="px-3 py-1 text-sm font-medium rounded-full bg-blue-100 text-blue-700">
+                🌍 Export Quality
+              </span>
+              <span className="px-3 py-1 text-sm font-medium rounded-full bg-orange-100 text-orange-700">
+                ⏱ 24h Response
+              </span>
+            </div>
             {/* Description as bullet points */}
             <div className="bg-card rounded-xl border border-border p-6">
               <h3 className="font-display font-bold text-lg text-foreground mb-4">Description</h3>
@@ -398,10 +419,13 @@ export default function ProductDetailPage() {
             </div>
 
             {/* Enquiry form */}
-            <div className="bg-card rounded-2xl border border-border p-6 shadow-sm">
+            <div className="bg-card rounded-2xl border border-border p-6 border-l-4 border-gold-500 shadow-lg hover:shadow-xl transition-shadow duration-300 ">
               <div className="mb-6">
                 <h2 className="font-display font-bold text-xl text-foreground mb-1">Send an Enquiry</h2>
                 <p className="text-muted-foreground text-sm">Interested in this product? Fill the form below and we'll contact you within 24 hours.</p>
+                <p className="text-xs text-green-600 font-medium mt-2">
+                  ✔ No minimum enquiry • Quick response guaranteed
+                </p>
               </div>
               <EnquiryForm productId={product._id} productName={product.name} />
             </div>

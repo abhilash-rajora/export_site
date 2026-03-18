@@ -79,7 +79,7 @@ export default function ProductCard({ product, hideStockBadge = false }: Product
 
   return (
     <div
-      className="group bg-white rounded-xl border border-border will-change-transform overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.15)] flex flex-col h-full"
+      className="group bg-white rounded-xl border border-border will-change-transform overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)] flex flex-col h-full"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => { setHovered(false); setCurrentImg(0); }}
     >
