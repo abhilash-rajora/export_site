@@ -110,6 +110,8 @@ export default function ProductDetailPage() {
     );
   }
 
+  
+
   if (isError || !product) {
     return (
       <div className="min-h-screen bg-white">
@@ -380,7 +382,7 @@ export default function ProductDetailPage() {
           </motion.div>
 
           {/* Right — Description + Enquiry */}
-          <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 }} className="space-y-6">
+          <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 }} className="space-y-6 sticky top-24">
 
             {/* Description as bullet points */}
             <div className="bg-card rounded-xl border border-border p-6">

@@ -3,6 +3,7 @@ import { Link } from '@tanstack/react-router';
 import { ArrowRight, DollarSign, Heart, MapPin, Package, Share2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import type { Product } from '../api/types';
+import { cn } from '@/utils/utils';
 
 interface ProductCardProps {
   product: Product;
@@ -148,7 +149,7 @@ export default function ProductCard({ product, hideStockBadge = false }: Product
 
       {/* Content */}
       <div className="p-3 sm:p-4 flex flex-col flex-1">
-        <h3 className="font-display font-bold text-sm sm:text-base leading-snug mb-1 line-clamp-2 min-h-[2.5rem] group-hover:text-gold-500 transition-colors duration-200">
+        <h3 className="font-display font-bold text-sm sm:text-base leading-snug mb-1 line-clamp-2 min-h-[2.5rem] group-hover:text-navy-800 transition-colors duration-200">
           {product.name}
         </h3>
         <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed line-clamp-2 mb-3">
@@ -171,12 +172,21 @@ export default function ProductCard({ product, hideStockBadge = false }: Product
         <Link to="/products/$id" params={{ id: product._id }}>
           <Button
             size="sm"
-            className="w-full bg-navy-800 hover:bg-navy-700 text-white font-semibold group/btn text-xs h-9 shadow-sm hover:shadow-md transition-all duration-300"
+            disabled={!inStock}
+            className={cn(
+              "w-full font-semibold text-xs h-9 transition-all duration-300",
+              inStock
+                ? "bg-navy-800 hover:bg-navy-700 text-white shadow-sm hover:shadow-md group/btn"
+                : "bg-gray-800 text-white "
+            )}
           >
             {inStock ? (
-              <>View & Enquire <ArrowRight className="w-3 h-3 ml-1.5 group-hover/btn:translate-x-1 transition-transform" /></>
+              <>
+                View & Enquire
+                <ArrowRight className="w-3 h-3 ml-1.5 group-hover/btn:translate-x-1 transition-transform" />
+              </>
             ) : (
-              'Out of Stock'
+              "View Details"
             )}
           </Button>
         </Link>
