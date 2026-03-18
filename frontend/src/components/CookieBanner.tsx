@@ -134,11 +134,11 @@ const handleClose = () => {
                 <p className="text-black font-semibold text-sm mb-0.5">
                   We value your privacy
                 </p>
-                <p className="text-black/50 text-xs leading-relaxed">
+                <p className="text-black/90 text-xs leading-relaxed">
                   We use cookies to enhance your experience. Manage your preferences or accept all cookies. Read our{' '}
                   <Link
                     to="/terms"
-                    className="text-gold-600 hover:text-gold-500 underline underline-offset-2"
+                    className="text-gold-700 hover:text-gold-500 underline underline-offset-2"
                   >
                     Terms & Conditions
                   </Link>.
