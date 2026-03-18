@@ -210,7 +210,13 @@ export default function ProductCard({ product, hideStockBadge = false }: Product
               navigate({ to: '/enquiry', search: { productName: product.name } });
             }}
           >
-            {inStock ? "Enquiry" : "Out of Stock"}
+            {inStock ? (
+              <>
+                <span className="hidden sm:inline">Quick </span>Enquiry 
+              </>
+            ) : (
+              "Out of Stock"
+            )}
           </Button>
 
           {/* View */}
