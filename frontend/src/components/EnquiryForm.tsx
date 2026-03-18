@@ -3,7 +3,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Loader2, Send } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { useSubmitEnquiry } from '../hooks/useQueries';
 
@@ -13,7 +13,10 @@ interface EnquiryFormProps {
   className?: string;
 }
 
+
+
 export default function EnquiryForm({ productId, productName, className }: EnquiryFormProps) {
+
   const [form, setForm] = useState({
     name: '',
     email: '',
@@ -21,6 +24,15 @@ export default function EnquiryForm({ productId, productName, className }: Enqui
     productName: productName ?? '',
     message: '',
   });
+
+    useEffect(() => {
+  if (productName) {
+    setForm((prev) => ({
+      ...prev,
+      productName: productName
+    }));
+  }
+}, [productName]);
 
   const submitEnquiry = useSubmitEnquiry();
 

@@ -25,6 +25,15 @@ const stats = [
   { value: '99%', label: 'Client Satisfaction' },
 ];
 
+const container = {
+  hidden: {},
+  show: {
+    transition: {
+      staggerChildren: 0.15
+    }
+  }
+};
+
 interface SeoData {
   title?: string;
   description?: string;
@@ -45,7 +54,7 @@ export default function HomePage() {
   const featuredProducts = products?.slice(0, 6) ?? [];
 
   return (
-    <>
+    <> 
       <Helmet>
         <title>{seo?.title || "WeExports | Trusted Global Export Partner"}</title>
         <meta name="description" content={seo?.description || "Leading export company delivering agriculture, textiles, minerals and electronics worldwide."} />
@@ -59,11 +68,7 @@ export default function HomePage() {
           style={{ height: '96svh' }}
         >
           {/* Autoplay looping background video (mobile) */}
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
+          <video autoPlay loop muted playsInline preload="none" poster="/container1.jpg"
             className="absolute inset-0 w-full h-full object-cover object-center"
           >
             <source src="/hero-mobile.mp4" type="video/mp4" />
@@ -99,9 +104,17 @@ export default function HomePage() {
                 <span className="text-gold-400">Global Export</span>{' '}
                 Partner
               </h1>
+              
               <p className="text-white text-base leading-relaxed mb-6">
                 Connecting quality products from across the world to international markets.
               </p>
+
+              <div className="flex flex-wrap gap-3 mt-3 text-white/70 text-xs">
+                <span>✔ ISO Certified</span>
+                <span>✔ 50+ Countries</span>
+                <span>✔ 15+ Years</span>
+              </div>
+              
               <div className="flex gap-3">
                 <Link to="/products">
                   <Button size="sm" className="bg-gold-500 hover:bg-gold-400 text-navy-900 font-bold px-5">
@@ -122,16 +135,14 @@ export default function HomePage() {
       {/* ── DESKTOP HERO ── navy bg + rounded card video ── */}
       <section className="hidden md:block bg-[#0D3D3D] px-[20px] pt-[20px] pb-[20px]">
         <div className="relative h-[620px] md:h-[700px] rounded-3xl overflow-hidden">
+          
           {/* Autoplay looping background video (desktop) */}
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
+          <video autoPlay loop muted playsInline preload="none" poster="/container1.jpg"
             className="absolute inset-0 w-full h-full object-cover object-center"
           >
             <source src="/hero-desktop.mp4" type="video/mp4" />
           </video>
+          
 
           {/* Static image fallback — commented out */}
           {/* <img
@@ -163,12 +174,22 @@ export default function HomePage() {
                 <p className="text-white/75 text-xl leading-relaxed mb-8 max-w-xl">
                   Connecting quality products from across the world to international markets.
                 </p>
+                <div className="flex items-center gap-6 mt-6  text-white/70 text-sm">
+                  <span>✔ ISO Certified</span>
+                  <span>✔ 50+ Countries</span>
+                  <span>✔ 15+ Years Experience</span>
+                </div>
+
+                <div className="h-4"></div>
+
                 <div className="flex flex-wrap gap-4">
                   <Link to="/products">
-                    <Button size="lg" 
-                    className="bg-gold-500 hover:bg-gold-400 text-navy-900 font-bold px-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
->
-                      Explore Products <ArrowRight className="ml-2 w-4 h-4" />
+                    <Button
+                      size="lg"
+                      className="group bg-gold-500 hover:bg-gold-400 text-navy-900 font-bold px-8"
+                    >
+                      Explore Products
+                      <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
                     </Button>
                   </Link>
                   <Link to="/enquiry">
@@ -191,7 +212,7 @@ export default function HomePage() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {stats.map((stat, i) => (
-              <motion.div key={stat.label} initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} className="text-center">
+              <motion.div key={stat.label} initial={{ opacity: 0, scale: 0.8 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} className="text-center hover:scale-105 transition-transform duration-300">
                 <div className="font-display text-3xl font-extrabold text-gold-400">{stat.value}</div>
                 <div className="text-white/50 text-sm mt-1">{stat.label}</div>
               </motion.div>
@@ -208,9 +229,10 @@ export default function HomePage() {
           </motion.div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {categories.map((cat, i) => (
+              
               <motion.div key={cat.name} initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }}>
-                <Link to="/products" search={{ category: cat.name }} className={`flex flex-col items-center p-4 rounded-xl border ${cat.color} hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 text-center`}>
-                  <cat.icon className="w-7 h-7 mb-2" />
+                <Link to="/products" search={{ category: cat.name }} className={`group flex flex-col items-center p-4 rounded-xl border ${cat.color} hover:shadow-xl transition-all duration-300 hover:-translate-y-1 hover:scale-[1.03] text-center`}>
+                  <cat.icon className="w-7 h-7 mb-2 group-hover:scale-110 transition-transform" />
                   <span className="font-semibold text-sm leading-snug">{cat.name}</span>
                   <span className="text-xs opacity-70 mt-0.5">{cat.desc}</span>
                 </Link>
@@ -288,7 +310,7 @@ export default function HomePage() {
             <div className="flex flex-wrap gap-4 justify-center">
               <Link to="/products">
                 <Button size="lg" className="bg-navy-900 hover:bg-navy-800 text-white font-bold px-8 shadow-navy">
-                  Browse Products <ArrowRight className="ml-2 w-4 h-4" />
+                  Browse Products <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
                 </Button>
               </Link>
               <Link to="/enquiry">
@@ -298,6 +320,13 @@ export default function HomePage() {
           </motion.div>
         </div>
       </section>
+      <div className="fixed bottom-4 left-0 right-0 px-4 md:hidden z-50">
+  <Link to="/enquiry">
+    <Button className="w-full bg-gold-500 text-navy-900 font-bold shadow-lg">
+      Get Quote Now
+    </Button>
+  </Link>
+</div>
     </>
   );
 }

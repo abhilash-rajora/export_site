@@ -1,6 +1,8 @@
 import { Clock, Globe, Mail, Phone } from 'lucide-react';
 import { motion } from "framer-motion";
 import EnquiryForm from '../components/EnquiryForm';
+import { useSearch } from '@tanstack/react-router';
+import { useState, useEffect } from 'react';
 
 const contactInfo = [
   { icon: Mail, label: 'Email Us', value: 'wexports.support@gmail.com', href: 'mailto:wexports.support@gmail.com' },
@@ -10,6 +12,10 @@ const contactInfo = [
 ];
 
 export default function EnquiryPage() {
+const search = useSearch({ strict: false });
+const productName = (search as any).productName || '';
+
+
   return (
     <div className="min-h-screen bg-white">
       <div className="bg-navy-900 text-white pt-28 pb-20">
@@ -69,7 +75,7 @@ export default function EnquiryPage() {
                 ✔ No minimum enquiry • 24h response • Trusted by global buyers
               </p>
               </div>
-              <EnquiryForm />
+              <EnquiryForm key={productName} productName={productName} />
             </div>
           </motion.div>
         </div>

@@ -4,6 +4,8 @@ import { ArrowRight, DollarSign, Heart, MapPin, Package, Share2 } from 'lucide-r
 import { useEffect, useState } from 'react';
 import type { Product } from '../api/types';
 import { cn } from '@/utils/utils';
+import { useNavigate } from '@tanstack/react-router';
+
 
 interface ProductCardProps {
   product: Product;
@@ -27,6 +29,7 @@ const getWishlist = (): string[] => {
   }
 };
 
+
 const toggleWishlistItem = (id: string): boolean => {
   const list = getWishlist();
   const exists = list.includes(id);
@@ -35,6 +38,7 @@ const toggleWishlistItem = (id: string): boolean => {
   return !exists;
 };
 
+
 export default function ProductCard({ product, hideStockBadge = false }: ProductCardProps) {
   const categoryStyle = categoryColors[product.category] || 'bg-muted text-muted-foreground border-border';
   const allImages = product.images?.length ? product.images : product.imageUrl ? [product.imageUrl] : [];
@@ -42,6 +46,7 @@ export default function ProductCard({ product, hideStockBadge = false }: Product
   const [hovered, setHovered] = useState(false);
   const [wishlisted, setWishlisted] = useState(false);
   const [shareMsg, setShareMsg] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     setWishlisted(getWishlist().includes(product._id));
@@ -70,7 +75,7 @@ export default function ProductCard({ product, hideStockBadge = false }: Product
       navigator.share({ title: product.name, url });
     } else {
       navigator.clipboard.writeText(url);
-      setShareMsg('Link copied!');
+      setShareMsg('Product link copied ✔');
       setTimeout(() => setShareMsg(''), 2000);
     }
   };
@@ -78,8 +83,9 @@ export default function ProductCard({ product, hideStockBadge = false }: Product
   const inStock = product.inStock !== false;
 
   return (
+    
     <div
-      className="group bg-white rounded-xl border border-border will-change-transform overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)] flex flex-col h-full"
+      className="group bg-white rounded-xl border border-border will-change-transform overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:scale-[1.02] flex flex-col h-full"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => { setHovered(false); setCurrentImg(0); }}
     >
@@ -97,12 +103,13 @@ export default function ProductCard({ product, hideStockBadge = false }: Product
 
       {/* Image carousel */}
       <div className="relative h-48 bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden flex-shrink-0">
+        
         {allImages.length > 0 ? (
           <>
             <img
               src={allImages[currentImg]}
               alt={product.name}
-              className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-110"
+              className="w-full h-full object-contain transition-all duration-500 group-hover:scale-110 group-hover:opacity-90"
               loading="lazy"
             />
             {allImages.length > 1 && (
@@ -157,39 +164,56 @@ export default function ProductCard({ product, hideStockBadge = false }: Product
         </p>
         <div className="space-y-1 mb-3 mt-auto">
           <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-            <MapPin className="w-3 h-3 text-gold-500 flex-shrink-0" />
+            <span className="text-xs">🌍</span>
             <span className="truncate">{product.originCountry}</span>
           </div>
           <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
             <DollarSign className="w-3 h-3 text-gold-500 flex-shrink-0" />
-            <span className="truncate">{product.priceRange}</span>
+            <span className="truncate font-semibold text-navy-800">
+              {product.priceRange}
+            </span>
           </div>
           <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
             <Package className="w-3 h-3 text-gold-500 flex-shrink-0" />
             <span>Min. {product.minOrderQty}</span>
           </div>
         </div>
-        <Link to="/products/$id" params={{ id: product._id }}>
-          <Button
-            size="sm"
-            disabled={!inStock}
-            className={cn(
-              "w-full font-semibold text-xs h-9 transition-all duration-300",
-              inStock
-                ? "bg-navy-800 hover:bg-navy-700 text-white shadow-sm hover:shadow-md group/btn"
-                : "bg-gray-800 text-white "
-            )}
-          >
-            {inStock ? (
-              <>
-                View & Enquire
-                <ArrowRight className="w-3 h-3 ml-1.5 group-hover/btn:translate-x-1 transition-transform" />
-              </>
-            ) : (
-              "View Details"
-            )}
-          </Button>
-        </Link>
+
+        
+          <div className="flex gap-2 mt-2">
+
+            {/* Quick Enquiry / Out of Stock */}
+            <Button
+              size="sm"
+              disabled={!inStock}
+              className={cn(
+                "w-1/2 font-semibold text-xs h-9",
+                inStock
+                  ? "bg-navy-800 hover:bg-navy-700 text-white"
+                  : "bg-gray-600 text-gray-300 hover:bg-gray-600 cursor-not-allowed"
+              )}
+             onClick={(e) => {
+                e.preventDefault();
+                if (!inStock) return;
+                navigate({ to: '/enquiry', search: { productName: product.name } });
+              }}
+            >
+              {inStock ? "Quick Enquiry" : "Out of Stock"}
+            </Button>
+
+            {/* View Button */}
+            <Link to="/products/$id" params={{ id: product._id }} className="w-1/2">
+              <Button
+                size="sm"
+                variant="outline"
+                className="w-full text-xs h-9 border-navy-800 text-navy-800 hover:bg-navy-50"
+              >
+                View
+                <ArrowRight className="ml-1 w-3 h-3 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </Link>
+
+          </div>
       </div>
     </div>
   );
