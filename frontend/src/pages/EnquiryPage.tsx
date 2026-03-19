@@ -26,7 +26,7 @@ export default function EnquiryPage() {
   if (productName) {
     const el = document.getElementById('enquiry-form');
     if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      el.scrollIntoView({ behavior: 'instant' });
     }
   }
 }, [productName]);
