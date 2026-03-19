@@ -46,7 +46,7 @@ export default function EnquiryPage() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className=""
+            className="order-2 lg:order-1"
           >
             {/* Badge */}
             <span className="inline-block bg-amber-500 text-amber-950 text-[10px] font-black tracking-[0.18em] uppercase px-3 py-1.5 rounded-sm mb-8">
@@ -95,7 +95,7 @@ export default function EnquiryPage() {
               <p className="text-[10px] font-black tracking-[0.15em] uppercase text-gray-400 mb-4">
                 Contact Information
               </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-3">
                 {contactInfo.map((info) => (
                   <div
                     key={info.label}
@@ -104,14 +104,14 @@ export default function EnquiryPage() {
                     <div className="w-9 h-9 rounded-lg bg-amber-500/15 flex items-center justify-center flex-shrink-0">
                       <info.icon className="w-4 h-4 text-amber-600" />
                     </div>
-                    <div className="min-w-0">
+                    <div className="min-w-0 flex-1">
                       <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-0.5">
                         {info.label}
                       </p>
                       {info.href ? (
                         <a
                           href={info.href}
-                          className="text-sm font-semibold text-gray-800 hover:text-amber-600 transition-colors truncate block"
+                          className="text-xs font-semibold text-gray-800 hover:text-amber-600 transition-colors break-all"
                         >
                           {info.value}
                         </a>
@@ -130,6 +130,7 @@ export default function EnquiryPage() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.12 }}
+            className="order-1 lg:order-2"
           >
             {/* Decorative amber square top-right */}
             <div className="flex justify-end mb-2 pointer-events-none">
