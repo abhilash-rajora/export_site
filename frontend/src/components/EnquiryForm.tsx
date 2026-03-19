@@ -66,27 +66,27 @@ export default function EnquiryForm({ productId, productName, className }: Enqui
     <form onSubmit={handleSubmit} className={className}>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="space-y-1.5">
-          <Label htmlFor="name" className="text-sm font-medium">
+          <Label htmlFor="name" className="text-sm font-medium ">
             Full Name <span className="text-destructive">*</span>
           </Label>
-          <Input id="name" name="name" placeholder="John Smith" value={form.name} onChange={handleChange} required />
+          <Input id="name" name="name" placeholder="Enter your full name"  value={form.name} onChange={handleChange} required />
         </div>
         <div className="space-y-1.5">
           <Label htmlFor="email" className="text-sm font-medium">
             Email Address <span className="text-destructive">*</span>
           </Label>
-          <Input id="email" name="email" type="email" placeholder="john@company.com" value={form.email} onChange={handleChange} required />
+          <Input id="email" name="email" type="email" placeholder="Enter your business email" value={form.email} onChange={handleChange} required />
         </div>
         <div className="space-y-1.5">
           <Label htmlFor="phone" className="text-sm font-medium">Phone Number</Label>
-          <Input id="phone" name="phone" type="tel" placeholder="+1 234 567 890" value={form.phone} onChange={handleChange} />
+          <Input id="phone" name="phone" type="tel" placeholder="WhatsApp (+country code)" value={form.phone} onChange={handleChange} />
         </div>
         <div className="space-y-1.5">
           <Label htmlFor="productName" className="text-sm font-medium">Product of Interest</Label>
           <Input
             id="productName"
             name="productName"
-            placeholder="e.g. Organic Cotton Textiles"
+            placeholder="e.g. spices, textiles, handicrafts..."
             value={form.productName}
             onChange={handleChange}
             readOnly={!!productId}
