@@ -2,6 +2,7 @@ import { Lock, Clock, ShieldCheck, Building2, Mail, Phone, Globe } from 'lucide-
 import { motion } from 'framer-motion';
 import EnquiryForm from '../components/EnquiryForm';
 import { useSearch } from '@tanstack/react-router';
+import { useEffect } from 'react';
 
 const features = [
   { icon: Lock,      label: 'End-to-end Encrypted Communications' },
@@ -17,8 +18,18 @@ const contactInfo = [
 ];
 
 export default function EnquiryPage() {
+
   const search = useSearch({ strict: false });
   const productName = (search as any).productName || '';
+
+    useEffect(() => {
+  if (productName) {
+    const el = document.getElementById('enquiry-form');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+}, [productName]);
 
   return (
     <div className="min-h-screen bg-[#eeecea]">
@@ -135,8 +146,8 @@ export default function EnquiryPage() {
             <div className="flex justify-end mb-2 pointer-events-none">
               <div className="w-16 h-16 bg-amber-400/60 rounded-sm" />
             </div>
-
-            <div className="bg-white/80 backdrop-blur-sm rounded-2xl border border-gray-200/60 shadow-xl px-7 sm:px-10 py-9">
+            
+            <div id="enquiry-form" className="bg-white/80 backdrop-blur-sm rounded-2xl border border-gray-200/60 shadow-xl px-7 sm:px-10 py-9">
               {/* Form header */}
               <div className="mb-8 pb-6 border-b border-gray-200">
                 <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
