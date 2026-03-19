@@ -1,6 +1,8 @@
 import { Link } from '@tanstack/react-router';
 import { motion } from 'framer-motion';
 import { ChevronLeft, FileText } from 'lucide-react';
+import { useEffect } from 'react';
+import api from "../api/axios"; 
 
 const sections = [
   {
@@ -54,6 +56,38 @@ const sections = [
 ];
 
 export default function TermsPage() {
+  // ✅ Fetch SEO from MongoDB and apply to browser
+  useEffect(() => {
+    const fetchSeo = async () => {
+      try {
+        const res = await api.get('/seo/terms');
+        if (res.data) {
+          document.title = res.data.title || 'Terms & Conditions | We Exports';
+
+          let desc = document.querySelector('meta[name="description"]');
+          if (!desc) {
+            desc = document.createElement('meta');
+            desc.setAttribute('name', 'description');
+            document.head.appendChild(desc);
+          }
+          desc.setAttribute('content', res.data.description || '');
+
+          let kw = document.querySelector('meta[name="keywords"]');
+          if (!kw) {
+            kw = document.createElement('meta');
+            kw.setAttribute('name', 'keywords');
+            document.head.appendChild(kw);
+          }
+          kw.setAttribute('content', res.data.keywords || '');
+        }
+      } catch (error) {
+        document.title = 'Terms & Conditions | We Exports';
+      }
+    };
+
+    fetchSeo();
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Header */}
