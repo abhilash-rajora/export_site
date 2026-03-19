@@ -7,10 +7,15 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from 'react';
 import ProductCard from '../components/ProductCard';
 import { useActiveProducts } from '../hooks/useQueries';
+import useSeo from '../hooks/useSeo';
+
+
 
 const CATEGORIES = ['All', 'Agriculture', 'Textiles', 'Minerals', 'Electronics', 'Food & Beverages', 'Handicrafts'];
 
 export default function ProductsPage() {
+  useSeo('products', 'Our Products | Explore Our Export Catalog');
+  
   const searchParams = useSearch({ strict: false }) as { category?: string };
   const navigate = useNavigate();
   const [search, setSearch] = useState('');

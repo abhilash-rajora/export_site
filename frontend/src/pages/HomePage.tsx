@@ -8,6 +8,8 @@ import { useActiveProducts } from '../hooks/useQueries';
 import { Helmet } from "react-helmet-async";
 import { useEffect, useState } from "react";
 import api from "../api/axios";
+import useSeo from '../hooks/useSeo';
+
 
 const categories = [
   { name: 'Agriculture', icon: Leaf, desc: 'Fresh produce & farm goods', color: 'bg-green-50 text-green-700 border-green-200' },
@@ -42,6 +44,7 @@ interface SeoData {
 
 export default function HomePage() {
 
+  useSeo('home',     'We Exports | Global Export Company from India');
   const [seo, setSeo] = useState<SeoData | null>(null);
 
   useEffect(() => {

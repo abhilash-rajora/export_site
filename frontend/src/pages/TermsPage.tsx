@@ -2,7 +2,8 @@ import { Link } from '@tanstack/react-router';
 import { motion } from 'framer-motion';
 import { ChevronLeft, FileText } from 'lucide-react';
 import { useEffect } from 'react';
-import api from "../api/axios"; 
+import useSeo from '../hooks/useSeo';
+
 
 const sections = [
   {
@@ -57,6 +58,7 @@ const sections = [
 
 export default function TermsPage() {
   // ✅ Fetch SEO from MongoDB and apply to browser
+  useSeo('terms',    'Terms & Conditions | We Exports');
   useEffect(() => {
     const fetchSeo = async () => {
       try {
