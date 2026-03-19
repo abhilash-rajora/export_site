@@ -4,7 +4,7 @@ import { ArrowRight, Award, CheckCircle2, Globe, TrendingUp, Users } from 'lucid
 import { motion } from "framer-motion";
 import useSeo from '../hooks/useSeo';
 
-useSeo('about',    'About We Exports | Our Story & Global Mission');
+
 
 const milestones = [
   { year: '2008', title: 'Founded', desc: 'WeExports was established with a mission to connect quality products with international buyers.' },
@@ -23,6 +23,7 @@ const values = [
 ];
 
 export default function AboutPage() {
+  useSeo('about',    'About We Exports | Our Story & Global Mission');
   return (
     <div className="min-h-screen bg-white ">
       <div className="bg-navy-900 text-white pt-28 pb-20">
