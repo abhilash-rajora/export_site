@@ -9,7 +9,7 @@ export const loadGoogleAnalytics = (consent = { analytics: false }) => {
   }
 
   const script = document.createElement('script');
-  script.src = 'https://www.googletagmanager.com/gtag/js?id=G-FHPMSX3KN1';
+  script.src = 'https://www.googletagmanager.com/gtag/js?id=G-GCXWTH90ZT';
   script.async = true;
   document.head.appendChild(script);
 
@@ -23,7 +23,7 @@ export const loadGoogleAnalytics = (consent = { analytics: false }) => {
     analytics_storage: consent.analytics ? 'granted' : 'denied',
   });
 
-  gtag('config', 'G-FHPMSX3KN1');
+  gtag('config', 'G-GCXWTH90ZT');
 
   window.gtagLoaded = true;
 };

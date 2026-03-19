@@ -31,7 +31,7 @@ const handleAcceptAll = () => {
 
   localStorage.setItem('cookie_consent', JSON.stringify(consent));
 
-  window['ga-disable-G-FHPMSX3KN1'] = false;
+  window['ga-disable-G-GCXWTH90ZT'] = false;
 
   loadGoogleAnalytics(consent);
 
@@ -66,7 +66,7 @@ window.gtag?.('event', 'cookie_reject', {
   event_label: 'rejected_all',
 });
 
-window['ga-disable-G-FHPMSX3KN1'] = true;
+window['ga-disable-G-GCXWTH90ZT'] = true;
 
   setVisible(false);
 };
@@ -89,7 +89,7 @@ const handleEssential = () => {
   event_category: 'engagement',
   event_label: 'essential_only',
 });
-  window['ga-disable-G-FHPMSX3KN1'] = true;
+  window['ga-disable-G-GCXWTH90ZT'] = true;
 
   setVisible(false);
 };
