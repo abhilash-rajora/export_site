@@ -111,7 +111,7 @@ export default function EnquiryForm({ productId, productName, className }: Enqui
       <Button
         type="submit"
         disabled={submitEnquiry.isPending}
-        className="mt-6 bg-gold-500 hover:bg-gold-400 text-navy-900 font-bold w-full shadow-gold"
+        className="mt-6 bg-gold-500 hover:bg-gold-400 text-navy-900 font-bold w-full shadow-gold "
         size="lg"
       >
         {submitEnquiry.isPending ? (

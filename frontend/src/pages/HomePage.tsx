@@ -114,12 +114,12 @@ export default function HomePage() {
               
               <div className="flex gap-3">
                 <Link to="/products">
-                  <Button size="sm" className="bg-gold-500 hover:bg-gold-400 text-navy-900 font-bold px-5">
-                    Explore Products <ArrowRight className="ml-1.5 w-3.5 h-3.5" />
+                  <Button size="sm" className="bg-gold-500 hover:bg-gold-400 text-navy-900 font-bold px-5 ">
+                    Explore Products <ArrowRight className="ml-1.5 w-3.5 h-3.5 " />
                   </Button>
                 </Link>
                 <Link to="/enquiry">
-                  <Button size="sm" variant="outline" className="border-white/30 text-white hover:bg-white/10 px-5">
+                  <Button size="sm" variant="outline" className="border-white/30 text-white hover:bg-white/10 px-5 ">
                     Get in Touch
                   </Button>
                 </Link>
@@ -178,7 +178,7 @@ export default function HomePage() {
                   <Link to="/products">
                     <Button
                       size="lg"
-                      className="group bg-gold-500 hover:bg-gold-400 text-navy-900 font-bold px-8"
+                      className="group bg-gold-500 hover:bg-gold-400 text-navy-900 font-bold px-8 "
                     >
                       Explore Products
                       <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -188,7 +188,7 @@ export default function HomePage() {
                     <Button 
                       size="lg" 
                       variant="outline" 
-                      className="border-white/40 text-white hover:bg-white/10 px-8 backdrop-blur-md"
+                      className="border-white/40 text-white hover:bg-white/10 px-8 backdrop-blur-md "
                     >
                       Get in Touch
                     </Button>
@@ -256,7 +256,7 @@ export default function HomePage() {
             <div className="text-center py-20">
               <p className="text-muted-foreground text-lg">Products coming soon. Check back shortly!</p>
               <Link to="/enquiry" className="mt-4 inline-block">
-                <Button className="bg-gold-500 hover:bg-gold-400 text-navy-900 mt-4">Make an Enquiry</Button>
+                <Button className="bg-gold-500 hover:bg-gold-400 text-navy-900 mt-4 ">Make an Enquiry</Button>
               </Link>
             </div>
           ) : (
@@ -301,7 +301,7 @@ export default function HomePage() {
             <p className="text-navy-800/80 text-lg mb-8 max-w-xl mx-auto">Browse our catalog and send us an enquiry. Our team responds within 24 hours.</p>
             <div className="flex flex-wrap gap-4 justify-center">
               <Link to="/products">
-                <Button size="lg" className="bg-navy-900 hover:bg-navy-800 text-white font-bold px-8 shadow-navy">
+                <Button size="lg" className="bg-navy-900 hover:bg-navy-800 text-white font-bold px-8 shadow-navy ">
                   Browse Products <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
                 </Button>
               </Link>
