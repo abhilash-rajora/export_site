@@ -10,6 +10,9 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 
+const ogRoute = require('./routes/ogRoute');
+app.use('/', ogRoute);
+
 dotenv.config();
 connectDB();
 
