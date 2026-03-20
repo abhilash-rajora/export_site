@@ -27,18 +27,22 @@ app.use(cors({
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
-// Routes
-app.use('/api/products', require('./routes/productRoutes'));
+// ── API Routes ───────────────────────────────────────────────────
+app.use('/api/products',  require('./routes/productRoutes'));
 app.use('/api/enquiries', require('./routes/enquiryRoutes'));
-app.use('/api/admin', require('./routes/adminRoutes'));
-app.use('/api/seo', require('./routes/seoRoutes'));
+app.use('/api/admin',     require('./routes/adminRoutes'));
+app.use('/api/seo',       require('./routes/seoRoutes'));
 
-const ogRoute = require('./routes/ogRoute');
-app.use('/', ogRoute);
+// ── OG tags (WhatsApp/social sharing ke liye) ────────────────────
+app.use('/', require('./routes/ogRoute'));
 
-// Sitemap + robots.txt (app ke baad aana chahiye)
-const sitemapRoute = require('./routes/sitemapRoute');
-app.use('/', sitemapRoute);
+// ── Sitemap + robots.txt ─────────────────────────────────────────
+app.use('/', require('./routes/sitemapRoute'));
+
+// ── Keep Alive (Render free tier sleep prevent karne ke liye) ────
+app.get('/ping', (req, res) => {
+  res.json({ status: 'ok', time: new Date().toISOString() });
+});
 
 app.get('/', (req, res) => res.send('Export Site API running'));
 

@@ -144,6 +144,10 @@ const routeTree = rootRoute.addChildren([
   ]),
 ]);
 
+setInterval(() => {
+  fetch('https://export-site-backend.onrender.com/ping').catch(() => {});
+}, 10 * 60 * 1000);
+
 const router = createRouter({ routeTree });
 
 declare module '@tanstack/react-router' {
