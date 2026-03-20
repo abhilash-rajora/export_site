@@ -34,27 +34,18 @@ interface SeoData {
 }
 
 export default function HomePage() {
-  useSeo('home', 'We Exports | Global Export Company from India');
-  const [seo, setSeo] = useState<SeoData | null>(null);
-
-  useEffect(() => {
-    api.get("/seo/home")
-      .then(res => setSeo(res.data))
-      .catch(() => {});
-  }, []);
+ useSeo('home', {
+  title:       'WExports | Trusted Global Export Partner from India',
+  description: 'Leading Indian export company delivering Agriculture, Textiles, Minerals and Electronics to 50+ countries worldwide.',
+  keywords:    'export company india, indian exporter, agriculture export, textile export, wexports',
+  canonical:   'https://wexports.vercel.app/',
+});
 
   const { data: products, isLoading } = useActiveProducts();
   const featuredProducts = products?.slice(0, 6) ?? [];
 
   return (
     <>
-      <Helmet>
-        <title>{seo?.title || "WeExports | Trusted Global Export Partner"}</title>
-        <meta name="description" content={seo?.description || "Leading export company delivering agriculture, textiles, minerals and electronics worldwide."} />
-        <meta name="keywords" content={seo?.keywords || "export company, we exports, agriculture export, textile exporter"} />
-        <link rel="canonical" href="https://wexports.vercel.app/" />
-      </Helmet>
-
       {/* ── MOBILE HERO ── */}
       <section className="md:hidden bg-[#0D3D3D] px-[8px] pt-[8px] pb-[8px]">
         <div className="relative rounded-2xl overflow-hidden" style={{ height: '96svh' }}>

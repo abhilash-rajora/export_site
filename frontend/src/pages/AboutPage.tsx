@@ -23,7 +23,12 @@ const values = [
 ];
 
 export default function AboutPage() {
-  useSeo('about',    'About We Exports | Our Story & Global Mission');
+  useSeo('about', {
+  title:       'About WExports | Our Story and Global Export Mission',
+  description: 'WExports — 15+ years of trusted export services from India. ISO certified, serving 50+ countries with 200+ product lines.',
+  keywords:    'about wexports, indian export company, trusted exporter india',
+  canonical:   'https://wexports.vercel.app/about',
+});
   return (
     <div className="min-h-screen bg-white ">
       <div className="bg-navy-900 text-white pt-28 pb-20">

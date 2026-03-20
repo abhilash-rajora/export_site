@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import ProductCard from '../components/ProductCard';
 import { useActiveProducts } from '../hooks/useQueries';
+import useSeo from '../hooks/useSeo';
 
 const getWishlist = (): string[] => {
   try {
@@ -15,6 +16,13 @@ const getWishlist = (): string[] => {
 };
 
 export default function WishlistPage() {
+
+  useSeo('wishlist', {
+  title:       'My Wishlist | WExports',
+  description: 'Your saved export products on WExports.',
+  noindex:     true,
+});
+
   const [wishlistIds, setWishlistIds] = useState<string[]>([]);
   const { data: allProducts } = useActiveProducts();
 

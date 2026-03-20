@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import EnquiryForm from '../components/EnquiryForm';
 import { useSearch } from '@tanstack/react-router';
 import { useEffect } from 'react';
+import  useSeo  from '../hooks/useSeo';
 
 const features = [
   { icon: Lock,      label: 'End-to-end Encrypted Communications' },
@@ -18,6 +19,13 @@ const contactInfo = [
 ];
 
 export default function EnquiryPage() {
+
+  useSeo('enquiry', {
+  title:       'Product Enquiry | WExports — Get a Free Export Quote',
+  description: 'Send an enquiry for Indian export products. Get pricing and shipping details within 24 hours.',
+  keywords:    'export enquiry india, product quote india, buy from india, wexports contact',
+  canonical:   'https://wexports.vercel.app/enquiry',
+});
 
   const search = useSearch({ strict: false });
   const productName = (search as any).productName || '';

@@ -8,6 +8,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from 'react';
 import EnquiryForm from '../components/EnquiryForm';
 import { useProductById } from '../hooks/useQueries';
+import useSeo from '../hooks/useSeo';
 
 export default function ProductDetailPage() {
   const { id } = useParams({ strict: false }) as { id: string };
@@ -18,6 +19,26 @@ export default function ProductDetailPage() {
   const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [shareTooltip, setShareTooltip] = useState<'idle' | 'copied' | 'shared'>('idle');
+
+  const productName = product?.name ?? '';
+  const productDesc = product?.description?.split('\n')[0]?.slice(0, 150) ?? '';
+  const productCat  = product?.category ?? '';
+  const productImg  = product?.images?.[0] ?? product?.imageUrl ?? '';
+
+
+  useSeo('product-detail', {
+  title:       productName
+                 ? `${productName} | ${productCat} Export India | WExports`
+                 : 'Product | WExports',
+  description: productDesc
+                 ? `${productDesc} — Verified Indian exporter. Free quote within 24hrs.`
+                 : 'Quality export product from India. Verified supplier, competitive pricing.',
+  keywords:    productName
+                 ? `${productName.toLowerCase()}, ${productCat.toLowerCase()} export india, wexports`
+                 : 'export product india, wexports',
+  canonical:   `https://wexports.vercel.app/products/detail/${id}`,
+  ogImage:     productImg,
+});
 
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {

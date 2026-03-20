@@ -96,33 +96,16 @@ const navItems = [
 ];
 
 export default function TermsPage() {
-  useSeo('terms', 'Terms & Conditions | We Exports');
+  useSeo('terms', {
+  title:       'Terms and Conditions | WExports',
+  description: 'Read WExports terms and conditions for export services, product listings and enquiry process.',
+  keywords:    'wexports terms, export company terms, wexports conditions',
+  canonical:   'https://wexports.vercel.app/terms',
+});
 
   const [activeId, setActiveId] = useState('acceptance');
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const sectionRefs = useRef({});
-
-  /* ── SEO fetch (unchanged from your original) ── */
-  useEffect(() => {
-    const fetchSeo = async () => {
-      try {
-        const res = await api.get('/seo/terms');
-        if (res.data) {
-          document.title = res.data.title || 'Terms & Conditions | We Exports';
-          const setMeta = (name, content) => {
-            let el = document.querySelector(`meta[name="${name}"]`);
-            if (!el) { el = document.createElement('meta'); el.setAttribute('name', name); document.head.appendChild(el); }
-            el.setAttribute('content', content || '');
-          };
-          setMeta('description', res.data.description);
-          setMeta('keywords', res.data.keywords);
-        }
-      } catch {
-        document.title = 'Terms & Conditions | We Exports';
-      }
-    };
-    fetchSeo();
-  }, []);
 
   /* ── Intersection observer for active sidebar item ── */
   useEffect(() => {
