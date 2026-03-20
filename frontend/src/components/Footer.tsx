@@ -2,6 +2,16 @@ import { Link } from '@tanstack/react-router';
 import { Globe, Mail, Phone } from 'lucide-react';
 import { FaFacebookF, FaInstagram, FaWhatsapp } from 'react-icons/fa';
 
+// ── Category slugs — clean URLs ke liye ─────────────────────────
+const footerCategories = [
+  { label: 'Agriculture',      slug: 'agriculture' },
+  { label: 'Textiles',         slug: 'textiles' },
+  { label: 'Minerals',         slug: 'minerals' },
+  { label: 'Electronics',      slug: 'electronics' },
+  { label: 'Food & Beverages', slug: 'food-beverages' },
+  { label: 'Handicrafts',      slug: 'handicrafts' },
+];
+
 export default function Footer() {
   const year = new Date().getFullYear();
 
@@ -57,88 +67,90 @@ export default function Footer() {
             </h3>
             <ul className="space-y-2">
               {[
-                { label: 'Home', href: '/' },
-                { label: 'Products', href: '/products' },
-                { label: 'About Us', href: '/about' },
+                { label: 'Home',              href: '/' },
+                { label: 'Products',          href: '/products' },
+                { label: 'About Us',          href: '/about' },
                 { label: 'Contact / Enquiry', href: '/enquiry' },
               ].map((link) => (
                 <li key={link.href}>
-                  <Link to={link.href} className="text-sm text-white/60 hover:text-gold-400 hover:translate-x-1 inline-block transition-all duration-200">
+                  <Link
+                    to={link.href}
+                    className="text-sm text-white/60 hover:text-gold-400 hover:translate-x-1 inline-block transition-all duration-200"
+                  >
                     {link.label}
                   </Link>
                 </li>
               ))}
               <li>
-                <Link to="/terms" className="text-sm text-white/60 hover:text-gold-400 hover:translate-x-1 inline-block transition-all duration-200">
+                <Link
+                  to="/terms"
+                  className="text-sm text-white/60 hover:text-gold-400 hover:translate-x-1 inline-block transition-all duration-200"
+                >
                   Terms & Conditions
                 </Link>
               </li>
             </ul>
           </div>
 
+          {/* ── Categories — clean /products/:slug URLs ── */}
           <div>
             <h3 className="font-display font-bold text-white text-sm uppercase tracking-widest mb-4">
               Categories
             </h3>
             <ul className="space-y-2">
-              {['Agriculture', 'Textiles', 'Minerals', 'Electronics', 'Food & Beverages', 'Handicrafts'].map(
-                (cat) => (
-                  <li key={cat}>
-                    <Link
-                      to="/products"
-                      search={{ category: cat }}
-                      className="text-sm text-white/60 hover:text-gold-400 transition-colors"
-                    >
-                      {cat}
-                    </Link>
-                  </li>
-                ),
-              )}
+              {footerCategories.map((cat) => (
+                <li key={cat.slug}>
+                  <Link
+                    to="/products/$category"
+                    params={{ category: cat.slug }}
+                    className="text-sm text-white/60 hover:text-gold-400 hover:translate-x-1 inline-block transition-colors duration-200"
+                  >
+                    {cat.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
 
         <div className="mt-12 pt-8 border-t border-white/10 flex flex-col items-center gap-6">
 
-  {/* Social Icons */}
-  <div className="flex items-center justify-center gap-6">
-    <a
-      href="https://facebook.com/yourpage"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="w-9 h-9 flex items-center justify-center rounded-full bg-white/5 hover:bg-gold-500/20 text-white/60 hover:text-gold-400 transition-all duration-300 hover:scale-110"
-    >
-      <FaFacebookF size={25} />
-    </a>
+          {/* Social Icons */}
+          <div className="flex items-center justify-center gap-6">
+            <a
+              href="https://facebook.com/yourpage"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-9 h-9 flex items-center justify-center rounded-full bg-white/5 hover:bg-gold-500/20 text-white/60 hover:text-gold-400 transition-all duration-300 hover:scale-110"
+            >
+              <FaFacebookF size={25} />
+            </a>
+            <a
+              href="https://instagram.com/yourpage"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-9 h-9 flex items-center justify-center rounded-full bg-white/5 hover:bg-gold-500/20 text-white/60 hover:text-gold-400 transition-all duration-300 hover:scale-110"
+            >
+              <FaInstagram size={25} />
+            </a>
+            <a
+              href="https://wa.me/919466363522"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-9 h-9 flex items-center justify-center rounded-full bg-white/5 hover:bg-gold-500/20 text-white/60 hover:text-gold-400 transition-all duration-300 hover:scale-110"
+            >
+              <FaWhatsapp size={25} />
+            </a>
+          </div>
 
-    <a
-      href="https://instagram.com/yourpage"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="w-9 h-9 flex items-center justify-center rounded-full bg-white/5 hover:bg-gold-500/20 text-white/60 hover:text-gold-400 transition-all duration-300 hover:scale-110"
-    >
-      <FaInstagram size={25} />
-    </a>
-
-    <a
-      href="https://wa.me/919466363522"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="w-9 h-9 flex items-center justify-center rounded-full bg-white/5 hover:bg-gold-500/20 text-white/60 hover:text-gold-400 transition-all duration-300 hover:scale-110"
-    >
-      <FaWhatsapp size={25} />
-    </a>
-  </div>
-
-  {/* Copyright */}
-  <p className="text-sm text-white/40 text-center ">
-    © {year} We Exports. All rights reserved.
-  </p>
-  <p className="text-xs text-white/30 text-center">
-  Connecting global markets with trusted exports
-</p>
-
-</div>
+          {/* Copyright */}
+          <p className="text-sm text-white/40 text-center">
+            © {year} We Exports. All rights reserved.
+          </p>
+          <p className="text-xs text-white/30 text-center">
+            Connecting global markets with trusted exports
+          </p>
+        </div>
       </div>
     </footer>
   );
