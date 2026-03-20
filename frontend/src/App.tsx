@@ -23,8 +23,9 @@ import WishlistPage from './pages/WishlistPage';
 import AdminForgotPasswordPage from './pages/admin/AdminForgotPasswordPage';
 import AdminVerifyResetOtpPage from './pages/admin/AdminVerifyResetOtpPage';
 import AdminResetPasswordPage from './pages/admin/AdminResetPasswordPage';
+import { Navigate } from '@tanstack/react-router';
 
-
+// ─── Admin password reset routes ───────────────────────────────────────────
 const adminForgotPasswordRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/admin/forgot-password',
@@ -43,26 +44,59 @@ const adminResetPasswordRoute = createRoute({
   component: AdminResetPasswordPage,
 });
 
+// ─── Root ──────────────────────────────────────────────────────────────────
 const rootRoute = createRootRoute({
   component: () => (
     <>
       <ScrollToTop />
       <Outlet />
-      <Toaster position="top-right" richColors  />
-      <CookieBanner /> 
+      <Toaster position="top-right" richColors />
+      <CookieBanner />
     </>
   ),
 });
 
-const publicLayoutRoute = createRoute({ getParentRoute: () => rootRoute, id: 'public-layout', component: () => <PublicLayout /> });
+// ─── Public layout ─────────────────────────────────────────────────────────
+const publicLayoutRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  id: 'public-layout',
+  component: () => <PublicLayout />,
+});
+
 const homeRoute = createRoute({ getParentRoute: () => publicLayoutRoute, path: '/', component: HomePage });
-const productsRoute = createRoute({ getParentRoute: () => publicLayoutRoute, path: '/products', component: ProductsPage });
-const productDetailRoute = createRoute({ getParentRoute: () => publicLayoutRoute, path: '/products/$id', component: ProductDetailPage });
 const enquiryRoute = createRoute({ getParentRoute: () => publicLayoutRoute, path: '/enquiry', component: EnquiryPage });
 const aboutRoute = createRoute({ getParentRoute: () => publicLayoutRoute, path: '/about', component: AboutPage });
 const wishlistRoute = createRoute({ getParentRoute: () => publicLayoutRoute, path: '/wishlist', component: WishlistPage });
-const adminLoginRoute = createRoute({ getParentRoute: () => rootRoute, path: '/admin/login', component: AdminLoginPage });
+const termsRoute = createRoute({ getParentRoute: () => publicLayoutRoute, path: '/terms', component: TermsPage });
 
+// ─── Products routes (NEW: clean URL + legacy redirect) ────────────────────
+const productsRoute = createRoute({
+  getParentRoute: () => publicLayoutRoute,
+  path: '/products',
+  component: ProductsPage,
+});
+
+// NEW: /products/agriculture, /products/textiles, etc.
+const productsByCategoryRoute = createRoute({
+  getParentRoute: () => publicLayoutRoute,
+  path: '/products/$category',
+  component: ProductsPage,           // same component, reads $category param
+});
+
+const productDetailRoute = createRoute({
+  getParentRoute: () => publicLayoutRoute,
+  path: '/products/detail/$id',     // moved to /detail/$id so $category doesn't conflict
+  component: ProductDetailPage,
+});
+
+// ─── Admin login ────────────────────────────────────────────────────────────
+const adminLoginRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/admin/login',
+  component: AdminLoginPage,
+});
+
+// ─── Admin layout ───────────────────────────────────────────────────────────
 const adminLayoutRoute = createRoute({
   getParentRoute: () => rootRoute,
   id: 'admin-layout',
@@ -75,24 +109,20 @@ const adminLayoutRoute = createRoute({
   ),
 });
 
-const adminSeoRoute = createRoute({
-  getParentRoute: () => adminLayoutRoute,
-  path: '/admin/seo',
-  component: AdminSeoPage,
-});
-
+const adminSeoRoute = createRoute({ getParentRoute: () => adminLayoutRoute, path: '/admin/seo', component: AdminSeoPage });
 const adminDashboardRoute = createRoute({ getParentRoute: () => adminLayoutRoute, path: '/admin', component: AdminDashboardPage });
 const adminProductsRoute = createRoute({ getParentRoute: () => adminLayoutRoute, path: '/admin/products', component: AdminProductsPage });
 const adminProductNewRoute = createRoute({ getParentRoute: () => adminLayoutRoute, path: '/admin/products/new', component: AdminProductFormPage });
 const adminProductEditRoute = createRoute({ getParentRoute: () => adminLayoutRoute, path: '/admin/products/$id/edit', component: AdminProductFormPage });
 const adminEnquiriesRoute = createRoute({ getParentRoute: () => adminLayoutRoute, path: '/admin/enquiries', component: AdminEnquiriesPage });
-const adminCreateAdminRoute = createRoute({getParentRoute: () => adminLayoutRoute, path: '/admin/create-admin',component: CreateAdminPage,});
-const termsRoute = createRoute({ getParentRoute: () => publicLayoutRoute, path: '/terms', component: TermsPage });
+const adminCreateAdminRoute = createRoute({ getParentRoute: () => adminLayoutRoute, path: '/admin/create-admin', component: CreateAdminPage });
 
+// ─── Route tree ─────────────────────────────────────────────────────────────
 const routeTree = rootRoute.addChildren([
   publicLayoutRoute.addChildren([
     homeRoute,
     productsRoute,
+    productsByCategoryRoute,   // NEW clean URL route
     productDetailRoute,
     enquiryRoute,
     aboutRoute,
@@ -114,11 +144,7 @@ const routeTree = rootRoute.addChildren([
   ]),
 ]);
 
-
-
-const router = createRouter({ routeTree 
-  
-});
+const router = createRouter({ routeTree });
 
 declare module '@tanstack/react-router' {
   interface Register { router: typeof router; }
@@ -127,4 +153,3 @@ declare module '@tanstack/react-router' {
 export default function App() {
   return <RouterProvider router={router} />;
 }
-

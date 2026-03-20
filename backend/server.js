@@ -33,6 +33,10 @@ app.use('/api/enquiries', require('./routes/enquiryRoutes'));
 app.use('/api/admin', require('./routes/adminRoutes'));
 app.use('/api/seo', require('./routes/seoRoutes'));
 
+// Sitemap + robots.txt (app ke baad aana chahiye)
+const sitemapRoute = require('./routes/sitemapRoute');
+app.use('/', sitemapRoute);
+
 app.get('/', (req, res) => res.send('Export Site API running'));
 
 const PORT = process.env.PORT || 5000;

@@ -205,7 +205,7 @@ export default function ProductCard({ product, hideStockBadge = false }: Product
           </button>
 
           {/* View Details — outlined */}
-          <Link to="/products/$id" params={{ id: product._id }} className="block">
+          <Link to="/products/detail/$id" params={{ id: product._id }} className="block">
             <button className="w-full py-2.5 rounded-xl text-sm font-bold tracking-wide border-2 border-gray-200 text-gray-700 hover:border-gray-400 hover:text-gray-900 transition-all duration-200 active:scale-[.98] flex items-center justify-center gap-1.5">
               View Details
               <ArrowRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5" />
