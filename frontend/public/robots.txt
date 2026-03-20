@@ -1,9 +1,0 @@
-User-agent: *
-Allow: /
-
-# Block karo jo index nahi hone chahiye
-Disallow: /wishlist
-Disallow: /api/
-Disallow: /_next/
-
-Sitemap: https://wexports.vercel.app/sitemap.xml
