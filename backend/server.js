@@ -10,9 +10,6 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 
-const ogRoute = require('./routes/ogRoute');
-app.use('/', ogRoute);
-
 dotenv.config();
 connectDB();
 
@@ -35,6 +32,9 @@ app.use('/api/products', require('./routes/productRoutes'));
 app.use('/api/enquiries', require('./routes/enquiryRoutes'));
 app.use('/api/admin', require('./routes/adminRoutes'));
 app.use('/api/seo', require('./routes/seoRoutes'));
+
+const ogRoute = require('./routes/ogRoute');
+app.use('/', ogRoute);
 
 // Sitemap + robots.txt (app ke baad aana chahiye)
 const sitemapRoute = require('./routes/sitemapRoute');
