@@ -54,6 +54,10 @@ function applySeo(opts: SeoOptions) {
   if (opts.keywords) setMeta('name', 'keywords', opts.keywords);
   setMeta('name', 'robots', opts.noindex ? 'noindex, nofollow' : 'index, follow');
   setLink('canonical', canonical);
+  setMeta('name', 'twitter:card',        'summary_large_image');
+  setMeta('name', 'twitter:title',       opts.title);
+  setMeta('name', 'twitter:description', opts.description);
+  if (opts.ogImage) setMeta('name', 'twitter:image', opts.ogImage);
 
   // Open Graph — WhatsApp / LinkedIn / Facebook preview
   setMeta('property', 'og:title',       opts.title);

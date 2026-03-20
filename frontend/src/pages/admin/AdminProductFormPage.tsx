@@ -12,7 +12,7 @@ import { toast } from 'sonner';
 import { useCreateProduct, useProductById, useUpdateProduct } from '../../hooks/useQueries';
 import api from '../../api/axios';
 
-const CATEGORIES = ['Agriculture', 'Textiles', 'Minerals', 'Electronics', 'Food & Beverages', 'Handicrafts', 'Chemicals', 'Metals', 'Plastics', 'Machinery', 'Automotive Parts', 'Pharmaceuticals', 'Furniture', 'Construction Materials', 'Energy Products', 'Consumer Goods', 'Other'];
+const CATEGORIES = ['Agriculture', 'Textiles', 'Minerals', 'Electronics', 'Food & Beverages', 'Handicrafts', 'Other'];
 
 const defaultForm = {
   name: '',
