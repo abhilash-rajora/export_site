@@ -8,10 +8,7 @@
       "source": "/robots.txt",
       "destination": "https://export-site-backend.onrender.com/robots.txt"
     },
-    {
-      "source": "/products/detail/:id",
-      "destination": "https://export-site-backend.onrender.com/products/detail/:id"
-    },
+    
     {
       "source": "/(.*)",
       "destination": "/index.html"
