@@ -16,6 +16,10 @@ const adminSchema = new mongoose.Schema(
     twoFactorSecret: String,
     twoFactorEnabled: { type: Boolean, default: false },
 
+    loginOtp:         { type: String, default: null },
+    loginOtpExpiry:   { type: Date,   default: null },
+    loginOtpAttempts: { type: Number, default: 0 },
+
     resetOtp: {
       type: String,
       default: null,
