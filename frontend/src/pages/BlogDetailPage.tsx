@@ -164,7 +164,7 @@ function MobileTOC({ sections }: { sections: { heading?: string }[] }) {
   const [open, setOpen] = useState(false);
   if (headings.length === 0) return null;
   return (
-    <div className="lg:hidden sticky top-16 z-30 mb-4">
+    <div className="lg:hidden sticky top-19 z-30 mb-4">
       <button
         onClick={() => setOpen(v => !v)}
         className="w-full flex items-center justify-between px-4 py-3 backdrop-blur-md bg-white/70 border border-gold-200 rounded-xl text-sm font-semibold text-navy-900 shadow-sm"

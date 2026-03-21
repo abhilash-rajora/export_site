@@ -43,7 +43,6 @@ export default function PublicNavbar() {
     return () => window.removeEventListener('storage', update);
   }, [location.pathname]);
 
-  // ── Blog link add kiya ──
   const navLinks = [
     { label: 'Home',     href: '/' },
     { label: 'Products', href: '/products' },
@@ -91,10 +90,10 @@ export default function PublicNavbar() {
               transition={{ duration: 0.4 }}
               className="absolute inset-x-0 top-0 pointer-events-none"
               style={{
-                height: '110px', zIndex: 0,
-                backdropFilter: 'blur(6px) saturate(150%)',
-                WebkitBackdropFilter: 'blur(6px) saturate(150%)',
-                background: 'linear-gradient(to bottom, rgba(255,255,255,0.10), rgba(255,255,255,0.03))',
+                height: '95px', zIndex: 0,
+                backdropFilter: 'blur(2px) saturate(150%)',
+                WebkitBackdropFilter: 'blur(2px) saturate(150%)',
+                background: 'linear-gradient(to bottom, rgba(255,255,255,0.0.1), rgba(255,255,255,0.03))',
                 maskImage: 'linear-gradient(to bottom, black 0%, black 60%, transparent 100%)',
                 WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black 60%, transparent 100%)',
               }}
