@@ -5,12 +5,9 @@ import { ArrowRight, ChevronRight, Coffee, Cpu, Gem, Globe, Leaf, Palette, Shiel
 import { motion } from 'framer-motion';
 import ProductCard from '../components/ProductCard';
 import { useActiveProducts } from '../hooks/useQueries';
-import { Helmet } from "react-helmet-async";
-import { useEffect, useState } from "react";
-import api from "../api/axios";
 import useSeo from '../hooks/useSeo';
+import CategoryCard3D from '../components/3d/CategoryCard3D';
 
-// ── Category config — slug matches /products/$category route ───────────────
 const categories = [
   { name: 'Agriculture',      slug: 'agriculture',    icon: Leaf,    desc: 'Fresh produce & farm goods',  color: 'bg-green-50 text-green-700 border-green-200' },
   { name: 'Textiles',         slug: 'textiles',        icon: Shirt,   desc: 'Fabrics & garments',           color: 'bg-purple-50 text-purple-700 border-purple-200' },
@@ -27,19 +24,13 @@ const stats = [
   { value: '99%',  label: 'Client Satisfaction' },
 ];
 
-interface SeoData {
-  title?: string;
-  description?: string;
-  keywords?: string;
-}
-
 export default function HomePage() {
- useSeo('home', {
-  title:       'WExports | Trusted Global Export Partner from India',
-  description: 'Leading Indian export company delivering Agriculture, Textiles, Minerals and Electronics to 50+ countries worldwide.',
-  keywords:    'export company india, indian exporter, agriculture export, textile export, wexports',
-  canonical:   'https://wexports.vercel.app/',
-});
+  useSeo('home', {
+    title:       'WExports | Trusted Global Export Partner from India',
+    description: 'Leading Indian export company delivering Agriculture, Textiles, Minerals and Electronics to 50+ countries worldwide.',
+    keywords:    'export company india, indian exporter, agriculture export, textile export, wexports',
+    canonical:   'https://wexports.vercel.app/',
+  });
 
   const { data: products, isLoading } = useActiveProducts();
   const featuredProducts = products?.slice(0, 6) ?? [];
@@ -142,26 +133,17 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── Categories — NOW using clean /products/:slug URLs ── */}
+      {/* Categories — glassmorphism */}
       <section id="category-section" className="py-20 bg-[#0D3D3D]">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
             <h2 className="font-display text-4xl font-extrabold text-white tracking-tight">Product Categories</h2>
-            <p className="text-white mt-3 text-lg max-w-xl mx-auto">We export a diverse range of products across six major categories.</p>
+            <p className="text-white/60 mt-3 text-lg max-w-xl mx-auto">We export a diverse range of products across six major categories.</p>
           </motion.div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {categories.map((cat, i) => (
-              <motion.div key={cat.name} initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }}>
-                {/* ✅ CHANGED: clean URL /products/$slug instead of ?category= */}
-                <Link
-                  to="/products/$category"
-                  params={{ category: cat.slug }}
-                  className={`group flex flex-col items-center p-4 rounded-xl border ${cat.color} hover:shadow-xl transition-all duration-300 hover:-translate-y-1 hover:scale-[1.03] text-center`}
-                >
-                  <cat.icon className="w-7 h-7 mb-2 group-hover:scale-110 transition-transform" />
-                  <span className="font-semibold text-sm leading-snug">{cat.name}</span>
-                  <span className="text-xs opacity-70 mt-0.5">{cat.desc}</span>
-                </Link>
+              <motion.div key={cat.name} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}>
+                <CategoryCard3D name={cat.name} slug={cat.slug} icon={cat.icon} desc={cat.desc} color={cat.color} />
               </motion.div>
             ))}
           </div>
@@ -182,7 +164,6 @@ export default function HomePage() {
               </Button>
             </Link>
           </motion.div>
-
           {isLoading ? (
             <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3">
               {Array.from({ length: 6 }).map((_, i) => <Skeleton key={i} className="h-80 rounded-xl" />)}
@@ -214,16 +195,48 @@ export default function HomePage() {
           </motion.div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              { icon: Globe, title: 'Worldwide Reach', desc: 'We ship to 50+ countries across all major continents.' },
-              { icon: Shield, title: 'Quality Assured', desc: 'Every product undergoes rigorous quality inspection before export.' },
-              { icon: Truck, title: 'End-to-End Logistics', desc: 'From sourcing to doorstep — we handle documentation, customs, and freight.' },
+              { icon: Globe,  title: 'Worldwide Reach',      desc: 'We ship to 50+ countries across all major continents.',                                           accent: '#60a5fa' },
+              { icon: Shield, title: 'Quality Assured',      desc: 'Every product undergoes rigorous quality inspection before export.',                              accent: '#4ade80' },
+              { icon: Truck,  title: 'End-to-End Logistics', desc: 'From sourcing to doorstep — we handle documentation, customs, and freight.',                      accent: '#fbbf24' },
             ].map((item, i) => (
-              <motion.div key={item.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.15 }} className="p-8 rounded-xl border border-white/10 bg-white/5">
-                <div className="w-12 h-12 rounded-lg bg-gold-500/20 flex items-center justify-center mb-5">
-                  <item.icon className="w-6 h-6 text-gold-400" />
+              <motion.div
+                key={item.title}
+                initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }} transition={{ delay: i * 0.15 }}
+                whileHover={{ scale: 1.03, y: -4 }}
+                className="group relative p-8 rounded-2xl overflow-hidden cursor-default"
+                style={{
+                  background: 'rgba(255,255,255,0.06)',
+                  backdropFilter: 'blur(20px)',
+                  WebkitBackdropFilter: 'blur(20px)',
+                  border: '1px solid rgba(255,255,255,0.12)',
+                  boxShadow: '0 4px 24px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.15)',
+                }}
+              >
+                {/* Top edge glare */}
+                <div className="absolute top-0 left-0 right-0 h-px"
+                  style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)' }} />
+
+                {/* Hover accent glow */}
+                <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  style={{ background: `radial-gradient(circle at 30% 0%, ${item.accent}18 0%, transparent 65%)` }} />
+
+                {/* Icon */}
+                <div className="relative z-10 w-12 h-12 rounded-xl flex items-center justify-center mb-5 transition-transform duration-300 group-hover:scale-110"
+                  style={{
+                    background: `${item.accent}18`,
+                    border: `1px solid ${item.accent}35`,
+                    boxShadow: `0 0 20px ${item.accent}20`,
+                  }}>
+                  <item.icon className="w-6 h-6" style={{ color: item.accent }} />
                 </div>
-                <h3 className="font-display font-bold text-xl text-white mb-3">{item.title}</h3>
-                <p className="text-white/60 leading-relaxed">{item.desc}</p>
+
+                <h3 className="relative z-10 font-display font-bold text-xl text-white mb-3">{item.title}</h3>
+                <p className="relative z-10 text-white/55 leading-relaxed">{item.desc}</p>
+
+                {/* Bottom reflection */}
+                <div className="absolute bottom-0 left-4 right-4 h-px"
+                  style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent)' }} />
               </motion.div>
             ))}
           </div>

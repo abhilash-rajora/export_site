@@ -10,6 +10,7 @@ import ProductCard from '../components/ProductCard';
 import { useActiveProducts } from '../hooks/useQueries';
 import useSeo from '../hooks/useSeo';
 
+
 // ── Category config (single source of truth) ──────────────────────────────
 export const CATEGORY_LIST = [
   { label: 'Agriculture',      slug: 'agriculture' },
