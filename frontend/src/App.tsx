@@ -24,6 +24,10 @@ import AdminForgotPasswordPage from './pages/admin/AdminForgotPasswordPage';
 import AdminVerifyResetOtpPage from './pages/admin/AdminVerifyResetOtpPage';
 import AdminResetPasswordPage from './pages/admin/AdminResetPasswordPage';
 import { Navigate } from '@tanstack/react-router';
+import BlogPage from './pages/BlogPage';
+import BlogDetailPage from './pages/BlogDetailPage';
+import AdminBlogPage from './pages/admin/AdminBlogPage';
+import AdminBlogFormPage from './pages/admin/AdminBlogFormPage';
 
 // ─── Admin password reset routes ───────────────────────────────────────────
 const adminForgotPasswordRoute = createRoute({
@@ -68,6 +72,8 @@ const enquiryRoute = createRoute({ getParentRoute: () => publicLayoutRoute, path
 const aboutRoute = createRoute({ getParentRoute: () => publicLayoutRoute, path: '/about', component: AboutPage });
 const wishlistRoute = createRoute({ getParentRoute: () => publicLayoutRoute, path: '/wishlist', component: WishlistPage });
 const termsRoute = createRoute({ getParentRoute: () => publicLayoutRoute, path: '/terms', component: TermsPage });
+const blogRoute = createRoute({ getParentRoute: () => publicLayoutRoute, path: '/blog', component: BlogPage });
+const blogDetailRoute = createRoute({ getParentRoute: () => publicLayoutRoute, path: '/blog/$slug', component: BlogDetailPage });
 
 // ─── Products routes (NEW: clean URL + legacy redirect) ────────────────────
 const productsRoute = createRoute({
@@ -116,6 +122,9 @@ const adminProductNewRoute = createRoute({ getParentRoute: () => adminLayoutRout
 const adminProductEditRoute = createRoute({ getParentRoute: () => adminLayoutRoute, path: '/admin/products/$id/edit', component: AdminProductFormPage });
 const adminEnquiriesRoute = createRoute({ getParentRoute: () => adminLayoutRoute, path: '/admin/enquiries', component: AdminEnquiriesPage });
 const adminCreateAdminRoute = createRoute({ getParentRoute: () => adminLayoutRoute, path: '/admin/create-admin', component: CreateAdminPage });
+const adminBlogRoute = createRoute({ getParentRoute: () => adminLayoutRoute, path: '/admin/blog', component: AdminBlogPage });
+const adminBlogNewRoute = createRoute({ getParentRoute: () => adminLayoutRoute, path: '/admin/blog/new', component: AdminBlogFormPage });
+const adminBlogEditRoute = createRoute({ getParentRoute: () => adminLayoutRoute, path: '/admin/blog/$id/edit', component: AdminBlogFormPage });
 
 // ─── Route tree ─────────────────────────────────────────────────────────────
 const routeTree = rootRoute.addChildren([
@@ -128,6 +137,8 @@ const routeTree = rootRoute.addChildren([
     aboutRoute,
     termsRoute,
     wishlistRoute,
+    blogRoute,
+    blogDetailRoute,
   ]),
   adminLoginRoute,
   adminForgotPasswordRoute,
@@ -141,6 +152,9 @@ const routeTree = rootRoute.addChildren([
     adminEnquiriesRoute,
     adminSeoRoute,
     adminCreateAdminRoute,
+    adminBlogRoute,
+    adminBlogNewRoute,
+    adminBlogEditRoute,
   ]),
 ]);
 

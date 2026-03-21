@@ -32,6 +32,7 @@ app.use('/api/products',  require('./routes/productRoutes'));
 app.use('/api/enquiries', require('./routes/enquiryRoutes'));
 app.use('/api/admin',     require('./routes/adminRoutes'));
 app.use('/api/seo',       require('./routes/seoRoutes'));
+app.use('/api/blogs', require('./routes/blogRoutes'));
 
 // ── OG tags (WhatsApp/social sharing ke liye) ────────────────────
 app.use('/', require('./routes/ogRoute'));
