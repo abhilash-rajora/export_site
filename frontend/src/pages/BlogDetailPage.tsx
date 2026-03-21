@@ -167,7 +167,7 @@ function MobileTOC({ sections }: { sections: { heading?: string }[] }) {
     <div className="lg:hidden sticky top-16 z-30 mb-4">
       <button
         onClick={() => setOpen(v => !v)}
-        className="w-full flex items-center justify-between px-4 py-3 bg-gold-50 border border-gold-200 rounded-xl text-sm font-semibold text-navy-900 shadow-sm"
+        className="w-full flex items-center justify-between px-4 py-3 backdrop-blur-md bg-white/40 border border-gold-200 rounded-xl text-sm font-semibold text-navy-900 shadow-sm"
       >
         <span className="flex items-center gap-2">📋 Table of Contents</span>
         <motion.span animate={{ rotate: open ? 180 : 0 }} transition={{ duration: 0.2 }}>
