@@ -175,7 +175,7 @@ export default function BlogPage() {
       </div>
 
       {/* Filters */}
-      <div className=" border-b border-gray-100 sticky top-0 z-20 shadow-sm backdrop-blur-2xl bg-white/30">
+      <div className=" border-b border-gray-100 sticky top-0 z-20 shadow-sm backdrop-blur-2xl bg-white/40">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap gap-2 items-center justify-between">
           <div className="flex gap-2 overflow-x-auto">
             <button onClick={() => { setCategory(''); setPage(1); }}
