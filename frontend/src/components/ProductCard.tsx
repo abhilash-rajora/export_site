@@ -157,6 +157,6 @@ const ProductCard = React.memo(function ProductCard({ product, hideStockBadge = 
     </div>
     </Link>
   );
-}
+});
 
 export default ProductCard;
