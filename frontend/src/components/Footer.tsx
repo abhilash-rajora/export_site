@@ -44,44 +44,49 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Quick Links — Blog added */}
-          <div>
-            <h3 className="font-display font-bold text-white text-sm uppercase tracking-widest mb-4">Quick Links</h3>
-            <ul className="space-y-2">
-              {[
-                { label: 'Home',              href: '/' },
-                { label: 'Products',          href: '/products' },
-                { label: 'Blog',              href: '/blog' },
-                { label: 'About Us',          href: '/about' },
-                { label: 'Contact / Enquiry', href: '/enquiry' },
-              ].map((link) => (
-                <li key={link.href}>
-                  <Link to={link.href} className="text-sm text-white/60 hover:text-gold-400 hover:translate-x-1 inline-block transition-all duration-200">
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-              <li>
-                <Link to="/terms" className="text-sm text-white/60 hover:text-gold-400 hover:translate-x-1 inline-block transition-all duration-200">
-                  Terms & Conditions
-                </Link>
-              </li>
-            </ul>
-          </div>
+          {/* Quick Links + Categories — side by side on mobile too */}
+          <div className="grid grid-cols-2 md:contents gap-10">
 
-          {/* Categories */}
-          <div>
-            <h3 className="font-display font-bold text-white text-sm uppercase tracking-widest mb-4">Categories</h3>
-            <ul className="space-y-2">
-              {footerCategories.map((cat) => (
-                <li key={cat.slug}>
-                  <Link to="/products/$category" params={{ category: cat.slug }}
-                    className="text-sm text-white/60 hover:text-gold-400 hover:translate-x-1 inline-block transition-colors duration-200">
-                    {cat.label}
+            {/* Quick Links */}
+            <div>
+              <h3 className="font-display font-bold text-white text-sm uppercase tracking-widest mb-4">Quick Links</h3>
+              <ul className="space-y-2">
+                {[
+                  { label: 'Home',              href: '/' },
+                  { label: 'Products',          href: '/products' },
+                  { label: 'Blog',              href: '/blog' },
+                  { label: 'About Us',          href: '/about' },
+                  { label: 'Contact / Enquiry', href: '/enquiry' },
+                ].map((link) => (
+                  <li key={link.href}>
+                    <Link to={link.href} className="text-sm text-white/60 hover:text-gold-400 hover:translate-x-1 inline-block transition-all duration-200">
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+                <li>
+                  <Link to="/terms" className="text-sm text-white/60 hover:text-gold-400 hover:translate-x-1 inline-block transition-all duration-200">
+                    Terms & Conditions
                   </Link>
                 </li>
-              ))}
-            </ul>
+              </ul>
+            </div>
+
+            {/* Categories */}
+            <div>
+              <h3 className="font-display font-bold text-white text-sm uppercase tracking-widest mb-4">Categories</h3>
+              <ul className="space-y-2">
+                {footerCategories.map((cat) => (
+                  <li key={cat.slug}>
+                    <Link to="/products/$category" params={{ category: cat.slug }}
+                      className="text-sm text-white/60 hover:text-gold-400 hover:translate-x-1 inline-block transition-colors duration-200">
+                      {cat.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
           </div>
         </div>
 
