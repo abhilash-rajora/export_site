@@ -2,14 +2,13 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Link, useNavigate, useParams, useSearch } from '@tanstack/react-router';
-import { Package, Search, SlidersHorizontal } from 'lucide-react';
+import { Package, Search } from 'lucide-react';
 import { motion } from "framer-motion";
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import ProductCard from '../components/ProductCard';
 import { useActiveProducts } from '../hooks/useQueries';
 import useSeo from '../hooks/useSeo';
-
 
 // ── Category config (single source of truth) ──────────────────────────────
 export const CATEGORY_LIST = [
@@ -57,6 +56,8 @@ export default function ProductsPage() {
   const activeCategory = categorySlug ? slugToLabel(categorySlug) : 'All';
 
   const [search, setSearch] = useState('');
+  const [page, setPage] = useState(1);
+  const PAGE_SIZE = 16;
   const { data: products, isLoading } = useActiveProducts();
 
   useEffect(() => {
@@ -64,11 +65,15 @@ export default function ProductsPage() {
   }, []);
 
   // ── Category change → navigate to clean URL ───────────────────────────────
+  // Reset page on filter change
+  const resetPage = () => setPage(1);
+
   const handleCategoryChange = (label: string) => {
+    setPage(1);
     if (label === 'All') {
-      navigate({ to: '/products' });
+      navigate({ to: '/products' }); resetPage();
     } else {
-      navigate({ to: '/products/$category', params: { category: labelToSlug(label) } });
+      navigate({ to: '/products/$category', params: { category: labelToSlug(label) } }); resetPage();
     }
   };
 
@@ -82,6 +87,9 @@ export default function ProductsPage() {
       p.originCountry.toLowerCase().includes(search.toLowerCase());
     return matchesCategory && matchesSearch;
   });
+
+  const totalPages = Math.ceil(filteredProducts.length / PAGE_SIZE);
+  const paginatedProducts = filteredProducts.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
   // ── Per-category SEO meta ─────────────────────────────────────────────────
   const metaTitle = activeCategory !== 'All'
@@ -122,28 +130,33 @@ export default function ProductsPage() {
         </div>
       </div>
 
-      <div id="products-solid-trigger" className="container mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        <div className="flex flex-col gap-4 mb-8">
-          <div className="relative max-w-md">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+      <div id="products-solid-trigger" className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        {/* Search — centered */}
+        <div className="flex justify-center mb-6">
+          <div className="relative w-full max-w-sm">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
             <Input
               placeholder="Search products..."
               value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="pl-9 rounded-full"
+              onChange={(e) => { setSearch(e.target.value); setPage(1); }}
+              className="pl-9 rounded-full border-gray-200 focus:border-gray-400 bg-gray-50"
             />
           </div>
-          <div className="flex flex-wrap gap-2 items-center">
-            <SlidersHorizontal className="w-4 h-4 text-muted-foreground" />
+        </div>
+
+        {/* Category filter — centered, plain underline style */}
+        <div className="flex justify-center mb-8">
+          <div className="flex flex-wrap justify-center gap-x-0 border-b border-gray-200 w-full max-w-2xl">
             {ALL_CATEGORIES.map((cat) => (
               <button
                 type="button"
                 key={cat}
                 onClick={() => handleCategoryChange(cat)}
-                className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all border ${
+                className={`px-4 py-2.5 text-sm font-semibold transition-all border-b-2 -mb-px whitespace-nowrap ${
                   activeCategory === cat
-                    ? 'bg-navy-900 text-white border-navy-900 shadow-sm'
-                    : 'bg-card text-foreground border-border hover:border-navy-300 hover:bg-muted'
+                    ? 'border-gray-900 text-gray-900'
+                    : 'border-transparent text-gray-400 hover:text-gray-700 hover:border-gray-300'
                 }`}
               >
                 {cat}
@@ -180,8 +193,8 @@ export default function ProductsPage() {
             )}
           </div>
         ) : (
-          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 items-stretch">
-            {filteredProducts.map((product, i) => (
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-5 gap-y-12 items-stretch">
+            {paginatedProducts.map((product, i) => (
               <motion.div
                 key={product._id}
                 initial={{ opacity: 0, y: 16 }}
@@ -193,6 +206,56 @@ export default function ProductsPage() {
             ))}
           </div>
         )}
+
+        {/* Pagination */}
+        {totalPages > 1 && (
+            <div className="flex items-center justify-center gap-2 mt-10 flex-wrap">
+              {/* Prev */}
+              <button
+                onClick={() => { setPage(p => Math.max(1, p - 1)); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                disabled={page === 1}
+                className="px-4 py-2 rounded-xl text-sm font-semibold border border-gray-200 text-gray-600 hover:border-gray-400 hover:text-gray-900 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+              >
+                ← Prev
+              </button>
+
+              {/* Page numbers */}
+              {Array.from({ length: totalPages }, (_, i) => i + 1)
+                .filter(p => p === 1 || p === totalPages || Math.abs(p - page) <= 1)
+                .reduce<(number | string)[]>((acc, p, idx, arr) => {
+                  if (idx > 0 && (p as number) - (arr[idx - 1] as number) > 1) acc.push('...');
+                  acc.push(p);
+                  return acc;
+                }, [])
+                .map((p, i) =>
+                  p === '...' ? (
+                    <span key={`dots-${i}`} className="px-2 text-gray-400">...</span>
+                  ) : (
+                    <button
+                      key={p}
+                      onClick={() => { setPage(p as number); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                      className={`w-10 h-10 rounded-xl text-sm font-bold transition-all ${
+                        page === p
+                          ? 'bg-gray-900 text-white'
+                          : 'border border-gray-200 text-gray-600 hover:border-gray-400 hover:text-gray-900'
+                      }`}
+                    >
+                      {p}
+                    </button>
+                  )
+                )
+              }
+
+              {/* Next */}
+              <button
+                onClick={() => { setPage(p => Math.min(totalPages, p + 1)); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                disabled={page === totalPages}
+                className="px-4 py-2 rounded-xl text-sm font-semibold border border-gray-200 text-gray-600 hover:border-gray-400 hover:text-gray-900 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+              >
+                Next →
+              </button>
+            </div>
+          )}
       </div>
       <div id="products-transparent-trigger" />
     </div>

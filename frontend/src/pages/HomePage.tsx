@@ -284,7 +284,7 @@ export default function HomePage() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <p className="text-gold-400 text-[10px] font-black uppercase tracking-[0.2em] mb-1">Explore 🔥</p>
+              <p className="text-gold-400 text-[10px] font-black uppercase tracking-[0.2em] mb-1">Explore</p>
               <h2 className="font-display text-xl sm:text-3xl font-extrabold text-white tracking-tight">Product Categories</h2>
             </div>
             <Link to="/products" className="flex items-center gap-1 text-xs font-bold text-white/40 hover:text-gold-400 transition-colors">
@@ -385,7 +385,7 @@ export default function HomePage() {
               style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent)' }} />
             <div className="flex items-end justify-between mb-5">
               <div>
-                <p className="text-gold-400 text-[10px] font-black uppercase tracking-[0.2em] mb-1">Handpicked ⭐</p>
+                <p className="text-gold-400 text-[10px] font-black uppercase tracking-[0.2em] mb-1">Handpicked</p>
                 <h2 className="font-display text-xl sm:text-3xl font-extrabold text-white tracking-tight leading-none">
                   FEATURED <span className="text-gold-400">EXPORTS</span>
                 </h2>
@@ -420,7 +420,7 @@ export default function HomePage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-start">
             <div className="lg:col-span-4">
               <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-                <p className="text-white/30 text-xs font-black uppercase tracking-[0.2em] mb-3">Most Popular 🚀</p>
+                <p className="text-white/30 text-xs font-black uppercase tracking-[0.2em] mb-3">Most Popular</p>
                 <h2 className="font-display text-3xl sm:text-5xl font-extrabold text-white leading-none tracking-tight">
                   TRENDING<br /><span className="text-gold-400">NOW.</span>
                 </h2>
@@ -468,7 +468,7 @@ export default function HomePage() {
             {/* Header */}
             <div className="flex items-end justify-between mb-5">
               <div>
-                <p className="text-blue-400 text-[10px] font-black uppercase tracking-[0.2em] mb-1">Just Added 🆕</p>
+                <p className="text-blue-400 text-[10px] font-black uppercase tracking-[0.2em] mb-1">Just Added</p>
                 <h2 className="font-display text-xl sm:text-3xl font-extrabold text-white tracking-tight leading-none">
                   NEW <span className="text-blue-400">ARRIVALS</span>
                 </h2>
