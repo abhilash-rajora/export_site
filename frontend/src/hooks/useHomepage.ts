@@ -33,6 +33,10 @@ export function useHomepageProducts() {
       const { data } = await api.get('/products/homepage');
       return data;
     },
-    staleTime: 3 * 60 * 1000, // 3 min cache
+    staleTime:            5 * 60 * 1000,  // 5 min — don't refetch if fresh
+    gcTime:               10 * 60 * 1000, // 10 min keep in memory
+    refetchOnWindowFocus: false,           // no refetch on tab switch
+    refetchOnReconnect:   false,           // no refetch on network reconnect
+    retry:                1,              // only 1 retry on failure
   });
 }

@@ -3,7 +3,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Link } from '@tanstack/react-router';
 import { ArrowRight, ChevronLeft, ChevronRight, Coffee, Cpu, Gem, Globe, Leaf, Palette, Shield, Shirt, Star, Truck, MapPin, Tag } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { useRef } from 'react';
+import React, { useRef, useState, useCallback, useEffect } from 'react';
 import { useHomepageProducts, HomeProduct } from '../hooks/useHomepage';
 import useSeo from '../hooks/useSeo';
 import CategoryCard3D from '../components/3d/CategoryCard3D';
@@ -24,22 +24,16 @@ const stats = [
   { value: '99%',  label: 'Client Satisfaction' },
 ];
 
-// ── Product Card ──────────────────────────────────────────────────
-function ProductCard({ product, badge, badgeColor = '#D4A017', desktopLarge }: {
-  product: HomeProduct; badge?: string; badgeColor?: string; desktopLarge?: boolean;
+// ── Shared card body ─────────────────────────────────────────────
+const CardBody = React.memo(function CardBody({ product, badge, badgeColor = '#D4A017', imgHeight, showEnquiry, eager = false }:{
+  product: HomeProduct; badge?: string; badgeColor?: string; imgHeight: number; showEnquiry?: boolean; eager?: boolean;
 }) {
   const image = product.images?.[0] ?? product.imageUrl ?? '';
   return (
-    <motion.div
-      whileHover={{ y: -4 }}
-      transition={{ type: 'spring', stiffness: 280, damping: 22 }}
-      className={`flex-shrink-0 flex flex-col rounded-2xl overflow-hidden bg-white ${desktopLarge ? 'w-full' : 'w-[175px] sm:w-[200px]'}`}
-      style={{ boxShadow: '0 4px 20px rgba(0,0,0,0.1)' }}
-    >
-      <div className={`relative overflow-hidden flex-shrink-0 ${desktopLarge ? 'h-[155px] sm:h-[260px]' : ''}`}
-        style={{ height: desktopLarge ? undefined : '155px' }}>
+    <>
+      <div className="relative overflow-hidden flex-shrink-0" style={{ height: imgHeight }}>
         {image
-          ? <img src={image} alt={product.name} className="w-full h-full object-cover" />
+          ? <img src={image} alt={product.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading={eager ? "eager" : "lazy"} decoding="async" />
           : <div className="w-full h-full flex items-center justify-center bg-gray-100"><Gem className="w-8 h-8 text-gray-300" /></div>
         }
         {badge && (
@@ -61,26 +55,61 @@ function ProductCard({ product, badge, badgeColor = '#D4A017', desktopLarge }: {
           <p className="font-bold text-xs" style={{ color: '#D4A017' }}>{product.priceRange}</p>
         )}
       </div>
-      <div className="flex flex-col gap-1.5 px-3 pb-3 pt-1.5">
-        <Link to="/enquiry" search={{ productName: product.name } as any} onClick={e => e.stopPropagation()}>
-          <button className="w-full h-7 text-[10px] font-black uppercase tracking-wide text-navy-900 hover:opacity-90 transition-all"
-            style={{ background: '#D4A017', borderRadius: '6px' }}>
-            Quick Enquiry
-          </button>
-        </Link>
-        <Link to="/products/detail/$id" params={{ id: product._id }}>
-          <button className="w-full h-7 text-[10px] font-semibold text-gray-600 hover:bg-gray-100 transition-all flex items-center justify-center gap-1 border border-gray-200"
-            style={{ borderRadius: '6px' }}>
-            View Detail <ArrowRight className="w-3 h-3" />
-          </button>
-        </Link>
-      </div>
-    </motion.div>
+      {showEnquiry && (
+        <div className="px-3 pb-3 pt-1.5">
+          <Link to="/enquiry" search={{ productName: product.name } as any} onClick={e => e.stopPropagation()} className="block">
+            <button className="w-full h-9 text-xs font-black uppercase tracking-wide text-navy-900 hover:opacity-90 transition-all"
+              style={{ background: '#D4A017', borderRadius: '8px' }}>
+              Quick Enquiry
+            </button>
+          </Link>
+        </div>
+      )}
+    </>
   );
-}
+});
+
+// ── Featured card — big fixed size ───────────────────────────────
+const FeaturedCard = React.memo(function FeaturedCard({ product, badge, badgeColor, eager = false }: { product: HomeProduct; badge?: string; badgeColor?: string; eager?: boolean }) {
+  return (
+    <Link to="/products/detail/$id" params={{ id: product._id }} className="block flex-shrink-0 w-[270px] sm:w-[360px]">
+      <motion.div whileHover={{ y: -4 }} transition={{ type: 'spring', stiffness: 280, damping: 22 }}
+        className="group flex flex-col rounded-2xl overflow-hidden bg-white w-full h-full"
+        style={{ boxShadow: '0 4px 20px rgba(0,0,0,0.1)' }}>
+        <CardBody product={product} badge={badge} badgeColor={badgeColor} imgHeight={280} showEnquiry eager={eager} />
+      </motion.div>
+    </Link>
+  );
+});
+
+// ── New Arrival Row 1 — fills grid cell, same height ─────────────
+const ArrivalGridCard = React.memo(function ArrivalGridCard({ product }: { product: HomeProduct }) {
+  return (
+    <Link to="/products/detail/$id" params={{ id: product._id }} className="block h-full">
+      <motion.div whileHover={{ y: -4 }} transition={{ type: 'spring', stiffness: 280, damping: 22 }}
+        className="group flex flex-col rounded-2xl overflow-hidden bg-white w-full h-full"
+        style={{ boxShadow: '0 4px 20px rgba(0,0,0,0.1)', minHeight: '320px' }}>
+        <CardBody product={product} badge="NEW" badgeColor="#3b82f6" imgHeight={210} />
+      </motion.div>
+    </Link>
+  );
+});
+
+// ── New Arrival Row 2 slider — fixed width ────────────────────────
+const ArrivalSliderCard = React.memo(function ArrivalSliderCard({ product }: { product: HomeProduct }) {
+  return (
+    <Link to="/products/detail/$id" params={{ id: product._id }} className="block flex-shrink-0 w-[155px] sm:w-[185px]">
+      <motion.div whileHover={{ y: -4 }} transition={{ type: 'spring', stiffness: 280, damping: 22 }}
+        className="group flex flex-col rounded-2xl overflow-hidden bg-white w-full h-full"
+        style={{ boxShadow: '0 4px 20px rgba(0,0,0,0.1)' }}>
+        <CardBody product={product} badge="NEW" badgeColor="#3b82f6" imgHeight={130} />
+      </motion.div>
+    </Link>
+  );
+});
 
 // ── Trending Card ─────────────────────────────────────────────────
-function TrendingCard({ product, index }: { product: HomeProduct; index: number }) {
+const TrendingCard = React.memo(function TrendingCard({ product, index }: { product: HomeProduct; index: number }) {
   const image = product.images?.[0] ?? product.imageUrl ?? '';
   const growthPct = ['+14%', '+8%', '+21%', '+12%', '+18%', '+9%'][index % 6];
   return (
@@ -94,7 +123,7 @@ function TrendingCard({ product, index }: { product: HomeProduct; index: number 
       >
         <div className="w-14 h-14 rounded-xl overflow-hidden flex-shrink-0 bg-gray-100">
           {image
-            ? <img src={image} alt={product.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
+            ? <img src={image} alt={product.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" loading="lazy" decoding="async" />
             : <div className="w-full h-full flex items-center justify-center"><Gem className="w-5 h-5 text-gray-300" /></div>
           }
         </div>
@@ -106,46 +135,41 @@ function TrendingCard({ product, index }: { product: HomeProduct; index: number 
       </motion.div>
     </Link>
   );
-}
+});
 
 // ── Horizontal Slider ─────────────────────────────────────────────
-function HScroller({ children }: { children: React.ReactNode }) {
+const HScroller = React.memo(function HScroller({ children }: { children: React.ReactNode }) {
   const ref = useRef<HTMLDivElement>(null);
-  const scroll = (dir: 'left' | 'right') => {
+  const scroll = useCallback((dir: 'left' | 'right') => {
     ref.current?.scrollBy({ left: dir === 'left' ? -220 : 220, behavior: 'smooth' });
-  };
+  }, []);
   return (
     <div className="relative">
-      {/* Desktop arrows — shifted out, bold */}
       <button onClick={() => scroll('left')}
         className="hidden sm:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-7 z-10 w-9 h-9 rounded-full items-center justify-center hover:scale-110 transition-all"
         style={{ background: 'white', border: '1px solid rgba(0,0,0,0.1)', boxShadow: '0 2px 8px rgba(0,0,0,0.15)' }}>
         <ChevronLeft className="w-5 h-5 text-gray-900 stroke-[2.5]" />
       </button>
-
       <div ref={ref} className="flex gap-3 overflow-x-auto pb-2"
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
         {children}
       </div>
-
       <button onClick={() => scroll('right')}
         className="hidden sm:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-7 z-10 w-9 h-9 rounded-full items-center justify-center hover:scale-110 transition-all"
         style={{ background: 'white', border: '1px solid rgba(0,0,0,0.1)', boxShadow: '0 2px 8px rgba(0,0,0,0.15)' }}>
         <ChevronRight className="w-5 h-5 text-gray-900 stroke-[2.5]" />
       </button>
-
-      {/* Mobile arrows — no bold, shifted away */}
       <button onClick={() => scroll('left')}
         className="sm:hidden absolute left-0 top-1/2 -translate-y-1/2 -translate-x-5 z-10 flex items-center justify-center">
-        <ChevronLeft className="w-6 h-6 text-white" />
+        <ChevronLeft className="w-6 h-6 text-gray-900" />
       </button>
       <button onClick={() => scroll('right')}
         className="sm:hidden absolute right-0 top-1/2 -translate-y-1/2 translate-x-5 z-10 flex items-center justify-center">
-        <ChevronRight className="w-6 h-6 text-white" />
+        <ChevronRight className="w-6 h-6 text-gray-900" />
       </button>
     </div>
   );
-}
+});
 
 // ── Card Skeleton ─────────────────────────────────────────────────
 function CardSkeleton({ count = 5 }: { count?: number }) {
@@ -284,7 +308,7 @@ export default function HomePage() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <p className="text-gold-400 text-[10px] font-black uppercase tracking-[0.2em] mb-1">Explore</p>
+              <p className="text-gold-400 text-[10px] font-black uppercase tracking-[0.2em] mb-1">Explore 🔥</p>
               <h2 className="font-display text-xl sm:text-3xl font-extrabold text-white tracking-tight">Product Categories</h2>
             </div>
             <Link to="/products" className="flex items-center gap-1 text-xs font-bold text-white/40 hover:text-gold-400 transition-colors">
@@ -292,8 +316,8 @@ export default function HomePage() {
             </Link>
           </div>
 
-          {/* Glass category cards */}
-          <div className="hidden sm:grid grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-4 mb-4 sm:mb-6">
+          {/* Glass category cards — desktop only */}
+          <div className="hidden sm:grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-4 mb-4 sm:mb-6">
             {categories.map((cat, i) => (
               <motion.div key={cat.name} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}>
                 <CategoryCard3D name={cat.name} slug={cat.slug} icon={cat.icon} desc={cat.desc} color={cat.color} />
@@ -301,32 +325,32 @@ export default function HomePage() {
             ))}
           </div>
 
-          {/* ── Mobile collage — 2x3 small grid ── */}
+          {/* Mobile collage */}
           <div className="grid sm:hidden grid-cols-3 gap-2" style={{ height: '220px' }}>
             {[
-              { slug: 'agriculture',   src: 'https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=400&q=70', label: 'Agriculture' },
-              { slug: 'textiles',      src: 'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=400&q=70',    label: 'Textiles' },
-              { slug: 'electronics',   src: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&q=70', label: 'Electronics' },
-              { slug: 'minerals',      src: 'https://www.sreemetaliks.com/blog/public/assets/images/blog/blog-2-Hematite_1707918282.webp',    label: 'Minerals' },
-              { slug: 'food-beverages',src: 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&q=70',    label: 'Food & Bev' },
-              { slug: 'handicrafts',   src: 'https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=400&q=70', label: 'Handicrafts' },
+              { slug: 'agriculture',    src: 'https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=400&q=70', label: 'Agriculture' },
+              { slug: 'textiles',       src: 'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=400&q=70',    label: 'Textiles' },
+              { slug: 'electronics',    src: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&q=70', label: 'Electronics' },
+              { slug: 'minerals',       src: 'https://www.sreemetaliks.com/blog/public/assets/images/blog/blog-2-Hematite_1707918282.webp', label: 'Minerals' },
+              { slug: 'food-beverages', src: 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&q=70',    label: 'Food & Bev' },
+              { slug: 'handicrafts',    src: 'https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=400&q=70', label: 'Handicrafts' },
             ].map(cat => (
               <Link key={cat.slug} to="/products/$category" params={{ category: cat.slug }}
                 className="relative rounded-xl overflow-hidden group cursor-pointer">
-                <img src={cat.src} alt={cat.label} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <img src={cat.src} alt={cat.label} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" decoding="async" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/75 to-transparent" />
                 <div className="absolute bottom-1.5 left-2">
-                  <p className="font-display font-bold text-white text-[10px] leading-tight">{cat.label}</p>
+                  <p className="font-display font-bold text-white/80 text-[10px] leading-tight">{cat.label}</p>
                 </div>
               </Link>
             ))}
           </div>
 
-          {/* ── Desktop collage — original layout ── */}
+          {/* Desktop collage */}
           <div className="hidden sm:grid grid-cols-12 grid-rows-2 gap-3" style={{ height: '380px' }}>
             <Link to="/products/$category" params={{ category: 'agriculture' }}
               className="col-span-4 row-span-2 relative rounded-2xl overflow-hidden group cursor-pointer">
-              <img src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=600&q=80" alt="Agriculture" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+              <img src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=600&q=80" alt="Agriculture" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" decoding="async" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
               <div className="absolute bottom-4 left-4 right-4">
                 <h3 className="font-display font-extrabold text-white/80 text-base leading-tight mb-1">Fresh Produce &amp; Farm Goods</h3>
@@ -335,7 +359,7 @@ export default function HomePage() {
             </Link>
             <Link to="/products/$category" params={{ category: 'textiles' }}
               className="col-span-4 row-span-1 relative rounded-2xl overflow-hidden group cursor-pointer">
-              <img src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=600&q=80" alt="Textiles" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+              <img src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=600&q=80" alt="Textiles" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" decoding="async" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
               <div className="absolute bottom-3 left-3">
                 <h3 className="font-display font-bold text-white/80 text-sm">Fabrics &amp; Garments</h3>
@@ -343,7 +367,7 @@ export default function HomePage() {
             </Link>
             <Link to="/products/$category" params={{ category: 'electronics' }}
               className="col-span-4 row-span-1 relative rounded-2xl overflow-hidden group cursor-pointer">
-              <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=80" alt="Electronics" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+              <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=80" alt="Electronics" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" decoding="async" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
               <div className="absolute bottom-3 left-3">
                 <h3 className="font-display font-bold text-white/80 text-sm">Components &amp; Devices</h3>
@@ -351,7 +375,7 @@ export default function HomePage() {
             </Link>
             <Link to="/products/$category" params={{ category: 'minerals' }}
               className="col-span-2 row-span-1 relative rounded-2xl overflow-hidden group cursor-pointer">
-              <img src="https://www.sreemetaliks.com/blog/public/assets/images/blog/blog-2-Hematite_1707918282.webp" alt="Minerals" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+              <img src="https://www.sreemetaliks.com/blog/public/assets/images/blog/blog-2-Hematite_1707918282.webp" alt="Minerals" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" decoding="async" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
               <div className="absolute bottom-3 left-3">
                 <h3 className="font-display font-bold text-white/80 text-xs">Raw Ores</h3>
@@ -359,7 +383,7 @@ export default function HomePage() {
             </Link>
             <Link to="/products/$category" params={{ category: 'food-beverages' }}
               className="col-span-3 row-span-1 relative rounded-2xl overflow-hidden group cursor-pointer">
-              <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=500&q=80" alt="Food" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+              <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=500&q=80" alt="Food" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" decoding="async" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
               <div className="absolute bottom-3 left-3">
                 <h3 className="font-display font-bold text-white/80 text-xs">Packaged Foods</h3>
@@ -367,7 +391,7 @@ export default function HomePage() {
             </Link>
             <Link to="/products/$category" params={{ category: 'handicrafts' }}
               className="col-span-3 row-span-1 relative rounded-2xl overflow-hidden group cursor-pointer">
-              <img src="https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=500&q=80" alt="Handicrafts" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+              <img src="https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=500&q=80" alt="Handicrafts" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" decoding="async" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
               <div className="absolute bottom-3 left-3">
                 <h3 className="font-display font-bold text-white/80 text-xs">Artisan Goods</h3>
@@ -382,12 +406,12 @@ export default function HomePage() {
         <div className="px-2 sm:px-4">
           <div className="rounded-2xl sm:rounded-3xl p-4 sm:p-8 relative" style={glassCard}>
             <div className="absolute top-0 left-6 right-6 h-px pointer-events-none"
-              style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent)' }} />
+              style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.7), transparent)' }} />
             <div className="flex items-end justify-between mb-5">
               <div>
-                <p className="text-gold-400 text-[10px] font-black uppercase tracking-[0.2em] mb-1">Handpicked</p>
+                <p className="text-gold-400 text-[10px] font-black uppercase tracking-[0.2em] mb-1">Handpicked ⭐</p>
                 <h2 className="font-display text-xl sm:text-3xl font-extrabold text-white tracking-tight leading-none">
-                  FEATURED <span className="text-gold-400">EXPORTS</span>
+                  FEATURED <span className="text-gold-400">PRODUCTS</span>
                 </h2>
               </div>
               <Link to="/products">
@@ -404,9 +428,10 @@ export default function HomePage() {
             ) : (
               <HScroller>
                 {data.featured.map((p, i) => (
-                  <ProductCard key={p._id} product={p}
-                    badge={['TOP GRADE', 'VERIFIED', 'BESTSELLER', 'PREMIUM'][i % 4]}
-                    badgeColor={['#D4A017', '#f97316', '#22c55e', '#60a5fa'][i % 4]} />
+                  <FeaturedCard key={p._id} product={p}
+                    eager={i < 2}
+                    badge={(['TOP GRADE', 'VERIFIED', 'BESTSELLER', 'PREMIUM'] as const)[i % 4]}
+                    badgeColor={(['#D4A017', '#f97316', '#22c55e', '#60a5fa'] as const)[i % 4]} />
                 ))}
               </HScroller>
             )}
@@ -420,7 +445,7 @@ export default function HomePage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-start">
             <div className="lg:col-span-4">
               <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-                <p className="text-white/30 text-xs font-black uppercase tracking-[0.2em] mb-3">Most Popular</p>
+                <p className="text-white/30 text-xs font-black uppercase tracking-[0.2em] mb-3">Most Popular 🚀</p>
                 <h2 className="font-display text-3xl sm:text-5xl font-extrabold text-white leading-none tracking-tight">
                   TRENDING<br /><span className="text-gold-400">NOW.</span>
                 </h2>
@@ -454,7 +479,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── NEW ARRIVALS — Row 1: fixed grid, Row 2: slider ── */}
+      {/* ── NEW ARRIVALS ── */}
       <section className="py-4 sm:py-6 bg-[#0a2a2a]">
         <div className="px-2 sm:px-4">
           <div className="rounded-2xl sm:rounded-3xl p-4 sm:p-8 relative" style={{
@@ -463,12 +488,10 @@ export default function HomePage() {
             boxShadow: '0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(96,165,250,0.08)',
           }}>
             <div className="absolute top-0 left-6 right-6 h-px pointer-events-none"
-              style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent)' }} />
-
-            {/* Header */}
+              style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.7), transparent)' }} />
             <div className="flex items-end justify-between mb-5">
               <div>
-                <p className="text-blue-400 text-[10px] font-black uppercase tracking-[0.2em] mb-1">Just Added</p>
+                <p className="text-blue-400 text-[10px] font-black uppercase tracking-[0.2em] mb-1">Just Added 🆕</p>
                 <h2 className="font-display text-xl sm:text-3xl font-extrabold text-white tracking-tight leading-none">
                   NEW <span className="text-blue-400">ARRIVALS</span>
                 </h2>
@@ -499,27 +522,21 @@ export default function HomePage() {
               <p className="text-white/30 text-center py-10">No products yet.</p>
             ) : (
               <div className="space-y-5">
-
-                {/* Row 1 — Fixed grid (first 4) — bigger on desktop */}
                 <div>
                   <p className="text-white/30 text-[10px] font-black uppercase tracking-widest mb-3">Latest Drop</p>
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                     {data.newArrivals.slice(0, 4).map((p, i) => (
-                      <ProductCard key={p._id} product={p} badge="NEW" badgeColor="#3b82f6" desktopLarge />
+                      <ArrivalGridCard key={p._id} product={p} />
                     ))}
                   </div>
                 </div>
-
-                {/* Divider */}
                 <div className="h-px" style={{ background: 'rgba(255,255,255,0.08)' }} />
-
-                {/* Row 2 — Slider (remaining) */}
                 {data.newArrivals.length > 4 && (
                   <div>
                     <p className="text-white/30 text-[10px] font-black uppercase tracking-widest mb-3">More New Arrivals</p>
                     <HScroller>
                       {data.newArrivals.slice(4).map((p, i) => (
-                        <ProductCard key={p._id} product={p} badge="NEW" badgeColor="#3b82f6" />
+                        <ArrivalSliderCard key={p._id} product={p} />
                       ))}
                     </HScroller>
                   </div>
@@ -538,9 +555,9 @@ export default function HomePage() {
           </motion.div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-8">
             {[
-              { icon: Globe,  title: 'Worldwide Reach',      desc: 'We ship to 50+ countries across all major continents.',                         accent: '#60a5fa' },
-              { icon: Shield, title: 'Quality Assured',      desc: 'Every product undergoes rigorous quality inspection before export.',            accent: '#4ade80' },
-              { icon: Truck,  title: 'End-to-End Logistics', desc: 'From sourcing to doorstep — we handle documentation, customs, and freight.',    accent: '#fbbf24' },
+              { icon: Globe,  title: 'Worldwide Reach',      desc: 'We ship to 50+ countries across all major continents.',          accent: '#60a5fa' },
+              { icon: Shield, title: 'Quality Assured',      desc: 'Every product undergoes rigorous quality inspection before export.', accent: '#4ade80' },
+              { icon: Truck,  title: 'End-to-End Logistics', desc: 'From sourcing to doorstep — we handle documentation, customs, and freight.', accent: '#fbbf24' },
             ].map((item, i) => (
               <motion.div key={item.title}
                 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}

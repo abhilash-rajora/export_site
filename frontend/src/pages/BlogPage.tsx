@@ -1,20 +1,19 @@
 // frontend/src/pages/BlogPage.tsx
-
 import { Link } from '@tanstack/react-router';
+import React, { useState, useCallback, memo } from 'react';
 import { motion } from 'framer-motion';
 import { Calendar, Clock, Search, ArrowRight, BookOpen, TrendingUp, Star, ChevronLeft, ChevronRight } from 'lucide-react';
-import { useState } from 'react';
 import { usePublishedBlogs, BLOG_CATEGORIES, Blog } from '../hooks/useBlogs';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import useSeo from '../hooks/useSeo';
 
 function formatDate(date: string) {
   return new Date(date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
 }
 
-function FeaturedCard({ blog }: { blog: Blog }) {
+// ── Memoized cards ────────────────────────────────────────────────
+const FeaturedCard = memo(function FeaturedCard({ blog }: { blog: Blog }) {
   return (
     <Link to="/blog/$slug" params={{ slug: blog.slug }}>
       <motion.div
@@ -22,8 +21,14 @@ function FeaturedCard({ blog }: { blog: Blog }) {
         className="group relative rounded-3xl overflow-hidden bg-navy-900 h-[420px] cursor-pointer"
       >
         {blog.coverImage && (
-          <img src={blog.coverImage} alt={blog.title}
-            className="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-65 group-hover:scale-105 transition-all duration-700" />
+          <img
+            src={blog.coverImage}
+            alt={blog.title}
+            loading="eager"
+            decoding="async"
+            width={800} height={420}
+            className="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-65 group-hover:scale-105 transition-all duration-700"
+          />
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-navy-900 via-navy-900/50 to-transparent" />
         <div className="absolute top-4 left-4">
@@ -50,19 +55,26 @@ function FeaturedCard({ blog }: { blog: Blog }) {
       </motion.div>
     </Link>
   );
-}
+});
 
-function BlogCard({ blog, index }: { blog: Blog; index: number }) {
+const BlogCard = memo(function BlogCard({ blog, index }: { blog: Blog; index: number }) {
   return (
     <Link to="/blog/$slug" params={{ slug: blog.slug }}>
       <motion.div
         initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }} transition={{ delay: index * 0.05 }}
+        viewport={{ once: true }} transition={{ delay: Math.min(index * 0.05, 0.3) }}
         className="group bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-gold-200 hover:shadow-xl transition-all duration-300 cursor-pointer h-full flex flex-col"
       >
-        <div className="relative h-48 overflow-hidden bg-navy-900">
+        <div className="relative h-48 overflow-hidden bg-navy-900 flex-shrink-0">
           {blog.coverImage
-            ? <img src={blog.coverImage} alt={blog.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+            ? <img
+                src={blog.coverImage}
+                alt={blog.title}
+                loading="lazy"
+                decoding="async"
+                width={400} height={192}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              />
             : <div className="w-full h-full flex items-center justify-center"><BookOpen className="w-10 h-10 text-gold-400/30" /></div>
           }
           <div className="absolute top-3 left-3">
@@ -78,7 +90,6 @@ function BlogCard({ blog, index }: { blog: Blog; index: number }) {
             </div>
           )}
         </div>
-
         <div className="p-5 flex flex-col flex-1">
           <div className="flex items-center gap-3 mb-2 text-xs text-gray-400">
             <span className="flex items-center gap-1"><Calendar className="w-3 h-3" />{formatDate(blog.publishedAt)}</span>
@@ -102,7 +113,21 @@ function BlogCard({ blog, index }: { blog: Blog; index: number }) {
       </motion.div>
     </Link>
   );
-}
+});
+
+// ── Skeleton rows ─────────────────────────────────────────────────
+const BlogListSkeleton = memo(function BlogListSkeleton() {
+  return (
+    <div className="space-y-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {[1,2,3].map(i => <Skeleton key={i} className="h-[420px] rounded-3xl" />)}
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {Array.from({length:6}).map((_,i) => <Skeleton key={i} className="h-80 rounded-2xl" />)}
+      </div>
+    </div>
+  );
+});
 
 export default function BlogPage() {
   useSeo('blog', {
@@ -112,11 +137,11 @@ export default function BlogPage() {
     canonical: 'https://wexports.vercel.app/blog',
   });
 
-  const [search, setSearch]     = useState('');
+  const [search, setSearch]           = useState('');
   const [searchInput, setSearchInput] = useState('');
-  const [category, setCategory] = useState('');
-  const [sort, setSort]         = useState('latest');
-  const [page, setPage]         = useState(1);
+  const [category, setCategory]       = useState('');
+  const [sort, setSort]               = useState('latest');
+  const [page, setPage]               = useState(1);
 
   const { data, isLoading } = usePublishedBlogs({ category, sort, page, search });
 
@@ -125,14 +150,17 @@ export default function BlogPage() {
   const pages    = data?.pages    ?? 1;
   const total    = data?.total    ?? 0;
 
-  const handleSearch = () => {
-    setSearch(searchInput);
-    setPage(1);
-  };
+  // Memoized handlers — no inline recreation
+  const handleSearch = useCallback(() => { setSearch(searchInput); setPage(1); }, [searchInput]);
+  const handleKeyDown = useCallback((e: React.KeyboardEvent) => { if (e.key === 'Enter') handleSearch(); }, [handleSearch]);
+  const handleCategoryAll = useCallback(() => { setCategory(''); setPage(1); }, []);
+  const handleSortChange = useCallback((v: string) => { setSort(v); setPage(1); }, []);
+  const handlePrev = useCallback(() => setPage(p => Math.max(1, p - 1)), []);
+  const handleNext = useCallback(() => setPage(p => Math.min(pages, p + 1)), [pages]);
 
   const sortOptions = [
-    { value: 'latest',  label: 'Latest',   icon: Calendar },
-    { value: 'popular', label: 'Popular',  icon: TrendingUp },
+    { value: 'latest',  label: 'Latest',  icon: Calendar },
+    { value: 'popular', label: 'Popular', icon: TrendingUp },
   ];
 
   return (
@@ -153,15 +181,13 @@ export default function BlogPage() {
             <p className="text-white/50 text-lg max-w-xl mb-8">
               Trade tips, industry news and market trends — everything you need to succeed in global exports.
             </p>
-
-            {/* Search bar */}
             <div className="flex gap-2 max-w-lg">
               <div className="relative flex-1">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
                 <input
                   value={searchInput}
                   onChange={e => setSearchInput(e.target.value)}
-                  onKeyDown={e => e.key === 'Enter' && handleSearch()}
+                  onKeyDown={handleKeyDown}
                   placeholder="Search articles..."
                   className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-gold-400 focus:bg-white/15 transition-all"
                 />
@@ -174,11 +200,11 @@ export default function BlogPage() {
         </div>
       </div>
 
-      {/* Filters */}
-      <div className=" border-b border-gray-100 sticky top-0 z-20 shadow-sm backdrop-blur-2xl bg-white/40">
+      {/* Filters — sticky */}
+      <div className="border-b border-gray-100 sticky top-0 z-20 shadow-sm backdrop-blur-2xl bg-white/40">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap gap-2 items-center justify-between">
-          <div className="flex gap-2 overflow-x-auto">
-            <button onClick={() => { setCategory(''); setPage(1); }}
+          <div className="flex gap-2 overflow-x-auto" style={{ scrollbarWidth: 'none' }}>
+            <button onClick={handleCategoryAll}
               className={`px-4 py-1.5 rounded-full text-sm font-semibold whitespace-nowrap transition-all border ${!category ? 'bg-navy-900 text-white border-navy-900' : 'bg-white text-gray-600 border-gray-200 hover:border-navy-300'}`}>
               All
             </button>
@@ -191,7 +217,7 @@ export default function BlogPage() {
           </div>
           <div className="flex gap-2">
             {sortOptions.map(opt => (
-              <button key={opt.value} onClick={() => { setSort(opt.value); setPage(1); }}
+              <button key={opt.value} onClick={() => handleSortChange(opt.value)}
                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all border ${sort === opt.value ? 'bg-navy-900 text-white border-navy-900' : 'bg-white text-gray-500 border-gray-200 hover:border-navy-300'}`}>
                 <opt.icon className="w-3 h-3" /> {opt.label}
               </button>
@@ -201,17 +227,7 @@ export default function BlogPage() {
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-
-        {isLoading ? (
-          <div className="space-y-8">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {[1,2,3].map(i => <Skeleton key={i} className="h-[420px] rounded-3xl" />)}
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {Array.from({length:6}).map((_,i) => <Skeleton key={i} className="h-80 rounded-2xl" />)}
-            </div>
-          </div>
-        ) : blogs.length === 0 && featured.length === 0 ? (
+        {isLoading ? <BlogListSkeleton /> : blogs.length === 0 && featured.length === 0 ? (
           <div className="text-center py-24">
             <BookOpen className="w-16 h-16 text-gray-200 mx-auto mb-4" />
             <h3 className="font-display font-bold text-2xl text-gray-700 mb-2">
@@ -220,12 +236,15 @@ export default function BlogPage() {
             <p className="text-gray-400">
               {search ? 'Try a different search term.' : 'Check back soon for export insights.'}
             </p>
-            {search && <Button variant="outline" className="mt-4" onClick={() => { setSearch(''); setSearchInput(''); }}>Clear Search</Button>}
+            {search && (
+              <Button variant="outline" className="mt-4" onClick={() => { setSearch(''); setSearchInput(''); }}>
+                Clear Search
+              </Button>
+            )}
           </div>
         ) : (
           <div className="space-y-12">
-
-            {/* Featured section */}
+            {/* Featured */}
             {featured.length > 0 && !search && !category && page === 1 && (
               <div>
                 <div className="flex items-center gap-4 mb-6">
@@ -240,7 +259,7 @@ export default function BlogPage() {
               </div>
             )}
 
-            {/* All blogs grid */}
+            {/* All blogs */}
             {blogs.length > 0 && (
               <div>
                 <div className="flex items-center gap-4 mb-6">
@@ -259,16 +278,24 @@ export default function BlogPage() {
             {/* Pagination */}
             {pages > 1 && (
               <div className="flex items-center justify-center gap-2 pt-4">
-                <Button variant="outline" size="sm" onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page === 1}>
+                <Button variant="outline" size="sm" onClick={handlePrev} disabled={page === 1}>
                   <ChevronLeft className="w-4 h-4" />
                 </Button>
-                {Array.from({ length: pages }, (_, i) => i + 1).map(p => (
-                  <button key={p} onClick={() => setPage(p)}
-                    className={`w-9 h-9 rounded-lg text-sm font-semibold transition-all ${page === p ? 'bg-navy-900 text-white' : 'bg-white border border-gray-200 text-gray-600 hover:border-navy-300'}`}>
-                    {p}
-                  </button>
-                ))}
-                <Button variant="outline" size="sm" onClick={() => setPage(p => Math.min(pages, p + 1))} disabled={page === pages}>
+                {Array.from({ length: pages }, (_, i) => i + 1)
+                  .filter(p => p === 1 || p === pages || Math.abs(p - page) <= 1)
+                  .reduce<(number | string)[]>((acc, p, idx, arr) => {
+                    if (idx > 0 && (p as number) - (arr[idx-1] as number) > 1) acc.push('...');
+                    acc.push(p);
+                    return acc;
+                  }, [])
+                  .map((p, i) => p === '...'
+                    ? <span key={`d${i}`} className="px-1 text-gray-400">...</span>
+                    : <button key={p} onClick={() => setPage(p as number)}
+                        className={`w-9 h-9 rounded-lg text-sm font-semibold transition-all ${page === p ? 'bg-navy-900 text-white' : 'bg-white border border-gray-200 text-gray-600 hover:border-navy-300'}`}>
+                        {p}
+                      </button>
+                  )}
+                <Button variant="outline" size="sm" onClick={handleNext} disabled={page === pages}>
                   <ChevronRight className="w-4 h-4" />
                 </Button>
               </div>

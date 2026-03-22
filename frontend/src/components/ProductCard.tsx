@@ -1,6 +1,6 @@
 import { Link } from '@tanstack/react-router';
-import { ArrowRight, Heart, Package, Share2, ShieldCheck } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { Heart, Package, Share2, ShieldCheck } from 'lucide-react';
+import React, { useEffect, useState, useCallback } from 'react';
 import type { Product } from '../api/types';
 import { cn } from '@/utils/utils';
 import { useNavigate } from '@tanstack/react-router';
@@ -29,7 +29,8 @@ const toggleWishlistItem = (id: string): boolean => {
   return !exists;
 };
 
-export default function ProductCard({ product, hideStockBadge = false }: ProductCardProps) {
+// React.memo prevents re-render when parent re-renders with same props
+const ProductCard = React.memo(function ProductCard({ product, hideStockBadge = false }: ProductCardProps) {
   const cat = categoryColors[product.category] || { bg: 'bg-gray-50', text: 'text-gray-600' };
   const allImages = product.images?.length ? product.images : product.imageUrl ? [product.imageUrl] : [];
   const [currentImg, setCurrentImg] = useState(0);
@@ -47,11 +48,24 @@ export default function ProductCard({ product, hideStockBadge = false }: Product
     return () => clearInterval(t);
   }, [hovered, allImages.length]);
 
+  const handleWishlist = useCallback((e: React.MouseEvent) => {
+    e.preventDefault(); e.stopPropagation();
+    setWishlisted(toggleWishlistItem(product._id));
+  }, [product._id]);
+
+  const handleShare = useCallback((e: React.MouseEvent) => {
+    e.preventDefault(); e.stopPropagation();
+    const url = `${window.location.origin}/products/${product._id}`;
+    navigator.share ? navigator.share({ title: product.name, url })
+      : (navigator.clipboard.writeText(url), setShareMsg('Copied ✔'), setTimeout(() => setShareMsg(''), 2000));
+  }, [product._id, product.name]);
+
   return (
+    <Link to="/products/detail/$id" params={{ id: product._id }} className="block h-full">
     <div
       className={cn(
         'group relative bg-white rounded-2xl overflow-hidden flex flex-col h-full',
-        'border border-gray-200 transition-all duration-300',
+        'border border-gray-200 transition-all duration-300 cursor-pointer',
         'hover:-translate-y-1 hover:shadow-[0_12px_32px_-6px_rgba(0,0,0,0.12)] hover:border-gray-300',
       )}
       onMouseEnter={() => setHovered(true)}
@@ -61,7 +75,7 @@ export default function ProductCard({ product, hideStockBadge = false }: Product
       <div className="relative w-full overflow-hidden flex-shrink-0 bg-gray-100" style={{ aspectRatio: '4/3' }}>
         {allImages.length > 0 ? (
           <img src={allImages[currentImg]} alt={product.name}
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" decoding="async" />
         ) : (
           <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100">
             <Package className="w-10 h-10 text-gray-300" />
@@ -91,15 +105,12 @@ export default function ProductCard({ product, hideStockBadge = false }: Product
 
         {/* Wishlist + Share */}
         <div className="absolute top-2 right-2 flex flex-col gap-1 opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-          <button onClick={e => { e.preventDefault(); e.stopPropagation(); setWishlisted(toggleWishlistItem(product._id)); }}
+          <button onClick={handleWishlist}
             className={cn('w-6 h-6 rounded-full flex items-center justify-center shadow-md backdrop-blur-sm transition-all',
               wishlisted ? 'bg-red-500 text-white' : 'bg-white/90 text-gray-500 hover:text-red-500')}>
             <Heart className={cn('w-3 h-3', wishlisted && 'fill-current')} />
           </button>
-          <button onClick={e => { e.preventDefault(); e.stopPropagation();
-            const url = `${window.location.origin}/products/${product._id}`;
-            navigator.share ? navigator.share({ title: product.name, url }) : (navigator.clipboard.writeText(url), setShareMsg('Copied ✔'), setTimeout(() => setShareMsg(''), 2000));
-          }}
+          <button onClick={handleShare}
             className="w-6 h-6 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-md text-gray-500 hover:text-blue-500 transition-all">
             <Share2 className="w-3 h-3" />
           </button>
@@ -108,7 +119,7 @@ export default function ProductCard({ product, hideStockBadge = false }: Product
       </div>
 
       {/* Content */}
-      <div className="flex flex-col flex-1 p-3 sm:p-4">
+      <div className="flex flex-col flex-1 p-3">
 
         {/* Category + Origin */}
         <div className="flex items-center justify-between mb-2">
@@ -128,25 +139,24 @@ export default function ProductCard({ product, hideStockBadge = false }: Product
         </div>
 
         {/* Min order */}
-        <p className="text-[11px] font-bold tracking-widest uppercase text-gray-400 mb-3">
+        <p className="text-[11px] font-bold tracking-widest uppercase text-gray-400 mb-2">
           Min Order: <span className="text-gray-700 font-semibold">{product.minOrderQty}</span>
         </p>
 
         {/* Buttons */}
-        <div className="mt-auto space-y-1.5">
+        <div className="mt-auto">
           <button disabled={!inStock}
-            onClick={e => { e.preventDefault(); if (!inStock) return; navigate({ to: '/enquiry', search: { productName: product.name } }); }}
+            onClick={e => { e.preventDefault(); e.stopPropagation(); if (!inStock) return; navigate({ to: '/enquiry', search: { productName: product.name } }); }}
             className={cn('w-full py-2 rounded-xl text-xs font-bold tracking-wide transition-all',
               inStock ? 'bg-gray-900 text-white hover:bg-gray-800 active:scale-[.98]' : 'bg-gray-200 text-gray-400 cursor-not-allowed')}>
             {inStock ? 'Quick Enquiry' : 'Out of Stock'}
           </button>
-          <Link to="/products/detail/$id" params={{ id: product._id }} className="block">
-            <button className="w-full py-2 rounded-xl text-xs font-bold tracking-wide border-2 border-gray-200 text-gray-700 hover:border-gray-400 hover:text-gray-900 transition-all flex items-center justify-center gap-1">
-              View Details <ArrowRight className="w-3 h-3" />
-            </button>
-          </Link>
+
         </div>
       </div>
     </div>
+    </Link>
   );
 }
+
+export default ProductCard;
