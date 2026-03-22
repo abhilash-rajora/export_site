@@ -307,7 +307,7 @@ export default function HomePage() {
               { slug: 'agriculture',   src: 'https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=400&q=70', label: 'Agriculture' },
               { slug: 'textiles',      src: 'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=400&q=70',    label: 'Textiles' },
               { slug: 'electronics',   src: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&q=70', label: 'Electronics' },
-              { slug: 'minerals',      src: 'https://images.unsplash.com/photo-1551244072-5d12893278bc?w=400&q=70',    label: 'Minerals' },
+              { slug: 'minerals',      src: 'https://www.sreemetaliks.com/blog/public/assets/images/blog/blog-2-Hematite_1707918282.webp',    label: 'Minerals' },
               { slug: 'food-beverages',src: 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&q=70',    label: 'Food & Bev' },
               { slug: 'handicrafts',   src: 'https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=400&q=70', label: 'Handicrafts' },
             ].map(cat => (
@@ -329,7 +329,7 @@ export default function HomePage() {
               <img src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=600&q=80" alt="Agriculture" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
               <div className="absolute bottom-4 left-4 right-4">
-                <h3 className="font-display font-extrabold text-white text-base leading-tight mb-1">Fresh Produce &amp; Farm Goods</h3>
+                <h3 className="font-display font-extrabold text-white/80 text-base leading-tight mb-1">Fresh Produce &amp; Farm Goods</h3>
                 <p className="text-white/50 text-xs flex items-center gap-1"><ArrowRight className="w-3 h-3" /> Explore</p>
               </div>
             </Link>
@@ -338,7 +338,7 @@ export default function HomePage() {
               <img src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=600&q=80" alt="Textiles" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
               <div className="absolute bottom-3 left-3">
-                <h3 className="font-display font-bold text-white text-sm">Fabrics &amp; Garments</h3>
+                <h3 className="font-display font-bold text-white/80 text-sm">Fabrics &amp; Garments</h3>
               </div>
             </Link>
             <Link to="/products/$category" params={{ category: 'electronics' }}
@@ -346,15 +346,15 @@ export default function HomePage() {
               <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=80" alt="Electronics" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
               <div className="absolute bottom-3 left-3">
-                <h3 className="font-display font-bold text-white text-sm">Components &amp; Devices</h3>
+                <h3 className="font-display font-bold text-white/80 text-sm">Components &amp; Devices</h3>
               </div>
             </Link>
             <Link to="/products/$category" params={{ category: 'minerals' }}
               className="col-span-2 row-span-1 relative rounded-2xl overflow-hidden group cursor-pointer">
-              <img src="https://images.unsplash.com/photo-1551244072-5d12893278bc?w=400&q=80" alt="Minerals" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+              <img src="https://www.sreemetaliks.com/blog/public/assets/images/blog/blog-2-Hematite_1707918282.webp" alt="Minerals" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
               <div className="absolute bottom-3 left-3">
-                <h3 className="font-display font-bold text-white text-xs">Raw Ores</h3>
+                <h3 className="font-display font-bold text-white/80 text-xs">Raw Ores</h3>
               </div>
             </Link>
             <Link to="/products/$category" params={{ category: 'food-beverages' }}
@@ -362,7 +362,7 @@ export default function HomePage() {
               <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=500&q=80" alt="Food" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
               <div className="absolute bottom-3 left-3">
-                <h3 className="font-display font-bold text-white text-xs">Packaged Foods</h3>
+                <h3 className="font-display font-bold text-white/80 text-xs">Packaged Foods</h3>
               </div>
             </Link>
             <Link to="/products/$category" params={{ category: 'handicrafts' }}
@@ -370,7 +370,7 @@ export default function HomePage() {
               <img src="https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=500&q=80" alt="Handicrafts" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
               <div className="absolute bottom-3 left-3">
-                <h3 className="font-display font-bold text-white text-xs">Artisan Goods</h3>
+                <h3 className="font-display font-bold text-white/80 text-xs">Artisan Goods</h3>
               </div>
             </Link>
           </div>
@@ -382,7 +382,7 @@ export default function HomePage() {
         <div className="px-2 sm:px-4">
           <div className="rounded-2xl sm:rounded-3xl p-4 sm:p-8 relative" style={glassCard}>
             <div className="absolute top-0 left-6 right-6 h-px pointer-events-none"
-              style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent)' }} />
+              style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent)' }} />
             <div className="flex items-end justify-between mb-5">
               <div>
                 <p className="text-gold-400 text-[10px] font-black uppercase tracking-[0.2em] mb-1">Handpicked ⭐</p>
@@ -463,7 +463,7 @@ export default function HomePage() {
             boxShadow: '0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(96,165,250,0.08)',
           }}>
             <div className="absolute top-0 left-6 right-6 h-px pointer-events-none"
-              style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent)' }} />
+              style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent)' }} />
 
             {/* Header */}
             <div className="flex items-end justify-between mb-5">
