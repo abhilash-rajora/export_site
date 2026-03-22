@@ -293,7 +293,7 @@ export default function HomePage() {
           </div>
 
           {/* Glass category cards */}
-          <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-4 mb-4 sm:mb-6">
+          <div className="hidden sm:grid grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-4 mb-4 sm:mb-6">
             {categories.map((cat, i) => (
               <motion.div key={cat.name} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}>
                 <CategoryCard3D name={cat.name} slug={cat.slug} icon={cat.icon} desc={cat.desc} color={cat.color} />
