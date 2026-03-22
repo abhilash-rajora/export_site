@@ -55,7 +55,7 @@ export default function CategoryCard3D({ name, slug, icon: Icon, desc }: Categor
             rotateX,
             rotateY,
             transformStyle: 'preserve-3d',
-            background: 'rgba(255, 255, 255, 0.09)',
+            background: 'rgba(255,255,255,0.07)',
             backdropFilter: 'blur(20px)',
             WebkitBackdropFilter: 'blur(20px)',
             border: '1px solid rgba(255,255,255,0.15)',
@@ -64,7 +64,7 @@ export default function CategoryCard3D({ name, slug, icon: Icon, desc }: Categor
           whileHover={{ scale: 1.06 }}
           whileTap={{ scale: 0.97 }}
           transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-          className="group relative flex flex-col items-center p-4 rounded-2xl text-center cursor-pointer overflow-hidden"
+          className="group relative flex flex-col items-center p-3 sm:p-4 rounded-2xl text-center cursor-pointer overflow-hidden h-full min-h-[90px]"
         >
           {/* Top edge glare */}
           <div className="absolute top-0 left-0 right-0 h-px"

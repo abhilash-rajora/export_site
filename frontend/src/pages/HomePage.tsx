@@ -89,7 +89,7 @@ function TrendingCard({ product, index }: { product: HomeProduct; index: number 
         initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }} transition={{ delay: index * 0.08 }}
         whileHover={{ scale: 1.02 }}
-        className="group flex items-center gap-3 p-3 rounded-2xl cursor-pointer bg-white"
+        className="group flex items-center gap-3 p-3 rounded-2xl cursor-pointer bg-white h-full"
         style={{ boxShadow: '0 2px 12px rgba(0,0,0,0.08)' }}
       >
         <div className="w-14 h-14 rounded-xl overflow-hidden flex-shrink-0 bg-gray-100">
@@ -116,19 +116,32 @@ function HScroller({ children }: { children: React.ReactNode }) {
   };
   return (
     <div className="relative">
+      {/* Desktop arrows — shifted out, bold */}
       <button onClick={() => scroll('left')}
-        className="hidden sm:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 w-9 h-9 rounded-full items-center justify-center hover:scale-110 transition-all"
-        style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', backdropFilter: 'blur(8px)' }}>
-        <ChevronLeft className="w-4 h-4 text-white" />
+        className="hidden sm:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-7 z-10 w-9 h-9 rounded-full items-center justify-center hover:scale-110 transition-all"
+        style={{ background: 'white', border: '1px solid rgba(0,0,0,0.1)', boxShadow: '0 2px 8px rgba(0,0,0,0.15)' }}>
+        <ChevronLeft className="w-5 h-5 text-gray-900 stroke-[2.5]" />
       </button>
+
       <div ref={ref} className="flex gap-3 overflow-x-auto pb-2"
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
         {children}
       </div>
+
       <button onClick={() => scroll('right')}
-        className="hidden sm:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 w-9 h-9 rounded-full items-center justify-center hover:scale-110 transition-all"
-        style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', backdropFilter: 'blur(8px)' }}>
-        <ChevronRight className="w-4 h-4 text-white" />
+        className="hidden sm:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-7 z-10 w-9 h-9 rounded-full items-center justify-center hover:scale-110 transition-all"
+        style={{ background: 'white', border: '1px solid rgba(0,0,0,0.1)', boxShadow: '0 2px 8px rgba(0,0,0,0.15)' }}>
+        <ChevronRight className="w-5 h-5 text-gray-900 stroke-[2.5]" />
+      </button>
+
+      {/* Mobile arrows — no bold, shifted away */}
+      <button onClick={() => scroll('left')}
+        className="sm:hidden absolute left-0 top-1/2 -translate-y-1/2 -translate-x-5 z-10 flex items-center justify-center">
+        <ChevronLeft className="w-6 h-6 text-white" />
+      </button>
+      <button onClick={() => scroll('right')}
+        className="sm:hidden absolute right-0 top-1/2 -translate-y-1/2 translate-x-5 z-10 flex items-center justify-center">
+        <ChevronRight className="w-6 h-6 text-white" />
       </button>
     </div>
   );
@@ -294,7 +307,7 @@ export default function HomePage() {
               { slug: 'agriculture',   src: 'https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=400&q=70', label: 'Agriculture' },
               { slug: 'textiles',      src: 'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=400&q=70',    label: 'Textiles' },
               { slug: 'electronics',   src: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&q=70', label: 'Electronics' },
-              { slug: 'minerals',      src: 'https://www.sreemetaliks.com/blog/public/assets/images/blog/blog-2-Hematite_1707918282.webp',    label: 'Minerals' },
+              { slug: 'minerals',      src: 'https://images.unsplash.com/photo-1551244072-5d12893278bc?w=400&q=70',    label: 'Minerals' },
               { slug: 'food-beverages',src: 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&q=70',    label: 'Food & Bev' },
               { slug: 'handicrafts',   src: 'https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=400&q=70', label: 'Handicrafts' },
             ].map(cat => (
@@ -316,7 +329,7 @@ export default function HomePage() {
               <img src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=600&q=80" alt="Agriculture" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
               <div className="absolute bottom-4 left-4 right-4">
-                <h3 className="font-display font-extrabold text-white/80 text-base leading-tight mb-1">Fresh Produce &amp; Farm Goods</h3>
+                <h3 className="font-display font-extrabold text-white text-base leading-tight mb-1">Fresh Produce &amp; Farm Goods</h3>
                 <p className="text-white/50 text-xs flex items-center gap-1"><ArrowRight className="w-3 h-3" /> Explore</p>
               </div>
             </Link>
@@ -325,7 +338,7 @@ export default function HomePage() {
               <img src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=600&q=80" alt="Textiles" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
               <div className="absolute bottom-3 left-3">
-                <h3 className="font-display font-bold text-white/80 text-sm">Fabrics &amp; Garments</h3>
+                <h3 className="font-display font-bold text-white text-sm">Fabrics &amp; Garments</h3>
               </div>
             </Link>
             <Link to="/products/$category" params={{ category: 'electronics' }}
@@ -333,15 +346,15 @@ export default function HomePage() {
               <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=80" alt="Electronics" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
               <div className="absolute bottom-3 left-3">
-                <h3 className="font-display font-bold text-white/80 text-sm">Components &amp; Devices</h3>
+                <h3 className="font-display font-bold text-white text-sm">Components &amp; Devices</h3>
               </div>
             </Link>
             <Link to="/products/$category" params={{ category: 'minerals' }}
               className="col-span-2 row-span-1 relative rounded-2xl overflow-hidden group cursor-pointer">
-              <img src="https://www.sreemetaliks.com/blog/public/assets/images/blog/blog-2-Hematite_1707918282.webp" alt="Minerals" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+              <img src="https://images.unsplash.com/photo-1551244072-5d12893278bc?w=400&q=80" alt="Minerals" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
               <div className="absolute bottom-3 left-3">
-                <h3 className="font-display font-bold text-white/80 text-xs">Raw Ores</h3>
+                <h3 className="font-display font-bold text-white text-xs">Raw Ores</h3>
               </div>
             </Link>
             <Link to="/products/$category" params={{ category: 'food-beverages' }}
@@ -349,7 +362,7 @@ export default function HomePage() {
               <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=500&q=80" alt="Food" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
               <div className="absolute bottom-3 left-3">
-                <h3 className="font-display font-bold text-white/80 text-xs">Packaged Foods</h3>
+                <h3 className="font-display font-bold text-white text-xs">Packaged Foods</h3>
               </div>
             </Link>
             <Link to="/products/$category" params={{ category: 'handicrafts' }}
@@ -357,7 +370,7 @@ export default function HomePage() {
               <img src="https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=500&q=80" alt="Handicrafts" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
               <div className="absolute bottom-3 left-3">
-                <h3 className="font-display font-bold text-white/80 text-xs">Artisan Goods</h3>
+                <h3 className="font-display font-bold text-white text-xs">Artisan Goods</h3>
               </div>
             </Link>
           </div>
@@ -432,8 +445,8 @@ export default function HomePage() {
               ) : !data?.trending?.length ? (
                 <p className="text-white/30 text-center py-10">No trending products yet.</p>
               ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {data.trending.slice(0, 6).map((p, i) => <TrendingCard key={p._id} product={p} index={i} />)}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 items-stretch">
+                  {data.trending.slice(0, 4).map((p, i) => <TrendingCard key={p._id} product={p} index={i} />)}
                 </div>
               )}
             </div>
