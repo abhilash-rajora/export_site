@@ -20,6 +20,9 @@ const productSchema = new mongoose.Schema(
     priceRange: { type: String, required: [true, 'Price range is required'], trim: true },
     isActive: { type: Boolean, default: true },
     inStock: { type: Boolean, default: true },
+    isFeatured: { type: Boolean, default: false },
+    views:      { type: Number,  default: 0 },
+    soldCount:  { type: Number,  default: 0 },
   },
   { timestamps: true }
 );

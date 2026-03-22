@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { protect } = require('../middleware/authMiddleware');
+
 const {
   getActiveProducts,
   getProductById,
@@ -10,11 +11,12 @@ const {
   deleteProduct,
   getAllProducts,
   toggleProductActive,
+  getHomepageProducts,  // ← yeh missing tha
 } = require('../controllers/productController');
 
 const { upload } = require('../config/cloudinary');
 
-// Image upload route
+// Image upload
 router.post('/upload-image', protect, (req, res) => {
   upload.single('image')(req, res, (err) => {
     if (err) {
@@ -26,15 +28,17 @@ router.post('/upload-image', protect, (req, res) => {
   });
 });
 
-router.get('/all', protect, getAllProducts);
-
-router.get('/', getActiveProducts);
+// ── Specific routes pehle /:id se pehle ──────────────────────────
+router.get('/all',      protect, getAllProducts);
+router.get('/homepage', getHomepageProducts);       // ← specific route
 router.get('/category/:category', getProductsByCategory);
-router.get('/:id', getProductById);
 
-router.post('/', protect, createProduct);
-router.put('/:id', protect, updateProduct);
-router.delete('/:id', protect, deleteProduct);
+router.get('/',    getActiveProducts);
+router.get('/:id', getProductById);                 // ← dynamic route last mein
+
+router.post('/',          protect, createProduct);
+router.put('/:id',        protect, updateProduct);
+router.delete('/:id',     protect, deleteProduct);
 router.patch('/:id/toggle', protect, toggleProductActive);
 
 module.exports = router;

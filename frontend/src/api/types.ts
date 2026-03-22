@@ -13,6 +13,9 @@ export interface Product {
   inStock: boolean;
   createdAt: string;
   updatedAt: string;
+  isFeatured?: boolean;
+  views:      number;
+  soldCount:  number;
 }
 
 export interface Enquiry {
