@@ -59,8 +59,8 @@ const CardBody = React.memo(function CardBody({ product, badge, badgeColor = '#D
         <div className="px-3 pb-3 pt-1.5">
           <Link to="/enquiry" search={{ productName: product.name } as any} onClick={e => e.stopPropagation()} className="block">
             <button className="w-full h-9 text-xs font-black uppercase tracking-wide text-navy-900 hover:opacity-90 transition-all"
-              style={{ background: '#D4A017', borderRadius: '8px' }}>
-              Quick Enquiry
+              style={{ background: '#D4A017', borderRadius: '12px' }}>
+              Get Price
             </button>
           </Link>
         </div>
@@ -423,7 +423,7 @@ export default function HomePage() {
             {isLoading ? <CardSkeleton count={5} /> : !data?.featured?.length ? (
               <div className="text-center py-10 rounded-2xl" style={{ border: '1px dashed rgba(255,255,255,0.1)' }}>
                 <Star className="w-8 h-8 text-gold-400/20 mx-auto mb-3" />
-                <p className="text-white/30 text-sm">No featured products — mark some in admin panel.</p>
+                <p className="text-white/30 text-sm">No featured products.</p>
               </div>
             ) : (
               <HScroller>
@@ -565,7 +565,7 @@ export default function HomePage() {
                 whileHover={{ scale: 1.03, y: -4 }}
                 className="group relative p-6 sm:p-8 rounded-2xl overflow-hidden"
                 style={{ background: 'rgba(255,255,255,0.06)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', border: '1px solid rgba(255,255,255,0.12)', boxShadow: '0 4px 24px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.15)' }}>
-                <div className="absolute top-0 left-0 right-0 h-px" style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)' }} />
+                <div className="absolute top-0 left-0 right-0 h-px" style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent)' }} />
                 <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                   style={{ background: `radial-gradient(circle at 30% 0%, ${item.accent}18 0%, transparent 65%)` }} />
                 <div className="relative z-10 w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center mb-4 sm:mb-5 group-hover:scale-110 transition-transform duration-300"

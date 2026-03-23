@@ -100,7 +100,7 @@ export default function CategoryCard3D({ name, slug, icon: Icon, desc }: Categor
 
           {/* Bottom reflection line */}
           <div className="absolute bottom-0 left-2 right-2 h-px"
-            style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)' }} />
+            style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)' }} />
         </motion.div>
       </Link>
     </div>

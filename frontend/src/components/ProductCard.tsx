@@ -149,7 +149,7 @@ const ProductCard = React.memo(function ProductCard({ product, hideStockBadge = 
             onClick={e => { e.preventDefault(); e.stopPropagation(); if (!inStock) return; navigate({ to: '/enquiry', search: { productName: product.name } }); }}
             className={cn('w-full py-2 rounded-xl text-xs font-bold tracking-wide transition-all',
               inStock ? 'bg-gray-900 text-white hover:bg-gray-800 active:scale-[.98]' : 'bg-gray-200 text-gray-400 cursor-not-allowed')}>
-            {inStock ? 'Quick Enquiry' : 'Out of Stock'}
+            {inStock ? 'Get Price' : 'Out of Stock'}
           </button>
 
         </div>
