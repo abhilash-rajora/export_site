@@ -113,12 +113,12 @@ const getHomepageProducts = async (req, res) => {
     const [featured, newArrivals, trending] = await Promise.all([
       Product.find({ ...base, isFeatured: true })
         .sort({ createdAt: -1 })
-        .limit(20)
+        .limit(12)
         .select('name category description images imageUrl priceRange originCountry minOrderQty isFeatured views soldCount createdAt'),
 
       Product.find(base)
         .sort({ createdAt: -1 })
-        .limit(20)
+        .limit(16)
         .select('name category description images imageUrl priceRange originCountry minOrderQty isFeatured views soldCount createdAt'),
 
       Product.find(base)

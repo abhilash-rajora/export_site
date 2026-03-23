@@ -59,7 +59,7 @@ const CardBody = React.memo(function CardBody({ product, badge, badgeColor = '#D
         <div className="px-3 pb-3 pt-1.5">
           <Link to="/enquiry" search={{ productName: product.name } as any} onClick={e => e.stopPropagation()} className="block">
             <button className="w-full h-9 text-xs font-black uppercase tracking-wide text-navy-900 hover:opacity-90 transition-all"
-              style={{ background: '#D4A017', borderRadius: '12px' }}>
+              style={{ background: '#D4A017', borderRadius: '8px' }}>
               Get Price
             </button>
           </Link>
@@ -161,11 +161,11 @@ const HScroller = React.memo(function HScroller({ children }: { children: React.
       </button>
       <button onClick={() => scroll('left')}
         className="sm:hidden absolute left-0 top-1/2 -translate-y-1/2 -translate-x-5 z-10 flex items-center justify-center">
-        <ChevronLeft className="w-6 h-6 text-white/60" />
+        <ChevronLeft className="w-6 h-6 text-gray-900" />
       </button>
       <button onClick={() => scroll('right')}
         className="sm:hidden absolute right-0 top-1/2 -translate-y-1/2 translate-x-5 z-10 flex items-center justify-center">
-        <ChevronRight className="w-6 h-6 text-white/60" />
+        <ChevronRight className="w-6 h-6 text-gray-900" />
       </button>
     </div>
   );
@@ -411,7 +411,7 @@ export default function HomePage() {
               <div>
                 <p className="text-gold-400 text-[10px] font-black uppercase tracking-[0.2em] mb-1">Handpicked ⭐</p>
                 <h2 className="font-display text-xl sm:text-3xl font-extrabold text-white tracking-tight leading-none">
-                  FEATURED <span className="text-gold-400">PRODUCTS</span>
+                  FEATURED <span className="text-gold-400">EXPORTS</span>
                 </h2>
               </div>
               <Link to="/products">
@@ -423,7 +423,7 @@ export default function HomePage() {
             {isLoading ? <CardSkeleton count={5} /> : !data?.featured?.length ? (
               <div className="text-center py-10 rounded-2xl" style={{ border: '1px dashed rgba(255,255,255,0.1)' }}>
                 <Star className="w-8 h-8 text-gold-400/20 mx-auto mb-3" />
-                <p className="text-white/30 text-sm">No featured products.</p>
+                <p className="text-white/30 text-sm">No featured products — mark some in admin panel.</p>
               </div>
             ) : (
               <HScroller>
@@ -504,44 +504,15 @@ export default function HomePage() {
             </div>
 
             {isLoading ? (
-              <div className="space-y-5">
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                  {Array.from({ length: 4 }).map((_, i) => (
-                    <div key={i} className="rounded-2xl overflow-hidden bg-white/10">
-                      <Skeleton className="h-[155px] w-full bg-white/10 rounded-none" />
-                      <div className="p-3 space-y-1.5">
-                        <Skeleton className="h-2.5 w-16 bg-white/10 rounded" />
-                        <Skeleton className="h-3.5 w-full bg-white/10 rounded" />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <CardSkeleton count={4} />
-              </div>
+              <CardSkeleton count={5} />
             ) : !data?.newArrivals?.length ? (
               <p className="text-white/30 text-center py-10">No products yet.</p>
             ) : (
-              <div className="space-y-5">
-                <div>
-                  <p className="text-white/30 text-[10px] font-black uppercase tracking-widest mb-3">Latest Drop</p>
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                    {data.newArrivals.slice(0, 4).map((p, i) => (
-                      <ArrivalGridCard key={p._id} product={p} />
-                    ))}
-                  </div>
-                </div>
-                <div className="h-px" style={{ background: 'rgba(255,255,255,0.08)' }} />
-                {data.newArrivals.length > 4 && (
-                  <div>
-                    <p className="text-white/30 text-[10px] font-black uppercase tracking-widest mb-3">More New Arrivals</p>
-                    <HScroller>
-                      {data.newArrivals.slice(4).map((p, i) => (
-                        <ArrivalSliderCard key={p._id} product={p} />
-                      ))}
-                    </HScroller>
-                  </div>
-                )}
-              </div>
+              <HScroller>
+                {data.newArrivals.map((p, i) => (
+                  <ArrivalSliderCard key={p._id} product={p} />
+                ))}
+              </HScroller>
             )}
           </div>
         </div>
