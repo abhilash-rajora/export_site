@@ -333,7 +333,7 @@ export default function HomePage() {
               { slug: 'electronics',    src: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&q=70', label: 'Electronics' },
               { slug: 'minerals',       src: 'https://www.sreemetaliks.com/blog/public/assets/images/blog/blog-2-Hematite_1707918282.webp', label: 'Minerals' },
               { slug: 'food-beverages', src: 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&q=70',    label: 'Food & Bev' },
-              { slug: 'handicrafts',    src: 'https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=400&q=70', label: 'Handicrafts' },
+              { slug: 'handicrafts',    src: 'https://images.openai.com/static-rsc-3/0ioaBzD2LKK6GuPAf98NGFEWNwuANA3fJw3n5F2loWrNOpDPjMaP8RMRZoctNa3DMJXS1bo1eyG0GODUzW0rMU2z8uNvdcgB_TsEJ5u0uec?purpose=inline', label: 'Handicrafts' },
             ].map(cat => (
               <Link key={cat.slug} to="/products/$category" params={{ category: cat.slug }}
                 className="relative rounded-xl overflow-hidden group cursor-pointer">
@@ -391,7 +391,7 @@ export default function HomePage() {
             </Link>
             <Link to="/products/$category" params={{ category: 'handicrafts' }}
               className="col-span-3 row-span-1 relative rounded-2xl overflow-hidden group cursor-pointer">
-              <img src="https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=500&q=80" alt="Handicrafts" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" decoding="async" />
+              <img src="https://images.openai.com/static-rsc-3/0ioaBzD2LKK6GuPAf98NGFEWNwuANA3fJw3n5F2loWrNOpDPjMaP8RMRZoctNa3DMJXS1bo1eyG0GODUzW0rMU2z8uNvdcgB_TsEJ5u0uec?purpose=inline" alt="Handicrafts" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" decoding="async" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
               <div className="absolute bottom-3 left-3">
                 <h3 className="font-display font-bold text-white/80 text-xs">Artisan Goods</h3>
