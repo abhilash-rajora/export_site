@@ -161,11 +161,11 @@ const HScroller = React.memo(function HScroller({ children }: { children: React.
       </button>
       <button onClick={() => scroll('left')}
         className="sm:hidden absolute left-0 top-1/2 -translate-y-1/2 -translate-x-5 z-10 flex items-center justify-center">
-        <ChevronLeft className="w-6 h-6 text-gray-900" />
+        <ChevronLeft className="w-6 h-6 text-white/60" />
       </button>
       <button onClick={() => scroll('right')}
         className="sm:hidden absolute right-0 top-1/2 -translate-y-1/2 translate-x-5 z-10 flex items-center justify-center">
-        <ChevronRight className="w-6 h-6 text-gray-900" />
+        <ChevronRight className="w-6 h-6 text-white/60" />
       </button>
     </div>
   );
