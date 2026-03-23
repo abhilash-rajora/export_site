@@ -423,7 +423,7 @@ export default function HomePage() {
             {isLoading ? <CardSkeleton count={5} /> : !data?.featured?.length ? (
               <div className="text-center py-10 rounded-2xl" style={{ border: '1px dashed rgba(255,255,255,0.1)' }}>
                 <Star className="w-8 h-8 text-gold-400/20 mx-auto mb-3" />
-                <p className="text-white/30 text-sm">No featured products — mark some in admin panel.</p>
+                <p className="text-white/30 text-sm">No featured products.</p>
               </div>
             ) : (
               <HScroller>

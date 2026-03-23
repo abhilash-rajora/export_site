@@ -56,14 +56,14 @@ export default function PublicNavbar() {
   const telegramPill = {
     className: 'rounded-full border border-white/50 shadow-[0_2px_16px_rgba(0,0,0,0.12)]',
     style: {
-      background: 'rgba(255,255,255,0.5)',
+      background: 'rgba(255,255,255,0.6)',
       backdropFilter: 'blur(12px) saturate(160%)',
       WebkitBackdropFilter: 'blur(12px) saturate(160%)',
     } as React.CSSProperties,
   };
 
   const LogoImage = ({ height }: { height: string }) => {
-    const px = height === 'h-14' ? '56px' : '44px';
+    const px = height === 'h-12' ? '56px' : '44px';
     return (
       <div className="relative flex items-center justify-center w-[140px] h-[44px] md:w-[160px] md:h-[56px]">
         <img src="/logo1.png" alt="WeExports" className="absolute transition-opacity duration-300"
@@ -80,19 +80,19 @@ export default function PublicNavbar() {
         className="fixed top-0 left-0 w-full z-50 pointer-events-none"
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: hidden ? '-120%' : '0%', opacity: 1 }}
-        transition={{ duration: 0.5, ease: 'easeInOut' }}
+        transition={{ duration: 0.3, ease: 'easeInOut' }}
       >
         <AnimatePresence>
           {scrolled && (
             <motion.div
               key="navbar-dim"
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-              transition={{ duration: 0.4 }}
+              transition={{ duration: 0.3 }}
               className="absolute inset-x-0 top-0 pointer-events-none"
               style={{
                 height: '95px', zIndex: 0,
-                backdropFilter: 'blur(2px) saturate(150%)',
-                WebkitBackdropFilter: 'blur(2px) saturate(150%)',
+                backdropFilter: 'blur(0px) saturate(100%)',
+                WebkitBackdropFilter: 'blur(0px) saturate(100%)',
                 background: 'linear-gradient(to bottom, rgba(255,255,255,0.0.1), rgba(255,255,255,0.03))',
                 maskImage: 'linear-gradient(to bottom, black 0%, black 60%, transparent 100%)',
                 WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black 60%, transparent 100%)',
@@ -110,7 +110,7 @@ export default function PublicNavbar() {
                 scrolled ? telegramPill.className : 'bg-white/10 border border-white/40 shadow-lg backdrop-blur-sm')}
               style={scrolled ? telegramPill.style : { WebkitBackdropFilter: 'blur(8px)' }}
             >
-              <LogoImage height="h-14 md:h-14px" />
+              <LogoImage height="h-12 md:h-12px" />
             </Link>
 
             <AnimatePresence mode="wait">
@@ -135,21 +135,21 @@ export default function PublicNavbar() {
                     )}
                   </Link>
                   <Link to="/enquiry"
-                    className="ml-1 flex items-center gap-2 px-5 py-2 rounded-full text-base font-bold bg-gold-500 text-navy-900 hover:bg-gold-400 shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200">
-                    Enquiry
+                    className="ml-1 flex items-center gap-2 px-4 py-2 rounded-full text-base font-bold bg-gold-500 text-navy-900 hover:bg-gold-400 shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200">
+                    Get Quote
                     <span className="w-6 h-6 rounded-full bg-navy-900 text-white flex items-center justify-center text-xs font-bold">→</span>
                   </Link>
                 </motion.div>
               ) : (
                 <motion.div key="pill"
                   initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                  transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                   className={cn('flex items-center gap-0 px-2 py-0.5', telegramPill.className)}
                   style={telegramPill.style}
                 >
                   {navLinks.map((link) => (
                     <Link key={link.href} to={link.href}
-                      className={cn('relative flex items-center px-5 h-14 rounded-full text-[15px] font-medium transition-all duration-200 group',
+                      className={cn('relative flex items-center px-4 h-12 rounded-full text-[15px] font-medium transition-all duration-200 group',
                         isActive(link.href) ? 'text-gold-600' : 'text-black hover:text-black hover:bg-black/[0.09]')}
                     >
                       {link.label}
@@ -159,7 +159,7 @@ export default function PublicNavbar() {
                   ))}
                   <span className="w-px h-6 bg-black/[0.08] mx-0.5 shrink-0" />
                   <Link to="/wishlist"
-                    className={cn('relative flex items-center justify-center w-12 h-14 rounded-full transition-colors duration-200',
+                    className={cn('relative flex items-center justify-center w-12 h-12 rounded-full transition-colors duration-200',
                       location.pathname === '/wishlist' ? 'text-red-500' : 'text-black hover:text-red-500 hover:bg-black/[0.04]')}
                     title="Wishlist"
                   >
@@ -172,10 +172,10 @@ export default function PublicNavbar() {
                   </Link>
                   <span className="w-px h-6 bg-black/[0.08] mx-0.5 shrink-0" />
                   <Link to="/enquiry"
-                    className={cn('flex items-center gap-1.5 mx-1.5 my-auto px-5 h-10 rounded-full text-[15px] font-bold transition-all duration-200',
+                    className={cn('flex items-center gap-1.5 mx-2.5 my-auto px-5 h-10 rounded-full text-[15px] font-bold transition-all duration-200',
                       location.pathname === '/enquiry' ? 'bg-gold-400 text-navy-900' : 'bg-navy-900 text-white hover:bg-gold-400 hover:text-navy-900')}
                   >
-                    Enquiry
+                    Get Quote
                     <span className="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center text-xs font-bold">→</span>
                   </Link>
                 </motion.div>
@@ -228,16 +228,16 @@ export default function PublicNavbar() {
             <AnimatePresence>
               {isOpen && (
                 <motion.div
-                  initial={{ opacity: 0, scaleX: 0.4, scaleY: 0.2 }}
-                  animate={{ opacity: 1, scaleX: 1, scaleY: 1 }}
+                  initial={{ opacity: 0, scale: 0.9, y: -10 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scaleX: 0.4, scaleY: 0.2 }}
-                  transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                  transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                   style={{ transformOrigin: 'top right', zIndex: 110 }}
                   className="absolute top-14 right-0 w-56 bg-navy-900 border border-white/30 rounded-2xl shadow-2xl pointer-events-auto"
                 >
                   <div className="p-2">
                     {navLinks.map((link, i) => (
-                      <motion.div key={link.href} initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 + i * 0.12, duration: 0.5 }}>
+                      <motion.div key={link.href} initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 + i * 0.12, duration: 0.3 }}>
                         <Link to={link.href} onClick={() => setIsOpen(false)}
                           className={cn('flex items-center px-4 py-3 rounded-xl text-base font-semibold transition-colors duration-200 hover:text-gold-400 hover:bg-white/5',
                             isActive(link.href) ? 'text-gold-400 bg-white/5' : 'text-white/90')}
@@ -249,7 +249,7 @@ export default function PublicNavbar() {
 
                     <div className="my-1.5 border-t border-white/10" />
 
-                    <motion.div initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 + navLinks.length * 0.12, duration: 0.5 }}>
+                    <motion.div initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 + navLinks.length * 0.12, duration: 0.3 }}>
                       <Link to="/wishlist" onClick={() => setIsOpen(false)}
                         className={cn('flex items-center justify-between px-4 py-3 rounded-xl text-base font-semibold transition-colors duration-200 hover:bg-white/5',
                           location.pathname === '/wishlist' ? 'text-red-400 bg-white/5' : 'text-white/90 hover:text-red-400')}
@@ -263,10 +263,10 @@ export default function PublicNavbar() {
 
                     <div className="my-1.5 border-t border-white/10" />
 
-                    <motion.div initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 + (navLinks.length + 1) * 0.12, duration: 0.5 }}>
+                    <motion.div initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 + (navLinks.length + 1) * 0.12, duration: 0.3 }}>
                       <Link to="/enquiry" onClick={() => setIsOpen(false)}
                         className="flex items-center justify-between px-4 py-3 rounded-xl text-base font-bold bg-gold-500 text-navy-900 hover:bg-gold-400 transition-colors duration-200">
-                        Enquiry
+                        Get Quote
                         <span className="w-6 h-6 rounded-full bg-navy-900 text-white flex items-center justify-center text-xs font-bold">→</span>
                       </Link>
                     </motion.div>
