@@ -1,0 +1,195 @@
+'use client';
+import { Lock, Clock, ShieldCheck, Building2, Mail, Phone, Globe } from 'lucide-react';
+import MotionWrapper from "@/components/common/MotionWrapper";
+import EnquiryForm from '@/components/EnquiryForm';
+import EnquiryScroll from "@/components/pages/EnquiryScroll";
+
+
+const features = [
+  { icon: Lock,      label: 'End-to-end Encrypted Communications' },
+  { icon: Clock,     label: '24-Hour Guaranteed Response Time' },
+  { icon: Building2, label: 'Escrow-Compatible Transaction Logic' },
+];
+
+const contactInfo = [
+  { icon: Mail,  label: 'Email Us',      value: 'wexports.support@gmail.com', href: 'mailto:wexports.support@gmail.com' },
+  { icon: Phone, label: 'Call Us',       value: '+91 (9466) 3635-22',         href: 'tel:+919466363522' },
+  { icon: Globe, label: 'Coverage',      value: '50+ Countries Worldwide' },
+  { icon: Clock, label: 'Response Time', value: 'Within 24 hours' },
+];
+
+export default function EnquiryPage({ searchParams }: { searchParams: { productName?: string } }) {
+    const productName = searchParams?.productName || "";
+  return (
+    <div className="min-h-screen bg-[#eeecea]">
+      <EnquiryScroll productName={productName} />
+      {/* ── Hero ── */}
+      <div className="bg-navy-900 text-white pt-28 pb-20 relative overflow-hidden">
+        <div className="pointer-events-none absolute -right-24 -top-24 w-96 h-96 rounded-full bg-gold-500 opacity-10 blur-[120px]" />
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <MotionWrapper> 
+            <h1 className="font-display text-3xl sm:text-4xl font-extrabold tracking-tight mb-3">
+              Get in Touch
+            </h1>
+            <p className="text-white/60 text-lg max-w-xl">
+              Have a question about our products? Send us an enquiry and our team will get back to you promptly.
+            </p>
+          </ MotionWrapper>
+        </div>
+      </div>
+
+      {/* ── Main ── */}
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl pt-16 pb-24">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 xl:gap-24 items-start">
+
+          {/* ── LEFT: trust signals ── */}
+          <MotionWrapper>
+
+            <span className="inline-block bg-amber-500 text-amber-950 text-[10px] font-black tracking-[0.18em] uppercase px-3 py-1.5 rounded-sm mb-8">
+              Institutional Grade
+            </span>
+
+            <h2 className="font-display text-5xl sm:text-6xl lg:text-[60px] font-extrabold text-gray-900 leading-[1.05] tracking-tight mb-6">
+              Secure Global<br />Procurement.
+            </h2>
+
+            <p className="text-gray-500 text-lg leading-relaxed max-w-md mb-10">
+              Direct access to vetted export suppliers from India. Every enquiry is handled via our private high-security channel to ensure price integrity and logistics confidentiality.
+            </p>
+
+            {/* Verified supplier box — glass */}
+            <div
+              className="rounded-xl px-6 py-5 flex items-start gap-4 mb-10"
+              style={{
+                background: 'rgba(255,255,255,0.7)',
+                border: '1px solid rgba(0,0,0,0.08)',
+                boxShadow: '0 2px 12px rgba(0,0,0,0.06)',
+              }}
+            >
+              <div className="w-10 h-10 rounded-lg bg-gold-500 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <ShieldCheck className="w-5 h-5 text-navy-900" />
+              </div>
+              <div>
+                <p className="text-[11px] font-black tracking-[0.15em] uppercase text-gray-800 mb-1">
+                  Verified Supplier Network
+                </p>
+                <p className="text-sm text-gray-500 leading-relaxed">
+                  Your request will be routed to certified partners only, adhering to global compliance standards.
+                </p>
+              </div>
+            </div>
+
+            {/* Features */}
+            <div className="space-y-4 mb-10">
+              {features.map(({ icon: Icon, label }) => (
+                <div key={label} className="flex items-center gap-4">
+                  <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
+                    style={{
+                      background: 'rgba(255,255,255,0.08)',
+                      border: '1px solid rgba(255,255,255,0.12)',
+                    }}>
+                    <Icon className="w-4 h-4 text-gray-700" />
+                  </div>
+                  <span className="text-sm font-medium text-gray-700">{label}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Contact cards — glass */}
+            <div>
+              <p className="text-[10px] font-black tracking-[0.15em] uppercase text-gray-400 mb-4">
+                Contact Information
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-3">
+                {contactInfo.map((info) => (
+                  <div key={info.label}
+                    className="flex items-start gap-3 p-4 rounded-xl hover:-translate-y-0.5 transition-all duration-300"
+                    style={{
+                      background: 'rgba(255,255,255,0.7)',
+                      border: '1px solid rgba(0,0,0,0.08)',
+                      boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
+                    }}
+                  >
+                    <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
+                      style={{ background: 'rgba(212,160,23,0.15)', border: '1px solid rgba(212,160,23,0.3)' }}>
+                      <info.icon className="w-4 h-4 text-gold-400" />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-0.5">
+                        {info.label}
+                      </p>
+                      {info.href ? (
+                        <a href={info.href} className="text-sm font-semibold text-gray-800 hover:text-amber-600 transition-colors truncate block">
+                          {info.value}
+                        </a>
+                      ) : (
+                        <p className="text-sm font-semibold text-gray-800">{info.value}</p>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </ MotionWrapper>
+
+          {/* ── RIGHT: Glass form panel ── */}
+          <MotionWrapper>
+
+            {/* Decorative gold square */}
+            <div className="flex justify-end mb-2 pointer-events-none">
+              <div className="w-16 h-16 bg-gold-500/40 rounded-sm" />
+            </div>
+
+            {/* Glass form card */}
+            <div
+              id="enquiry-form"
+              className="relative rounded-2xl px-7 sm:px-10 py-9 overflow-hidden"
+              style={{
+                background: 'rgba(255,255,255,0.75)',
+                backdropFilter: 'blur(24px)',
+                WebkitBackdropFilter: 'blur(24px)',
+                border: '1px solid rgba(255,255,255,0.9)',
+                boxShadow: '0 8px 40px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,1)',
+              }}
+            >
+              {/* Top edge glare */}
+              <div className="absolute top-0 left-0 right-0 h-px"
+                style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent)' }} />
+
+              {/* Inner top glow */}
+              <div className="absolute top-0 left-0 right-0 h-32 pointer-events-none"
+                style={{ background: 'radial-gradient(ellipse at 50% 0%, rgba(212,160,23,0.08) 0%, transparent 70%)' }} />
+
+              {/* Form header */}
+              <div className="mb-8 pb-6" style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+                <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
+                  Enquiry Form
+                </h2>
+                <p className="text-sm text-gray-400 mt-1.5">
+                  Fields marked <span className="text-red-500">*</span> are required · We respond within 24 hours
+                </p>
+              </div>
+
+              <EnquiryForm key={productName} productName={productName} glass />
+            </div>
+
+            {/* Trust pills — glass */}
+            <div className="flex flex-wrap gap-2 mt-5 px-1">
+              {['✔ No minimum enquiry', '🌍 50+ countries served', '🔒 Private & secure'].map(pill => (
+                <span key={pill} className="text-[11px] font-semibold text-gray-500 px-3 py-1 rounded-full"
+                  style={{
+                    background: 'rgba(255,255,255,0.7)',
+                    border: '1px solid rgba(0,0,0,0.1)',
+                  }}>
+                  {pill}
+                </span>
+              ))}
+            </div>
+          </ MotionWrapper>
+        </div>
+      </div>
+
+      <div id="enquiry-transparent-trigger" />
+    </div>
+  );
+}

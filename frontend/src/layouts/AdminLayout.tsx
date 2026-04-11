@@ -1,3 +1,4 @@
+
 import { cn } from '@/lib/utils';
 import { Link, Outlet, useLocation, useNavigate } from '@tanstack/react-router';
 import { ChevronRight, ExternalLink, LayoutDashboard, LogOut, Menu, MessageSquare, Package, Search, BookOpen } from 'lucide-react';

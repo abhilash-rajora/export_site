@@ -116,7 +116,7 @@ const verify2FALogin = async (req, res) => {
     const jwtToken = jwt.sign(
       { id: admin._id, role: admin.role },
       process.env.JWT_SECRET,
-      { expiresIn: "1h" }   // ← 1 hour session
+      { expiresIn: "10d" }   // ← 1 hour session
     );
 
     res.json({
