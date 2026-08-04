@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Link } from '@tanstack/react-router';
-import { ArrowRight, ChevronLeft, ChevronRight, Coffee, Cpu, Gem, Globe, Leaf, Palette, Shield, Shirt, Star, Truck, MapPin, Tag, BadgeCheck } from 'lucide-react';
+import { Mail,MessageCircle, Instagram, Facebook,ArrowRight, ChevronLeft, ChevronRight, Coffee, Cpu, Gem, Globe, Leaf, Palette, Shield, Shirt, Star, Truck, MapPin, Tag, BadgeCheck } from 'lucide-react';
 import { motion } from 'framer-motion';
 import React, { useRef, useState, useCallback, useEffect } from 'react';
 import { useHomepageProducts, HomeProduct } from '../hooks/useHomepage';
@@ -16,11 +16,31 @@ const categories = [
   
 ];
 
-const stats = [
-  { value: '50+',  label: 'Countries Served' },
-  { value: '200+', label: 'Product Lines' },
-  { value: '15+',  label: 'Years Experience' },
-  { value: '99%',  label: 'Client Satisfaction' },
+const contactItems = [
+  {
+    icon: Mail,
+    label: "Email",
+    value: "info@gypenterprises.com",
+    href: "mailto:info@gypenterprises.com",
+  },
+  {
+    icon: MessageCircle,
+    label: "WhatsApp",
+    value: "+91 9876543210",
+    href: "https://wa.me/919876543210",
+  },
+  {
+    icon: Instagram,
+    label: "Instagram",
+    value: "@gypenterprises",
+    href: "https://instagram.com/gypenterprises",
+  },
+  {
+    icon: Facebook,
+    label: "Facebook",
+    value: "GYP Enterprises",
+    href: "https://facebook.com/gypenterprises",
+  },
 ];
 
 // ── Shared card body ─────────────────────────────────────────────
@@ -233,10 +253,10 @@ export default function HomePage() {
     <div className="absolute inset-0 flex flex-col justify-end px-5 pb-6">
       <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.65, ease: 'easeOut' }}>
         <p className="text-white/80 text-[10px] font-medium uppercase tracking-[0.25em] mb-3 border-b border-white/30 pb-2 inline-block">
-          Premium Indian HairExporter
+          Premium Indian Hair Exporter
         </p>
         <h1 className="font-serif text-3xl font-normal text-white leading-tight tracking-tight mb-3">
-          Premium Indian Raw Human HairExporter
+          Premium Indian Raw Human Hair Exporter
         </h1>
         <p className="text-white/80 text-sm leading-relaxed mb-5">
           We export 100% ethically sourced raw Indian human hair, virgin hair
@@ -307,11 +327,11 @@ export default function HomePage() {
             transition={{ duration: 0.7, ease: 'easeOut' }}
             className="max-w-2xl"
           >
-            <p className="text-white/80 text-xs font-medium uppercase tracking-[0.25em] mb-4 border-b border-white/30 pb-3 inline-block">
-              Premium Indian HairExporter
+            <p className="text-gold-200 text-xs font-medium uppercase tracking-[0.25em] mb-4 border-b border-white/30 pb-3 inline-block">
+              Premium Indian Hair Exporter
             </p>
             <h1 className="font-serif text-5xl lg:text-6xl font-normal text-white leading-[1.12] tracking-tight mb-6">
-              Premium Indian<br />Raw Human HairExporter
+              Premium Indian<br />Raw Human Hair Exporter
             </h1>
             <p className="text-white/80 text-lg leading-relaxed mb-8 max-w-xl">
               We export 100% ethically sourced raw Indian human hair, virgin hair
@@ -360,8 +380,8 @@ export default function HomePage() {
               <div key={s.label} className="flex items-center gap-3 px-4 first:pl-0">
                 <s.icon className="w-6 h-6 text-white flex-shrink-0" strokeWidth={1.5} />
                 <div className="leading-tight">
-                  <div className="text-white font-bold text-sm">{s.value}</div>
-                  <div className="text-white/60 text-[10px] uppercase tracking-wide">{s.label}</div>
+                  <div className="text-white font-bold text-[16px]">{s.value}</div>
+                  <div className="text-white/60 text-[12px] uppercase tracking-wide">{s.label}</div>
                 </div>
               </div>
             ))}
@@ -373,18 +393,39 @@ export default function HomePage() {
 </section>
 
       {/* Stats */}
-      <section className="bg-navy-900 border-y border-navy-700">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
-            {stats.map((stat, i) => (
-              <motion.div key={stat.label} initial={{ opacity: 0, scale: 0.8 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} className="text-center">
-                <div className="font-display text-2xl sm:text-3xl font-extrabold text-gold-400">{stat.value}</div>
-                <div className="text-white/50 text-xs sm:text-sm mt-1">{stat.label}</div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <section className="bg-black/90 backdrop-blur-md border-y border-white/10">
+  <div className="container mx-auto px-6 py-5">
+    <div className="flex flex-wrap justify-center items-center gap-8 text-white/80">
+
+      <a href="mailto:info@gypenterprises.com" className="flex items-center gap-2 hover:text-gold-400 transition">
+        <Mail className="w-5 h-5 text-gold-400" />
+        <span>info@gypenterprises.com</span>
+      </a>
+
+      <span className="hidden md:block text-white/20">•</span>
+
+      <a href="#" className="flex items-center gap-2 hover:text-gold-400 transition">
+        <MessageCircle className="w-5 h-5 text-gold-400" />
+        <span>+91 9876543210</span>
+      </a>
+
+      <span className="hidden md:block text-white/20">•</span>
+
+      <a href="#" className="flex items-center gap-2 hover:text-gold-400 transition">
+        <Instagram className="w-5 h-5 text-gold-400" />
+        <span>Instagram</span>
+      </a>
+
+      <span className="hidden md:block text-white/20">•</span>
+
+      <a href="#" className="flex items-center gap-2 hover:text-gold-400 transition">
+        <Facebook className="w-5 h-5 text-gold-400" />
+        <span>Facebook</span>
+      </a>
+
+    </div>
+  </div>
+</section>
 
       {/* ── Categories ── */}
       <section className="py-10 sm:py-16 bg-[#0D3D3D]">
