@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Link } from '@tanstack/react-router';
-import { ArrowRight, ChevronLeft, ChevronRight, Coffee, Cpu, Gem, Globe, Leaf, Palette, Shield, Shirt, Star, Truck, MapPin, Tag } from 'lucide-react';
+import { ArrowRight, ChevronLeft, ChevronRight, Coffee, Cpu, Gem, Globe, Leaf, Palette, Shield, Shirt, Star, Truck, MapPin, Tag, BadgeCheck } from 'lucide-react';
 import { motion } from 'framer-motion';
 import React, { useRef, useState, useCallback, useEffect } from 'react';
 import { useHomepageProducts, HomeProduct } from '../hooks/useHomepage';
@@ -9,12 +9,11 @@ import useSeo from '../hooks/useSeo';
 import CategoryCard3D from '../components/3d/CategoryCard3D';
 
 const categories = [
-  { name: 'Agriculture',      slug: 'agriculture',   icon: Leaf,    desc: 'Fresh produce & farm goods',  color: 'bg-green-50 text-green-700 border-green-200' },
-  { name: 'Textiles',         slug: 'textiles',       icon: Shirt,   desc: 'Fabrics & garments',           color: 'bg-purple-50 text-purple-700 border-purple-200' },
-  { name: 'Minerals',         slug: 'minerals',       icon: Gem,     desc: 'Raw minerals & ores',          color: 'bg-stone-50 text-stone-700 border-stone-200' },
-  { name: 'Electronics',      slug: 'electronics',    icon: Cpu,     desc: 'Components & devices',         color: 'bg-blue-50 text-blue-700 border-blue-200' },
-  { name: 'Food & Beverages', slug: 'food-beverages', icon: Coffee,  desc: 'Packaged foods & drinks',      color: 'bg-orange-50 text-orange-700 border-orange-200' },
-  { name: 'Handicrafts',      slug: 'handicrafts',    icon: Palette, desc: 'Artisan & handmade goods',     color: 'bg-amber-50 text-amber-700 border-amber-200' },
+  { name: 'Non-Remy',      slug: 'Non-Remy',   icon: Leaf,    desc: 'Fresh produce & farm goods',  color: 'bg-green-50 text-green-700 border-green-200' },
+  { name: 'Remy',         slug: 'Remy',       icon: Shirt,   desc: 'Fabrics & garments',           color: 'bg-purple-50 text-purple-700 border-purple-200' },
+  { name: 'Double Drawn',         slug: 'Double Drawn',       icon: Gem,     desc: 'Raw minerals & ores',          color: 'bg-stone-50 text-stone-700 border-stone-200' },
+  { name: 'Single Drawn',      slug: 'Single Drawn',    icon: Cpu,     desc: 'Components & devices',         color: 'bg-blue-50 text-blue-700 border-blue-200' },
+  
 ];
 
 const stats = [
@@ -212,82 +211,166 @@ export default function HomePage() {
   return (
     <>
       {/* ── MOBILE HERO ── */}
-      <section className="md:hidden bg-[#0D3D3D] px-2 pt-2 pb-2">
-        <div className="relative rounded-2xl overflow-hidden" style={{ height: '96svh' }}>
-          <video autoPlay loop muted playsInline preload="none" poster="/container1.jpg"
-            className="absolute inset-0 w-full h-full object-cover object-center">
-            <source src="/hero-mobile.mp4" type="video/mp4" />
-          </video>
-          <div className="absolute inset-0"
-            style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.98) 0%, rgba(0,0,0,0.85) 30%, rgba(0,0,0,0.4) 60%, transparent 100%)' }}
-          />
-          <div className="absolute inset-0 flex flex-col justify-end px-5 pb-10">
-            <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.65, ease: 'easeOut' }}>
-              <div className="inline-flex items-center gap-2 bg-gold-500/20 border border-gold-500/30 text-gold-300 text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4">
-                <Globe className="w-3 h-3" />Global Export Excellence
-              </div>
-              <h1 className="font-display text-3xl font-extrabold text-white leading-tight tracking-tight mb-3">
-                Your Trusted <span className="text-gold-400">GYP ENTER Export</span> Partner
-              </h1>
-              <p className="text-white/80 text-sm leading-relaxed mb-6">
-                Connecting quality products from across the world to international markets.
-              </p>
-              <div className="flex gap-3">
-                <Link to="/products">
-                  <Button size="sm" className="bg-gold-500 hover:bg-gold-400 text-navy-900 font-bold px-4">
-                    Explore <ArrowRight className="ml-1 w-3.5 h-3.5" />
-                  </Button>
-                </Link>
-                <Link to="/enquiry">
-                  <Button size="sm" variant="outline" className="border-white/30 text-white hover:bg-white/10 px-4">
-                    Contact
-                  </Button>
-                </Link>
-              </div>
-            </motion.div>
-          </div>
+<section className="md:hidden bg-[#0D3D3D] px-2 pt-2 pb-2">
+  <div className="relative rounded-2xl overflow-hidden" style={{ height: '96svh' }}>
+    <video autoPlay loop muted playsInline preload="none" poster="/gyp_hero.png"
+      className="absolute inset-0 w-full h-full object-cover object-center">
+    </video>
+
+    {/* TEMP: static hero image layered over the video — remove this <img> to go back to video-only */}
+    <img
+      src="/gyp_hero.png"
+      alt="GYP Enterprises Global Export"
+      className="absolute inset-0 w-full h-full object-cover object-center"
+    />
+
+    <div className="absolute inset-0 bg-black/50" />
+    <div
+      className="absolute inset-0"
+      style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 55%, transparent 100%)' }}
+    />
+
+    <div className="absolute inset-0 flex flex-col justify-end px-5 pb-6">
+      <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.65, ease: 'easeOut' }}>
+        <p className="text-white/80 text-[10px] font-medium uppercase tracking-[0.25em] mb-3 border-b border-white/30 pb-2 inline-block">
+          Premium Indian HairExporter
+        </p>
+        <h1 className="font-serif text-3xl font-normal text-white leading-tight tracking-tight mb-3">
+          Premium Indian Raw Human HairExporter
+        </h1>
+        <p className="text-white/80 text-sm leading-relaxed mb-5">
+          We export 100% ethically sourced raw Indian human hair, virgin hair
+          bundles, closures, frontals, wigs, and custom hair extensions to
+          salons, distributors, and beauty brands across the globe.
+        </p>
+        <div className="flex flex-col gap-2.5 mb-5">
+          <Link to="/products">
+            <Button size="sm" className="bg-white hover:bg-white/90 text-navy-900 font-semibold w-full rounded-none uppercase tracking-wide text-xs">
+              Explore Collection
+            </Button>
+          </Link>
+          <Link to="/enquiry">
+            <Button size="sm" variant="outline" className="border border-white/60 text-white hover:bg-white/10 w-full rounded-none uppercase tracking-wide text-xs underline underline-offset-4">
+              Request Wholesale Quote
+            </Button>
+          </Link>
         </div>
-      </section>
+        {/* Compact stat row */}
+        <div className="bg-black/40 backdrop-blur-sm rounded-xl px-3 py-3 grid grid-cols-3 gap-2">
+          {[
+            { icon: Leaf,   value: '100%',     label: 'Virgin Hair' },
+            { icon: Globe,  value: '40+',      label: 'Countries' },
+            { icon: Truck,  value: 'Worldwide', label: 'Shipping' },
+          ].map((s) => (
+            <div key={s.label} className="flex flex-col items-center text-center">
+              <s.icon className="w-4 h-4 text-white mb-1" strokeWidth={1.5} />
+              <div className="text-white font-bold text-[11px]">{s.value}</div>
+              <div className="text-white/60 text-[9px]">{s.label}</div>
+            </div>
+          ))}
+        </div>
+      </motion.div>
+    </div>
+  </div>
+</section>
 
       {/* ── DESKTOP HERO ── */}
-      <section className="hidden md:block bg-[#0D3D3D] px-5 pt-5 pb-5">
-        <div className="relative h-[620px] md:h-[700px] rounded-3xl overflow-hidden">
-          <video autoPlay loop muted playsInline preload="none" poster="/container1.jpg"
-            className="absolute inset-0 w-full h-full object-cover object-center">
-            <source src="/hero-desktop.mp4" type="video/mp4" />
-          </video>
-          <div className="hero-overlay absolute inset-0" />
-          <div className="relative z-10 h-full flex items-center">
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-              <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease: 'easeOut' }}
-                style={{ textShadow: "0 2px 10px rgba(0,0,0,0.5)" }}
-                className="max-w-2xl backdrop-blur-[2px]">
-                <div className="inline-flex items-center gap-2 bg-gold-500/20 border border-gold-500/30 text-gold-300 text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-6">
-                  <Globe className="w-3 h-3" />Global Export Excellence
-                </div>
-                <h1 className="font-display text-5xl lg:text-6xl font-extrabold text-white leading-[1.08] tracking-tight mb-6">
-                  Exporter of<span className="text-gold-400 block">Indian Human Hair</span>From India
-                </h1>
-                <p className="text-white/75 text-xl leading-relaxed mb-8 max-w-xl">
-                  Connecting quality products from across the world to international markets.
-                </p>
-                <div className="flex flex-wrap gap-4">
-                  <Link to="/products">
-                    <Button size="lg" className="group bg-gold-500 hover:bg-gold-400 text-navy-900 font-bold px-8">
-                      Explore Products <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
-                    </Button>
-                  </Link>
-                  <Link to="/enquiry">
-                    <Button size="lg" variant="outline" className="border-white/40 text-white hover:bg-white/10 px-8 backdrop-blur-md">
-                      Get in Touch
-                    </Button>
-                  </Link>
-                </div>
-              </motion.div>
+      {/* ── DESKTOP HERO ── */}
+<section className="hidden md:block bg-[#0D3D3D] px-5 pt-5 pb-5">
+  <div className="relative h-[620px] md:h-[700px] rounded-3xl overflow-hidden">
+    <video autoPlay loop muted playsInline preload="none" poster="/gyp_hero.png"
+      className="absolute inset-0 w-full h-full object-cover object-center">
+     
+    </video>
+
+    {/* TEMP: static hero image layered over the video — remove this <img> to go back to video-only */}
+    <img
+      src="/gyp_hero.png"
+      alt="GYP Enterprises Global Export"
+      className="absolute inset-0 w-full h-full object-cover object-center"
+    />
+
+    {/* Dark overlay for text legibility, same as reference */}
+    <div className="absolute inset-0 bg-black/45" />
+    <div
+      className="absolute inset-0"
+      style={{ background: 'linear-gradient(90deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.25) 55%, transparent 90%)' }}
+    />
+
+    <div className="relative z-10 h-full flex flex-col justify-between py-14">
+      {/* Text block */}
+      <div className="flex-1 flex items-center">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: 'easeOut' }}
+            className="max-w-2xl"
+          >
+            <p className="text-white/80 text-xs font-medium uppercase tracking-[0.25em] mb-4 border-b border-white/30 pb-3 inline-block">
+              Premium Indian HairExporter
+            </p>
+            <h1 className="font-serif text-5xl lg:text-6xl font-normal text-white leading-[1.12] tracking-tight mb-6">
+              Premium Indian<br />Raw Human HairExporter
+            </h1>
+            <p className="text-white/80 text-lg leading-relaxed mb-8 max-w-xl">
+              We export 100% ethically sourced raw Indian human hair, virgin hair
+              bundles, closures, frontals, wigs, and custom hair extensions to
+              salons, distributors, and beauty brands across the globe.
+            </p>
+            <div className="flex flex-wrap gap-4">
+              <Link to="/products">
+                <Button
+                  size="lg"
+                  className="bg-white hover:bg-white/90 text-navy-900 font-semibold px-8 rounded-none uppercase tracking-wide text-sm"
+                >
+                  Explore Collection
+                </Button>
+              </Link>
+              <Link to="/enquiry">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="border border-white/60 text-white hover:bg-white/10 px-8 rounded-none uppercase tracking-wide text-sm underline underline-offset-4"
+                >
+                  Request Wholesale Quote
+                </Button>
+              </Link>
             </div>
+          </motion.div>
+        </div>
+      </div>
+
+      {/* Bottom stat row — matches reference: icon + label pairs divided by thin lines */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, delay: 0.3, ease: 'easeOut' }}
+        className="px-4 sm:px-6 lg:px-8"
+      >
+        <div className="bg-black/40 backdrop-blur-sm rounded-xl px-6 py-5">
+          <div className="grid grid-cols-5 divide-x divide-white/20">
+            {[
+              { icon: Leaf,       value: '100%',     label: 'Virgin Human Hair' },
+              { icon: BadgeCheck, value: 'Ethically', label: 'Sourced' },
+              { icon: Globe,      value: '40+',       label: 'Countries Served' },
+              { icon: Shield,     value: 'Premium',   label: 'Quality Assured' },
+              { icon: Truck,      value: 'Worldwide', label: 'Shipping' },
+            ].map((s) => (
+              <div key={s.label} className="flex items-center gap-3 px-4 first:pl-0">
+                <s.icon className="w-6 h-6 text-white flex-shrink-0" strokeWidth={1.5} />
+                <div className="leading-tight">
+                  <div className="text-white font-bold text-sm">{s.value}</div>
+                  <div className="text-white/60 text-[10px] uppercase tracking-wide">{s.label}</div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
-      </section>
+      </motion.div>
+    </div>
+  </div>
+</section>
 
       {/* Stats */}
       <section className="bg-navy-900 border-y border-navy-700">
@@ -317,7 +400,7 @@ export default function HomePage() {
           </div>
 
           {/* Glass category cards — desktop only */}
-          <div className="hidden sm:grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-4 mb-4 sm:mb-6">
+          <div className="hidden sm:grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 mb-4 sm:mb-6">
             {categories.map((cat, i) => (
               <motion.div key={cat.name} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}>
                 <CategoryCard3D name={cat.name} slug={cat.slug} icon={cat.icon} desc={cat.desc} color={cat.color} />

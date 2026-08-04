@@ -30,8 +30,8 @@ export default function Footer() {
               Delivering ethically sourced, 100% virgin Indian human hair to global markets with quality and reliability.
             </p>
             <div className="mt-6 space-y-2">
-              <a href="mailto:wexports.support@gmail.com" className="flex items-center gap-2 text-sm text-white/60 hover:text-gold-400 hover:translate-x-1 inline-block transition-all duration-200">
-                <Mail className="w-4 h-4" /> wexports.support@gmail.com
+              <a href="mailto:info.gypenterprises@gmail.com" className="flex items-center gap-2 text-sm text-white/60 hover:text-gold-400 hover:translate-x-1 inline-block transition-all duration-200">
+                <Mail className="w-4 h-4" /> info.gypenterprises@gmail.com
               </a>
               <a href="tel:+919882008290" className="flex items-center gap-2 text-sm text-white/60 hover:text-gold-400 hover:translate-x-1 inline-block transition-all duration-200">
                 <Phone className="w-4 h-4" /> +91 (988) 200-8290
