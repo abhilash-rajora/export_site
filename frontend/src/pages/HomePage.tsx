@@ -201,7 +201,7 @@ const glassCard = {
 
 export default function HomePage() {
   useSeo('home', {
-    title:       'WExports | Trusted Global Export Partner from India',
+    title:       'GYP ENTERPRISE | Trusted Global Export Partner from India',
     description: 'Leading Indian export company delivering Agriculture, Textiles, Minerals and Electronics to 50+ countries worldwide.',
     keywords:    'export company india, indian exporter, agriculture export, textile export, wexports',
     canonical:   'https://wexports.vercel.app/',
@@ -227,7 +227,7 @@ export default function HomePage() {
                 <Globe className="w-3 h-3" />Global Export Excellence
               </div>
               <h1 className="font-display text-3xl font-extrabold text-white leading-tight tracking-tight mb-3">
-                Your Trusted <span className="text-gold-400">Global Export</span> Partner
+                Your Trusted <span className="text-gold-400">GYP ENTER Export</span> Partner
               </h1>
               <p className="text-white/80 text-sm leading-relaxed mb-6">
                 Connecting quality products from across the world to international markets.
@@ -266,7 +266,7 @@ export default function HomePage() {
                   <Globe className="w-3 h-3" />Global Export Excellence
                 </div>
                 <h1 className="font-display text-5xl lg:text-6xl font-extrabold text-white leading-[1.08] tracking-tight mb-6">
-                  Your Trusted <span className="text-gold-400 block">Global Export</span> Partner
+                  Exporter of<span className="text-gold-400 block">Indian Human Hair</span>From India
                 </h1>
                 <p className="text-white/75 text-xl leading-relaxed mb-8 max-w-xl">
                   Connecting quality products from across the world to international markets.

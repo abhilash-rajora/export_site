@@ -66,9 +66,9 @@ export default function PublicNavbar() {
     const px = height === 'h-12' ? '56px' : '44px';
     return (
       <div className="relative flex items-center justify-center w-[140px] h-[44px] md:w-[160px] md:h-[56px]">
-        <img src="/logo1.png" alt="WeExports" className="absolute transition-opacity duration-300"
+        <img src="/GYP-LOGO.png" alt="GYP ENTERPRISE" className="absolute transition-opacity duration-300"
           style={{ height: px, width: 'auto', objectFit: 'contain', opacity: scrolled ? 0 : 1, pointerEvents: 'none' }} />
-        <img src="/logo-dark.png" alt="WeExports" className="absolute transition-opacity duration-300"
+        <img src="/GYP-LOGO.png" alt="GYP ENTERPRISE" className="absolute transition-opacity duration-300"
           style={{ height: px, width: 'auto', objectFit: 'contain', opacity: scrolled ? 1 : 0, pointerEvents: 'none' }} />
       </div>
     );

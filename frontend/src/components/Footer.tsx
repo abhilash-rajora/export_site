@@ -3,12 +3,10 @@ import { Globe, Mail, Phone } from 'lucide-react';
 import { FaFacebookF, FaInstagram, FaWhatsapp } from 'react-icons/fa';
 
 const footerCategories = [
-  { label: 'Agriculture',      slug: 'agriculture' },
-  { label: 'Textiles',         slug: 'textiles' },
-  { label: 'Minerals',         slug: 'minerals' },
-  { label: 'Electronics',      slug: 'electronics' },
-  { label: 'Food & Beverages', slug: 'food-beverages' },
-  { label: 'Handicrafts',      slug: 'handicrafts' },
+  { label: 'Non-Remy',      slug: 'Non-Remy' },
+  { label: 'Remy',         slug: 'Remy' },
+  { label: 'Double Drawn',         slug: 'Double Drawn' },
+  { label: 'Single Drawn',      slug: 'Single Drawn' },
 ];
 
 export default function Footer() {
@@ -23,20 +21,20 @@ export default function Footer() {
           <div className="md:col-span-2">
             <Link to="/" className="flex items-center group">
               <span className="font-display text-2xl md:text-xl font-extrabold tracking-tight">
-                <span className="text-white transition-colors duration-300 group-hover:text-gold-400">We</span>
-                <span className="text-gold-400 transition-colors duration-300 group-hover:text-white">Exports</span>
+                <span className="text-white transition-colors duration-300 group-hover:text-gold-400">GYP</span>
+                <span className="text-gold-400 transition-colors duration-300 group-hover:text-white"> Enterprises</span>
               </span>
             </Link>
             <p className="text-xs text-green-400 mt-3 font-medium">✔ Trusted by global buyers  • 50+ countries served</p>
             <p className="text-white/60 text-sm leading-relaxed mt-3 max-w-xs">
-              Your trusted export partner connecting quality products from across the world to international markets.
+              Delivering ethically sourced, 100% virgin Indian human hair to global markets with quality and reliability.
             </p>
             <div className="mt-6 space-y-2">
               <a href="mailto:wexports.support@gmail.com" className="flex items-center gap-2 text-sm text-white/60 hover:text-gold-400 hover:translate-x-1 inline-block transition-all duration-200">
                 <Mail className="w-4 h-4" /> wexports.support@gmail.com
               </a>
-              <a href="tel:+919466363522" className="flex items-center gap-2 text-sm text-white/60 hover:text-gold-400 hover:translate-x-1 inline-block transition-all duration-200">
-                <Phone className="w-4 h-4" /> +91 (946) 636-3522
+              <a href="tel:+919882008290" className="flex items-center gap-2 text-sm text-white/60 hover:text-gold-400 hover:translate-x-1 inline-block transition-all duration-200">
+                <Phone className="w-4 h-4" /> +91 (988) 200-8290
               </a>
               <span className="flex items-center gap-2 text-sm text-white/60">
                 <Globe className="w-4 h-4" /> Worldwide Shipping
@@ -100,13 +98,13 @@ export default function Footer() {
               className="w-9 h-9 flex items-center justify-center rounded-full bg-white/5 hover:bg-gold-500/20 text-white/60 hover:text-gold-400 transition-all duration-300 hover:scale-110">
               <FaInstagram size={25} />
             </a>
-            <a href="https://wa.me/919466363522" target="_blank" rel="noopener noreferrer"
+            <a href="https://wa.me/919882008290" target="_blank" rel="noopener noreferrer"
               className="w-9 h-9 flex items-center justify-center rounded-full bg-white/5 hover:bg-gold-500/20 text-white/60 hover:text-gold-400 transition-all duration-300 hover:scale-110">
               <FaWhatsapp size={25} />
             </a>
           </div>
-          <p className="text-sm text-white/40 text-center">© {year} We Exports. All rights reserved.</p>
-          <p className="text-xs text-white/30 text-center">Connecting global markets with trusted exports</p>
+          <p className="text-sm text-white/40 text-center">© {year} GYP Enterprises. All rights reserved.</p>
+          <p className="text-xs text-white/30 text-center">Delivering Premium Indian Human Hair to Global Markets</p>
         </div>
       </div>
     </footer>
