@@ -103,10 +103,10 @@ export default function PublicNavbar() {
 
         {/* ── Desktop ── */}
         <div className="hidden md:block pointer-events-auto relative z-10">
-          <div className="flex items-center justify-between px-8 mt-6 max-w-7xl mx-auto">
+          <div className="flex items-center justify-between px-10 mt-9 max-w-7xl mx-auto">
 
             <Link to="/"
-              className={cn('flex items-center justify-center px-4 py-1.5 h-[48px] md:h-[60px] rounded-full transition-all duration-500',
+              className={cn('flex items-center justify-center px-3 py-3.5 h-[48px] md:h-[60px] rounded-full transition-all duration-500',
                 scrolled ? telegramPill.className : 'bg-white/10 border border-white/40 shadow-lg backdrop-blur-sm')}
               style={scrolled ? telegramPill.style : { WebkitBackdropFilter: 'blur(8px)' }}
             >

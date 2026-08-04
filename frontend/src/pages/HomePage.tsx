@@ -1,12 +1,13 @@
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Link } from '@tanstack/react-router';
-import { Mail,MessageCircle, Instagram, Facebook,ArrowRight, ChevronLeft, ChevronRight, Coffee, Cpu, Gem, Globe, Leaf, Palette, Shield, Shirt, Star, Truck, MapPin, Tag, BadgeCheck } from 'lucide-react';
+import { Mail,MessageCircle,ArrowRight, ChevronLeft, ChevronRight, Coffee, Cpu, Gem, Globe, Leaf, Palette, Shield, Shirt, Star, Truck, MapPin, Tag, BadgeCheck } from 'lucide-react';
 import { motion } from 'framer-motion';
 import React, { useRef, useState, useCallback, useEffect } from 'react';
 import { useHomepageProducts, HomeProduct } from '../hooks/useHomepage';
 import useSeo from '../hooks/useSeo';
 import CategoryCard3D from '../components/3d/CategoryCard3D';
+import { FaFacebookF, FaInstagram, FaWhatsapp } from 'react-icons/fa';
 
 const categories = [
   { name: 'Non-Remy',      slug: 'Non-Remy',   icon: Leaf,    desc: 'Fresh produce & farm goods',  color: 'bg-green-50 text-green-700 border-green-200' },
@@ -24,19 +25,19 @@ const contactItems = [
     href: "mailto:info@gypenterprises.com",
   },
   {
-    icon: MessageCircle,
+    icon: FaWhatsapp,
     label: "WhatsApp",
-    value: "+91 9876543210",
-    href: "https://wa.me/919876543210",
+    value: "+91 9882008290",
+    href: "https://wa.me/9882008290",
   },
   {
-    icon: Instagram,
+    icon: FaInstagram,
     label: "Instagram",
     value: "@gypenterprises",
     href: "https://instagram.com/gypenterprises",
   },
   {
-    icon: Facebook,
+    icon: FaFacebookF,
     label: "Facebook",
     value: "GYP Enterprises",
     href: "https://facebook.com/gypenterprises",
@@ -404,22 +405,22 @@ export default function HomePage() {
 
       <span className="hidden md:block text-white/20">•</span>
 
-      <a href="#" className="flex items-center gap-2 hover:text-gold-400 transition">
-        <MessageCircle className="w-5 h-5 text-gold-400" />
-        <span>+91 9876543210</span>
+      <a href="https://wa.me/919882008290" target="_blank" className="flex items-center gap-2 hover:text-gold-400 transition">
+        <FaWhatsapp className="w-5 h-5 text-gold-400" />
+        <span>+91 98820 08290</span>
       </a>
 
       <span className="hidden md:block text-white/20">•</span>
 
-      <a href="#" className="flex items-center gap-2 hover:text-gold-400 transition">
-        <Instagram className="w-5 h-5 text-gold-400" />
+      <a href="https://www.instagram.com/gypenterprises/" target="_blank" className="flex items-center gap-2 hover:text-gold-400 transition">
+        <FaInstagram className="w-5 h-5 text-gold-400" />
         <span>Instagram</span>
       </a>
 
       <span className="hidden md:block text-white/20">•</span>
 
-      <a href="#" className="flex items-center gap-2 hover:text-gold-400 transition">
-        <Facebook className="w-5 h-5 text-gold-400" />
+      <a href="https://www.facebook.com/gypenterprises/" target="_blank" className="flex items-center gap-2 hover:text-gold-400 transition">
+        <FaFacebookF className="w-5 h-5 text-gold-400" />
         <span>Facebook</span>
       </a>
 
