@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Link } from '@tanstack/react-router';
-import { Mail,MessageCircle,ArrowRight, ChevronLeft, ChevronRight, Coffee, Cpu, Gem, Globe, Leaf, Palette, Shield, Shirt, Star, Truck, MapPin, Tag, BadgeCheck } from 'lucide-react';
+import { Mail,MessageCircle,ArrowRight, ChevronLeft, ChevronRight, Coffee, Cpu, Gem, Globe, Leaf, Palette, Shield, Shirt, Star, Truck, MapPin, Tag, BadgeCheck ,Scissors, Sparkles, Crown,} from 'lucide-react';
 import { motion } from 'framer-motion';
 import React, { useRef, useState, useCallback, useEffect } from 'react';
 import { useHomepageProducts, HomeProduct } from '../hooks/useHomepage';
@@ -10,10 +10,10 @@ import CategoryCard3D from '../components/3d/CategoryCard3D';
 import { FaFacebookF, FaInstagram, FaWhatsapp } from 'react-icons/fa';
 
 const categories = [
-  { name: 'Non-Remy',      slug: 'Non-Remy',   icon: Leaf,    desc: 'Fresh produce & farm goods',  color: 'bg-green-50 text-green-700 border-green-200' },
-  { name: 'Remy',         slug: 'Remy',       icon: Shirt,   desc: 'Fabrics & garments',           color: 'bg-purple-50 text-purple-700 border-purple-200' },
-  { name: 'Double Drawn',         slug: 'Double Drawn',       icon: Gem,     desc: 'Raw minerals & ores',          color: 'bg-stone-50 text-stone-700 border-stone-200' },
-  { name: 'Single Drawn',      slug: 'Single Drawn',    icon: Cpu,     desc: 'Components & devices',         color: 'bg-blue-50 text-blue-700 border-blue-200' },
+  { name: 'Non-Remy',      slug: 'Non-Remy',     icon: Scissors,    desc: 'Collected human hair',  color: 'bg-green-50 text-green-700 border-green-200' },
+  { name: 'Remy',          slug: 'Remy',         icon: BadgeCheck,   desc: 'Premium cuticle-aligned hair',           color: 'bg-purple-50 text-purple-700 border-purple-200' },
+  { name: 'Double Drawn',  slug: 'Double Drawn', icon: Crown,     desc: 'Full volume from root to tip',          color: 'bg-stone-50 text-stone-700 border-stone-200' },
+  { name: 'Single Drawn',  slug: 'Single Drawn', icon: Sparkles,     desc: 'Natural taper and density',         color: 'bg-blue-50 text-blue-700 border-blue-200' },
   
 ];
 
@@ -647,7 +647,7 @@ export default function HomePage() {
       <section className="py-12 sm:py-20 bg-navy-900 text-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-10 sm:mb-14">
-            <h2 className="font-display text-2xl sm:text-4xl font-extrabold text-white tracking-tight">Why Choose WeExports?</h2>
+            <h2 className="font-display text-2xl sm:text-4xl font-extrabold text-white tracking-tight">Why Choose GYP ENTERPRISES?</h2>
           </motion.div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-8">
             {[
@@ -685,7 +685,7 @@ export default function HomePage() {
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
               <Link to="/products">
                 <Button size="lg" className="bg-navy-900 hover:bg-navy-800 text-white font-bold px-8 w-full sm:w-auto">
-                  Browse Products <ArrowRight className="ml-2 w-4 h-4" />
+                  Explore Collection <ArrowRight className="ml-2 w-4 h-4" />
                 </Button>
               </Link>
               <Link to="/enquiry">

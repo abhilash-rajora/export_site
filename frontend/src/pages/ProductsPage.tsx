@@ -12,12 +12,10 @@ import useSeo from '../hooks/useSeo';
 
 // ── Category config (single source of truth) ──────────────────────────────
 export const CATEGORY_LIST = [
-  { label: 'Agriculture',      slug: 'agriculture' },
-  { label: 'Textiles',         slug: 'textiles' },
-  { label: 'Minerals',         slug: 'minerals' },
-  { label: 'Electronics',      slug: 'electronics' },
-  { label: 'Food & Beverages', slug: 'food-beverages' },
-  { label: 'Handicrafts',      slug: 'handicrafts' },
+  { label: 'Non Remy',      slug: 'non-remy' },
+  { label: 'Remy',         slug: 'remy' },
+  { label: 'Double Drawn',         slug: 'double-drawn' },
+  { label: 'Single Drawn',      slug: 'single-drawn' },
 ];
 
 // slug → display label   e.g. "food-beverages" → "Food & Beverages"
