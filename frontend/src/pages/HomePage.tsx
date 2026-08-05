@@ -234,13 +234,13 @@ export default function HomePage() {
       {/* ── MOBILE HERO ── */}
 <section className="md:hidden bg-[#0D3D3D] px-2 pt-2 pb-2">
   <div className="relative rounded-2xl overflow-hidden" style={{ height: '96svh' }}>
-    <video autoPlay loop muted playsInline preload="none" poster="/gyp_hero.png"
+    <video autoPlay loop muted playsInline preload="none" poster="/gyp_hero2.png"
       className="absolute inset-0 w-full h-full object-cover object-center">
     </video>
 
     {/* TEMP: static hero image layered over the video — remove this <img> to go back to video-only */}
     <img
-      src="/gyp_hero.png"
+      src="/gyp_hero2.png"
       alt="GYP Enterprises Global Export"
       className="absolute inset-0 w-full h-full object-cover object-center"
     />
@@ -261,8 +261,8 @@ export default function HomePage() {
         </h1>
         <p className="text-white/80 text-sm leading-relaxed mb-5">
           We export 100% ethically sourced raw Indian human hair, virgin hair
-          bundles, closures, frontals, wigs, and custom hair extensions to
-          salons, distributors, and beauty brands across the globe.
+          bundles, closures to
+           distributors, and beauty brands across the globe.
         </p>
         <div className="flex flex-col gap-2.5 mb-5">
           <Link to="/products">
@@ -299,14 +299,14 @@ export default function HomePage() {
       {/* ── DESKTOP HERO ── */}
 <section className="hidden md:block bg-[#0D3D3D] px-5 pt-5 pb-5">
   <div className="relative h-[620px] md:h-[700px] rounded-3xl overflow-hidden">
-    <video autoPlay loop muted playsInline preload="none" poster="/gyp_hero.png"
+    <video autoPlay loop muted playsInline preload="none" poster="/gyp_hero2.png"
       className="absolute inset-0 w-full h-full object-cover object-center">
      
     </video>
 
     {/* TEMP: static hero image layered over the video — remove this <img> to go back to video-only */}
     <img
-      src="/gyp_hero.png"
+      src="/gyp_hero2.png"
       alt="GYP Enterprises Global Export"
       className="absolute inset-0 w-full h-full object-cover object-center"
     />
@@ -331,13 +331,13 @@ export default function HomePage() {
             <p className="text-gold-200 text-xs font-medium uppercase tracking-[0.25em] mb-4 border-b border-white/30 pb-3 inline-block">
               Premium Indian Hair Exporter
             </p>
-            <h1 className="font-serif text-5xl lg:text-6xl font-normal text-white leading-[1.12] tracking-tight mb-6">
+            <h1 className="font-serif text-5xl lg:text-5xl font-normal text-white leading-[1.12] tracking-tight mb-6">
               Premium Indian<br />Raw Human Hair Exporter
             </h1>
             <p className="text-white/80 text-lg leading-relaxed mb-8 max-w-xl">
               We export 100% ethically sourced raw Indian human hair, virgin hair
-              bundles, closures, frontals, wigs, and custom hair extensions to
-              salons, distributors, and beauty brands across the globe.
+              bundles to
+               distributors, and beauty brands across the globe.
             </p>
             <div className="flex flex-wrap gap-4">
               <Link to="/products">
@@ -398,9 +398,9 @@ export default function HomePage() {
   <div className="container mx-auto px-6 py-5">
     <div className="flex flex-wrap justify-center items-center gap-8 text-white/80">
 
-      <a href="mailto:info@gypenterprises.com" className="flex items-center gap-2 hover:text-gold-400 transition">
+      <a href="mailto:info.gypenterprises@gmail.com" className="flex items-center gap-2 hover:text-gold-400 transition">
         <Mail className="w-5 h-5 text-gold-400" />
-        <span>info@gypenterprises.com</span>
+        <span>info.gypenterprises@gmail.com</span>
       </a>
 
       <span className="hidden md:block text-white/20">•</span>
@@ -453,12 +453,12 @@ export default function HomePage() {
           {/* Mobile collage */}
           <div className="grid sm:hidden grid-cols-3 gap-2" style={{ height: '220px' }}>
             {[
-              { slug: 'agriculture',    src: 'https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=400&q=70', label: 'Agriculture' },
-              { slug: 'textiles',       src: 'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=400&q=70',    label: 'Textiles' },
-              { slug: 'electronics',    src: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&q=70', label: 'Electronics' },
-              { slug: 'minerals',       src: 'https://www.sreemetaliks.com/blog/public/assets/images/blog/blog-2-Hematite_1707918282.webp', label: 'Minerals' },
-              { slug: 'food-beverages', src: 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&q=70',    label: 'Food & Bev' },
-              { slug: 'handicrafts',    src: 'https://images.openai.com/static-rsc-3/0ioaBzD2LKK6GuPAf98NGFEWNwuANA3fJw3n5F2loWrNOpDPjMaP8RMRZoctNa3DMJXS1bo1eyG0GODUzW0rMU2z8uNvdcgB_TsEJ5u0uec?purpose=inline', label: 'Handicrafts' },
+              { slug: 'agriculture',    src: '', label: 'Agriculture' },
+              { slug: 'textiles',       src: '',    label: 'Textiles' },
+              { slug: 'electronics',    src: '', label: 'Electronics' },
+              { slug: 'minerals',       src: '', label: 'Minerals' },
+              { slug: 'food-beverages', src: '',    label: 'Food & Bev' },
+              { slug: 'handicrafts',    src: '', label: 'Handicrafts' },
             ].map(cat => (
               <Link key={cat.slug} to="/products/$category" params={{ category: cat.slug }}
                 className="relative rounded-xl overflow-hidden group cursor-pointer">
@@ -475,7 +475,7 @@ export default function HomePage() {
           <div className="hidden sm:grid grid-cols-12 grid-rows-2 gap-3" style={{ height: '380px' }}>
             <Link to="/products/$category" params={{ category: 'agriculture' }}
               className="col-span-4 row-span-2 relative rounded-2xl overflow-hidden group cursor-pointer">
-              <img src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=600&q=80" alt="Agriculture" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" decoding="async" />
+              <img src="" alt="Agriculture" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" decoding="async" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
               <div className="absolute bottom-4 left-4 right-4">
                 <h3 className="font-display font-extrabold text-white/80 text-base leading-tight mb-1">Fresh Produce &amp; Farm Goods</h3>
@@ -484,7 +484,7 @@ export default function HomePage() {
             </Link>
             <Link to="/products/$category" params={{ category: 'textiles' }}
               className="col-span-4 row-span-1 relative rounded-2xl overflow-hidden group cursor-pointer">
-              <img src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=600&q=80" alt="Textiles" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" decoding="async" />
+              <img src="" alt="Textiles" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" decoding="async" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
               <div className="absolute bottom-3 left-3">
                 <h3 className="font-display font-bold text-white/80 text-sm">Fabrics &amp; Garments</h3>
@@ -492,7 +492,7 @@ export default function HomePage() {
             </Link>
             <Link to="/products/$category" params={{ category: 'electronics' }}
               className="col-span-4 row-span-1 relative rounded-2xl overflow-hidden group cursor-pointer">
-              <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=80" alt="Electronics" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" decoding="async" />
+              <img src="" alt="Electronics" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" decoding="async" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
               <div className="absolute bottom-3 left-3">
                 <h3 className="font-display font-bold text-white/80 text-sm">Components &amp; Devices</h3>
@@ -500,7 +500,7 @@ export default function HomePage() {
             </Link>
             <Link to="/products/$category" params={{ category: 'minerals' }}
               className="col-span-2 row-span-1 relative rounded-2xl overflow-hidden group cursor-pointer">
-              <img src="https://www.sreemetaliks.com/blog/public/assets/images/blog/blog-2-Hematite_1707918282.webp" alt="Minerals" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" decoding="async" />
+              <img src="" alt="Minerals" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" decoding="async" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
               <div className="absolute bottom-3 left-3">
                 <h3 className="font-display font-bold text-white/80 text-xs">Raw Ores</h3>
@@ -508,7 +508,7 @@ export default function HomePage() {
             </Link>
             <Link to="/products/$category" params={{ category: 'food-beverages' }}
               className="col-span-3 row-span-1 relative rounded-2xl overflow-hidden group cursor-pointer">
-              <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=500&q=80" alt="Food" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" decoding="async" />
+              <img src="" alt="Food" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" decoding="async" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
               <div className="absolute bottom-3 left-3">
                 <h3 className="font-display font-bold text-white/80 text-xs">Packaged Foods</h3>
@@ -516,7 +516,7 @@ export default function HomePage() {
             </Link>
             <Link to="/products/$category" params={{ category: 'handicrafts' }}
               className="col-span-3 row-span-1 relative rounded-2xl overflow-hidden group cursor-pointer">
-              <img src="https://images.openai.com/static-rsc-3/0ioaBzD2LKK6GuPAf98NGFEWNwuANA3fJw3n5F2loWrNOpDPjMaP8RMRZoctNa3DMJXS1bo1eyG0GODUzW0rMU2z8uNvdcgB_TsEJ5u0uec?purpose=inline" alt="Handicrafts" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" decoding="async" />
+              <img src="" alt="Handicrafts" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" decoding="async" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
               <div className="absolute bottom-3 left-3">
                 <h3 className="font-display font-bold text-white/80 text-xs">Artisan Goods</h3>
