@@ -21,8 +21,8 @@ const contactItems = [
   {
     icon: Mail,
     label: "Email",
-    value: "info@gypenterprises.com",
-    href: "mailto:info@gypenterprises.com",
+    value: "info.gypenterprises@gmail.com",
+    href: "mailto:info.gypenterprises@gmail.com",
   },
   {
     icon: FaWhatsapp,
@@ -221,7 +221,7 @@ const glassCard = {
 
 export default function HomePage() {
   useSeo('home', {
-    title:       'GYP ENTERPRISE | Trusted Global Export Partner from India',
+    title:       'GYP GLOBAL | Trusted Global Export Partner from India',
     description: 'Leading Indian export company delivering Agriculture, Textiles, Minerals and Electronics to 50+ countries worldwide.',
     keywords:    'export company india, indian exporter, agriculture export, textile export, wexports',
     canonical:   'https://wexports.vercel.app/',
@@ -507,14 +507,13 @@ export default function HomePage() {
           </div>
 
           {/* Mobile collage */}
-          <div className="grid sm:hidden grid-cols-3 gap-2" style={{ height: '220px' }}>
+          <div className="grid sm:hidden grid-cols-2 gap-2" style={{ height: '220px' }}>
             {[
-              { slug: 'agriculture',    src: '', label: 'Agriculture' },
-              { slug: 'textiles',       src: '',    label: 'Textiles' },
-              { slug: 'electronics',    src: '', label: 'Electronics' },
-              { slug: 'minerals',       src: '', label: 'Minerals' },
-              { slug: 'food-beverages', src: '',    label: 'Food & Bev' },
-              { slug: 'handicrafts',    src: '', label: 'Handicrafts' },
+              { slug: 'HAIR Image',    src: '', label: 'HAIR Image' },
+              { slug: 'HAIR Image',       src: '',    label: 'HAIR Image' },
+              { slug: 'HAIR Image',    src: '', label: 'HAIR Image' },
+              { slug: 'HAIR Image',       src: '', label: 'HAIR Image' },
+              
             ].map(cat => (
               <Link key={cat.slug} to="/products/$category" params={{ category: cat.slug }}
                 className="relative rounded-xl overflow-hidden group cursor-pointer">
@@ -531,51 +530,51 @@ export default function HomePage() {
           <div className="hidden sm:grid grid-cols-12 grid-rows-2 gap-3" style={{ height: '380px' }}>
             <Link to="/products/$category" params={{ category: 'agriculture' }}
               className="col-span-4 row-span-2 relative rounded-2xl overflow-hidden group cursor-pointer">
-              <img src="" alt="Agriculture" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" decoding="async" />
+              <img src="" alt="HAIR Image" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" decoding="async" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
               <div className="absolute bottom-4 left-4 right-4">
-                <h3 className="font-display font-extrabold text-white/80 text-base leading-tight mb-1">Fresh Produce &amp; Farm Goods</h3>
+                <h3 className="font-display font-extrabold text-white/80 text-base leading-tight mb-1">HAIR Image &amp; HAIR Image</h3>
                 <p className="text-white/50 text-xs flex items-center gap-1"><ArrowRight className="w-3 h-3" /> Explore</p>
               </div>
             </Link>
             <Link to="/products/$category" params={{ category: 'textiles' }}
               className="col-span-4 row-span-1 relative rounded-2xl overflow-hidden group cursor-pointer">
-              <img src="" alt="Textiles" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" decoding="async" />
+              <img src="" alt="HAIR Image" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" decoding="async" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
               <div className="absolute bottom-3 left-3">
-                <h3 className="font-display font-bold text-white/80 text-sm">Fabrics &amp; Garments</h3>
+                <h3 className="font-display font-bold text-white/80 text-sm">HAIR Image &amp; HAIR Image</h3>
               </div>
             </Link>
             <Link to="/products/$category" params={{ category: 'electronics' }}
               className="col-span-4 row-span-1 relative rounded-2xl overflow-hidden group cursor-pointer">
-              <img src="" alt="Electronics" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" decoding="async" />
+              <img src="" alt="HAIR Image" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" decoding="async" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
               <div className="absolute bottom-3 left-3">
-                <h3 className="font-display font-bold text-white/80 text-sm">Components &amp; Devices</h3>
+                <h3 className="font-display font-bold text-white/80 text-sm">HAIR Image &amp; HAIR Image</h3>
               </div>
             </Link>
             <Link to="/products/$category" params={{ category: 'minerals' }}
               className="col-span-2 row-span-1 relative rounded-2xl overflow-hidden group cursor-pointer">
-              <img src="" alt="Minerals" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" decoding="async" />
+              <img src="" alt="HAIR Image" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" decoding="async" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
               <div className="absolute bottom-3 left-3">
-                <h3 className="font-display font-bold text-white/80 text-xs">Raw Ores</h3>
+                <h3 className="font-display font-bold text-white/80 text-xs">HAIR Image</h3>
               </div>
             </Link>
             <Link to="/products/$category" params={{ category: 'food-beverages' }}
               className="col-span-3 row-span-1 relative rounded-2xl overflow-hidden group cursor-pointer">
-              <img src="" alt="Food" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" decoding="async" />
+              <img src="" alt="HAIR Image" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" decoding="async" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
               <div className="absolute bottom-3 left-3">
-                <h3 className="font-display font-bold text-white/80 text-xs">Packaged Foods</h3>
+                <h3 className="font-display font-bold text-white/80 text-xs">HAIR Image</h3>
               </div>
             </Link>
             <Link to="/products/$category" params={{ category: 'handicrafts' }}
               className="col-span-3 row-span-1 relative rounded-2xl overflow-hidden group cursor-pointer">
-              <img src="" alt="Handicrafts" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" decoding="async" />
+              <img src="" alt="HAIR Image" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" decoding="async" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
               <div className="absolute bottom-3 left-3">
-                <h3 className="font-display font-bold text-white/80 text-xs">Artisan Goods</h3>
+                <h3 className="font-display font-bold text-white/80 text-xs">HAIR Image</h3>
               </div>
             </Link>
           </div>
@@ -703,7 +702,7 @@ export default function HomePage() {
       <section className="py-12 sm:py-20 bg-navy-900 text-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-10 sm:mb-14">
-            <h2 className="font-display text-2xl sm:text-4xl font-extrabold text-white tracking-tight">Why Choose GYP ENTERPRISES?</h2>
+            <h2 className="font-display text-2xl sm:text-4xl font-extrabold text-white tracking-tight">Why Choose GYP Global?</h2>
           </motion.div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-8">
             {[

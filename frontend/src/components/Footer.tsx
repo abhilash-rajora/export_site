@@ -22,7 +22,7 @@ export default function Footer() {
             <Link to="/" className="flex items-center group">
               <span className="font-display text-2xl md:text-xl font-extrabold tracking-tight">
                 <span className="text-white transition-colors duration-300 group-hover:text-gold-400">GYP</span>
-                <span className="text-gold-400 transition-colors duration-300 group-hover:text-white"> Enterprises</span>
+                <span className="text-gold-400 transition-colors duration-300 group-hover:text-white"> Global</span>
               </span>
             </Link>
             <p className="text-xs text-green-400 mt-3 font-medium">✔ Trusted by global buyers  • 50+ countries served</p>

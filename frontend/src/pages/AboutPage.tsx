@@ -24,9 +24,9 @@ const values = [
 
 export default function AboutPage() {
   useSeo('about', {
-  title:       'About WExports | Our Story and Global Export Mission',
-  description: 'WExports — 15+ years of trusted export services from India. ISO certified, serving 50+ countries with 200+ product lines.',
-  keywords:    'about wexports, indian export company, trusted exporter india',
+  title:       'About GYP Global | Our Story and Global Export Mission',
+  description: 'GYP Global — 15+ years of trusted export services from India. ISO certified, serving 50+ countries with 200+ product lines.',
+  keywords:    'about GYP Global, indian raw human hairexport company, trusted exporter india',
   canonical:   'https://wexports.vercel.app/about',
 });
   return (
@@ -39,7 +39,7 @@ export default function AboutPage() {
               Building Bridges<br /><span className="text-gold-400">Across Borders</span>
             </h1>
             <p className="text-white/65 text-xl leading-relaxed max-w-xl">
-              For over 15 years, WeExports has been the trusted export partner for businesses worldwide.
+              For over 15 years, GYP Global has been the trusted Indian Raw Human Hair export partner for businesses worldwide.
             </p>
           </motion.div>
           <div className="mt-6 flex flex-wrap gap-4 text-sm text-white/70">
@@ -151,7 +151,7 @@ export default function AboutPage() {
               <div className="flex justify-center">
                 <p className="text-lg italic text-muted-foreground leading-relaxed border-l-4 border-gold-500 pl-4 text-left inline-block max-w-xl">
                   <span className="text-gold-500 text-2xl mr-1">“</span>
-                  WeExports helped us source high-quality products smoothly and efficiently. 
+                  GYP Global helped us source high-quality products smoothly and efficiently. 
                   Their team is highly professional and reliable.
                 </p>
               </div>
